@@ -1,0 +1,36 @@
+:host {
+    display: block;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 8px 16px 16px;
+}
+
+p.info-text {
+    font-size: 0.925rem;
+
+    i {
+        font-size: 1rem;
+        margin-right: 5px;
+    }
+}
+
+.alert {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+}
+
+input,
+select {
+    margin: 4px 0;
+}
+
+button+button {
+    margin-left: 8px;
+}
+
+form input.form-control,
+form select.form-control,
+form textarea.form-control {
+    padding: 0.325rem 0.65rem;
+}

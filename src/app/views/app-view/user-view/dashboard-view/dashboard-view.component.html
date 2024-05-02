@@ -1,0 +1,28 @@
+<div class="row mb-3">
+    <h1 class="fs-3 mb-3">Dashboard</h1>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>Statistiques</h5>
+                <p>Qu'avez-vous accompli ?</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3  animate__animated animate__fadeIn">
+    @if(steps$ | async; as steps) {
+
+    @for(step of steps; track step.id) {
+    <div class="col-12 col-md-6 col-xl-4 steps-list">
+        <ui-step-card [step]="step"></ui-step-card>
+    </div>
+    }
+    @empty {
+    <h2>Si vous êtes admin,<br> ajoutez des steps et des prompts</h2>
+    }
+
+    }
+
+</div>

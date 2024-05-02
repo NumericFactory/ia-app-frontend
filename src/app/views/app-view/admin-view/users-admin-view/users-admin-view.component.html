@@ -1,0 +1,59 @@
+<!--admins -->
+
+<div class="row mb-4">
+    <span class="title col-8">
+        <h2>Utilisateurs</h2>
+    </span>
+    <span class="search col-4">
+        <input #searchText (keyup)="searchUser(searchText.value)" class="form-control" placeholder="Rechercher"
+            type="text">
+    </span>
+</div>
+
+
+@if(printUsers) {
+<table class="table table-sm table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>Créé le</th>
+            <th>Nom complet</th>
+            <th style="width: 20%;">Email</th>
+            <th>Mobile</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(user of printUsers; track user.id) {
+        <tr>
+            <th>{{user.id}}</th>
+            <td style="font-size:85%">{{user.createdAt | date:'dd/MM/yy'}}</td>
+            <td>{{user.lastname}} {{user.firstname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone}}</td>
+            <td>
+                <div class="d-inline-flex">
+                    @if(!user.roles.length) {
+                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">guest</span>
+                    }
+                    @else {
+                    @for(role of user.roles; track role) {
+                    @if(role===Role.user) {
+                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">user</span>
+                    }
+                    @if(role===Role.admin) {
+                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">admin</span>
+                    }
+                    @if(role===Role.powerAdmin) {
+                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">powerAdmin</span>
+                    }
+                    }
+                    }
+                    <!-- {{roles.value | json}} -->
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+}

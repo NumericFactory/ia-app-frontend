@@ -1,0 +1,21 @@
+.nav-link {
+    color: #000;
+    opacity: 0.75;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &.active {
+        color: rgba(79, 70, 229, 1);
+        opacity: 1;
+        font-weight: 500;
+    }
+}
+
+.nav-underline {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .15);
+}

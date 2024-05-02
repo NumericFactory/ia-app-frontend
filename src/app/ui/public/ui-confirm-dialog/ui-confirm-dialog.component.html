@@ -1,0 +1,21 @@
+<h3 class="text-center mb-3">{{data.confirmTitle}}</h3>
+
+@if(data.confirmText) {
+<p class="text-secondary info-text  text-center">
+    {{data.confirmText}}
+</p>
+}
+<hr>
+<div>
+    <div class="row mt-3">
+
+        <div class="col">
+            <div class="d-flex justify-content-end">
+                <button (click)="cancelAction()" class="btn btn-sm btn-light me-2">Annuler</button>
+                <button (click)="validAction()" class="btn btn-sm btn-danger ms-2">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

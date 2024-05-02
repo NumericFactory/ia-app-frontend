@@ -1,0 +1,41 @@
+<nav class="navbar bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <!-- logo brand-->
+        <a title="retour Dashboard" class="navbar-brand align-items-center" routerLink="/dashboard">
+            @if(title==='Admin') {
+            <i style="position: relative;top: 1px;font-size: 18px;" class="bi bi-arrow-left"></i>
+            <span class="ms-2">dashboard User</span> }
+        </a>
+
+        <ul class="nav">
+
+            @if(user$ | async; as user) {
+            <!-- auth user links -->
+            <li class="nav-item">
+                <a [matMenuTriggerFor]="menu" class="nav-link d-flex align-items-center">
+                    <i *ngIf="user.roles.includes(2) || user.roles.includes(3)" title="admin"
+                        style="color:rgb(255, 209, 150);margin-right: 5px;" class="bi bi-shield-fill-check"></i>
+                    <span>{{user.firstname}}</span>
+                    <span><img class="avatar"
+                            [src]="'https://api.dicebear.com/8.x/adventurer/svg?seed='+user.firstname"></span>
+                </a>
+
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <span>Mon compte</span>
+                    </button>
+                    <button (click)="logoutAction()" mat-menu-item>
+                        <span>Logout</span>
+                    </button>
+
+                    <button *ngIf="user.roles.includes(2) || user.roles.includes(3)" (click)="goToAdminPage()"
+                        mat-menu-item>
+                        <span>Admin</span>
+                    </button>
+                </mat-menu>
+            </li>
+            }
+        </ul>
+
+    </div>
+</nav>

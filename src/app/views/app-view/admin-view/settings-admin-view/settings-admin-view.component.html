@@ -1,0 +1,35 @@
+<div class="mb-4 d-flex justify-content-between">
+    <span class="title">
+        <h2>Paramètres</h2>
+    </span>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-primary ms-2 btn-icon">
+            <i class="bi bi-plus"></i>
+            Ajouter un provider IA
+        </button>
+    </div>
+</div>
+
+<table class="table table-sm table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th style="width: 20%;">Provider</th>
+            <th>API key</th>
+            <th>API secret key</th>
+            <th>Modèle</th>
+            <th style="width: 60px;text-align:center">Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let provider of providers">
+            <td>{{provider.id}}</td>
+            <td>{{provider.name}}</td>
+            <td>{{provider.api_key}}</td>
+            <td>{{provider.api_secret_key}}</td>
+            <td>{{provider.model}}</td>
+            <td style="text-align:center">
+                <button class="btn btn-sm btn-secondary"><i class="bi bi-trash"></i></button>
+            </td>
+        </tr>

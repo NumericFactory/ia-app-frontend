@@ -1,0 +1,45 @@
+<h3 class="fs-5">Mettre à jour ce Step</h3>
+
+<p class="text-secondary info-text">
+    <i class="bi bi-info-circle-fill text-primary"></i>Sauvegarder pour mettre à jour.
+</p>
+<hr>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="updateStepForm">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="title">Nom*</label>
+                <input type="text" class="form-control" id="title" formControlName="title">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="subtitle">Sous-titre</label>
+                <input type="text" class="form-control" id="subtitle" formControlName="subtitle">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="desc">Description</label>
+                <!-- <textarea class="form-control" id="desc" formControlName="desc"></textarea> -->
+                <p-editor (onInit)="onEditorInit($event)" formControlName="desc" [style]="{ height: '220px' }">
+                    <ng-template pTemplate="header">
+                        <span class="ql-formats">
+                            <button type="button" class="ql-bold" aria-label="Bold"></button>
+                            <button type="button" class="ql-italic" aria-label="Italic"></button>
+                            <button type="button" class="ql-underline" aria-label="Underline"></button>
+                        </span>
+                    </ng-template>
+                </p-editor>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+
+
+</form>

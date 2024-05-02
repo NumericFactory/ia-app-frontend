@@ -1,1 +1,234 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+    CSS global Angelique & Fathia / Projet EPITA 2024
+    Nous décidons d'organiser le CSS global par fragments
+    afin que le CSS reste maintenable et scalable.
+    - les CSS globaux : _variables.scss, _reset.scss, _grid.scss
+    - les composants  : _button.scss, _form.scss, _navbar.scss, _pagination.scss, _slider.scss
+    - les dépendances : les fonts, fontawesome, material Angular
+*/
+
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
+/* CSS Dependencies */
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'quill/dist/quill.snow.css';
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../node_modules/bootstrap/scss/functions";
+
+// 2. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+@import "bootstrap/scss/_variables";
+
+// Custom
+@import "assets/_snackbar.scss";
+
+
+
+// 3. Include any default variable overrides here
+$theme-colors: (
+    "primary": $purple,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark
+);
+
+// 4. Include any default map overrides here
+
+// 5. Import all the rest of Bootstrap 
+@import "bootstrap/scss/bootstrap";
+
+
+body {
+    // background: #edf0f3 !important;
+    background: #fcfdff !important;
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+}
+
+ui-sidebar {
+    position: sticky;
+    top: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+
+    i {
+        font-size: 1.6rem;
+    }
+
+    padding: 0px 12px 0px 3px;
+}
+
+table th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    background-color: #edf0f3 !important;
+}
+
+table tbody tr th:first-child {
+    font-size: 0.85rem;
+    background-color: #d7ffff !important;
+    width: 30px;
+    color: #194350;
+}
+
+.nav-link {
+    font-size: .95rem;
+}
+
+.nav-link:hover {
+    color: var(--purple-color);
+    text-decoration: none;
+}
+
+.list-group-item.disabled,
+.list-group-item:disabled {
+    color: rgb(129 135 142 / 75%);
+    pointer-events: none;
+    background-color: #f7f7f7;
+}
+
+.btn-back {
+    color: #111;
+    padding: 0rem 1rem 0 0;
+    transform: translate(0px, 2px);
+}
+
+// Then add additional custom code here
+form {
+    .form-group {
+        margin-bottom: .75rem;
+
+        button {
+            margin-top: .3rem;
+        }
+    }
+
+    label {
+        font-weight: bold !important;
+        font-size: .9rem !important;
+    }
+
+    input.form-control,
+    select.form-control,
+    textarea.form-control {
+        border-color: rgb(176, 176, 176) !important;
+        border-width: 1px;
+        padding: .475rem .75rem;
+
+        &:focus {
+            border-color: rgb(99 102 241) !important;
+            box-shadow: 0 0px 0px 1px rgb(99, 102, 241) !important
+        }
+    }
+
+    p.error {
+        color: #9a1854;
+        font-size: 85%;
+        margin: 0;
+    }
+
+}
+
+a {
+    color: rgb(79 70 229);
+    text-decoration: none;
+
+    &.link {
+        text-decoration: underline;
+    }
+
+    &:hover {
+        color: rgb(108, 111, 241);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+}
+
+.alert {
+    margin-top: 1rem;
+
+    p {
+        margin: 0;
+    }
+}
+
+.dialog-user-var {
+    position: fixed !important;
+    top: 50px;
+    // min-height: 70vh;
+    overflow-y: auto;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+}
+
+/** QL EDITOR */
+.ql-editor {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #131313;
+
+    p {
+        margin-bottom: 10px;
+    }
+}
+
+.p-listbox .p-listbox-list {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    .p-listbox-item {
+        margin: 2px 0 !important;
+        padding: .5rem 1.5rem !important;
+        border: 0 none;
+        color: #334155;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+        border-radius: 4px;
+    }
+}
+
+.p-listbox:not(.p-disabled) .p-listbox-item:not(.p-highlight):not(.p-disabled).p-focus {
+    background-color: #cda7ea;
+}

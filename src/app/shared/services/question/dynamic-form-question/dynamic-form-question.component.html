@@ -1,0 +1,24 @@
+<div class="form-group" [formGroup]="form">
+    <!-- label-->
+    <label [attr.for]="question.key">
+        {{question.label}}<span style="opacity: .75;" *ngIf="question.required">*</span>
+    </label>
+
+    <!-- field (input or textarea or select)-->
+    <div [ngSwitch]="question.controlType">
+
+        <input class="form-control" *ngSwitchCase="'input'" [formControlName]="question.variable_id" [id]="question.key"
+            [type]="question.type">
+
+        <textarea class="form-control" *ngSwitchCase="'textarea'" [formControlName]="question.variable_id"
+            [id]="question.key"></textarea>
+
+        <select class="form-control" [id]="question.key" *ngSwitchCase="'select'"
+            [formControlName]="question.variable_id">
+            <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+        </select>
+    </div>
+
+    <!-- error message under input -->
+    <p class="error" *ngIf="isInvalid">Champ requis</p>
+</div>

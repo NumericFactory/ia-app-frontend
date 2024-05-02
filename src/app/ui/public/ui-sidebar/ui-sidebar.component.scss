@@ -1,0 +1,31 @@
+.sidebar-left {
+    min-width: 250px;
+    max-width: 250px;
+    height: calc(100vh - 0px);
+    border-right: 1px solid #b0b0b0;
+    background-color: #fff7ec !important;
+}
+
+.nav-link {
+    i {
+        margin-right: 10px;
+    }
+
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: #2c2b40;
+    color: #bcc0e1;
+
+    &:hover {
+        background-color: #2c2b40;
+        color: #bcc0e1;
+    }
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #e2e8f0;
+    color: var(--bs-gray-800);
+    cursor: pointer;
+}

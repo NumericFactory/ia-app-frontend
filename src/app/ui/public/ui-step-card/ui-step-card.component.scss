@@ -1,0 +1,10 @@
+.card {
+    background: #d4d4d4;
+    transition-duration: .2s;
+}
+
+.card:hover {
+    background: #f4f4f4;
+    transform: scale(1.03);
+    cursor: pointer;
+}

@@ -1,0 +1,92 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegisterForm()">
+    <div class="row">
+        <div class="col">
+            <!-- prenom-->
+            <div class="form-group">
+                <label for="firstName">Prénom</label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstname">
+                <p *ngIf="registerForm.controls['firstname'].errors && isFormSubmitted" class="error">
+                    Requis - 2-20 caractères
+                </p>
+            </div>
+        </div>
+
+        <div class="col">
+            <!-- nom-->
+            <div class="form-group">
+                <label for="lastName">Nom</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastname">
+                <p *ngIf="registerForm.controls['lastname'].errors && isFormSubmitted" class="error">
+                    Requis - 2-20 caractères
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- phone -->
+    <div class="form-group">
+        <label for="phone">Mobile</label>
+        <input type="text" class="form-control" id="phone" formControlName="phone">
+        <p *ngIf="registerForm.controls['phone'].errors && isFormSubmitted" class="error">
+            Requis
+        </p>
+    </div>
+    <!-- email -->
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email">
+        <p *ngIf="registerForm.controls['email'].errors && isFormSubmitted" class="error">
+            Veuillez saisir une adresse email valide
+        </p>
+    </div>
+    <!-- password -->
+    <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" class="form-control" id="password" formControlName="password">
+        <p class="password-validation">
+            <span [class.valid]="registerForm.controls['password'].value.match('^(?=.*[A-Z])')">
+                @if(registerForm.controls['password'].value.match('^(?=.*[A-Z])')){
+                <i class="bi bi-check"></i>
+                }
+                @else {<i class="fa-solid fa-xmark"></i>}
+                Majuscule
+            </span>
+
+            <span [class.valid]="registerForm.controls['password'].value.match('^(?=.*[a-z])')">
+                @if(registerForm.controls['password'].value.match('^(?=.*[a-z])')){
+                <i class="bi bi-check"></i>
+                }
+                @else {<i class="fa-solid fa-xmark"></i>}
+                Minuscule
+            </span>
+
+            <span [class.valid]="registerForm.controls['password'].value.match('(.*[0-9].*)')">
+                @if(registerForm.controls['password'].value.match('(.*[0-9].*)')){
+                <i class="bi bi-check"></i>
+                }
+                @else {<i class="fa-solid fa-xmark"></i>}
+                Chiffre
+            </span>
+
+            <span [class.valid]="registerForm.controls['password'].value.match('(?=.*[!@#$%^&*])')">
+                @if(registerForm.controls['password'].value.match('(?=.*[!@#$%^&*])')){
+                <i class="bi bi-check"></i>
+                }
+                @else {<i class="fa-solid fa-xmark"></i>}
+                Caractère spécial
+            </span>
+        </p>
+    </div>
+    <!-- password confirmation -->
+    <!-- <div class="form-group">
+        <label for="passwordConfirmation">Confirmation mot de passe</label>
+        <input type="password" class="form-control" id="passwordConfirmation" [formControl]="confirmpassword">
+    </div> -->
+    <!-- submit button-->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary w-100">Inscription</button>
+    </div>
+</form>
+
+<hr>
+<p style="font-size: 95%;" class="text-center ">Vous avez déjà un compte? <a routerLink="/auth/login">Connectez-vous</a>
+</p>

@@ -1,0 +1,26 @@
+:host {
+    display: block;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 8px 16px 16px;
+}
+
+p.info-text {
+    font-size: 0.975rem;
+
+    i {
+        font-size: 1rem;
+        margin-right: 3px;
+    }
+}
+
+.alert {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+}
+
+
+button+button {
+    margin-left: 8px;
+}

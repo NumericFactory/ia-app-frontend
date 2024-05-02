@@ -1,0 +1,31 @@
+import { Component, Input } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, NgSwitchCase } from '@angular/common';
+import { QuestionBase } from '../question.model';
+
+
+
+@Component({
+  standalone: true,
+  selector: 'app-question',
+  templateUrl: './dynamic-form-question.component.html',
+  imports: [CommonModule, ReactiveFormsModule, CommonModule, NgSwitchCase],
+})
+export class DynamicFormQuestionComponent {
+
+  @Input() question!: QuestionBase<string>;
+  @Input() form!: FormGroup;
+  @Input() isFormSubmitted: boolean = false;
+
+  ngOnInit() {
+    console.log('question', this.question);
+    console.log('form', this.form);
+  }
+
+
+  // champ invalide si le champ est invalide ET qu'il a été modifié ou le formulaire a été soumis
+  get isInvalid() {
+    return this.form.controls[this.question.variable_id!].invalid && this.form.controls[this.question.variable_id!].dirty
+      || this.form.controls[this.question.variable_id!].invalid && this.isFormSubmitted;
+  }
+}

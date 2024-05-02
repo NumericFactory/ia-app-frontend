@@ -1,0 +1,14 @@
+img {
+    width: 100%;
+}
+
+p.password-validation span {
+    margin-right: 2px;
+    opacity: 0.5;
+    font-size: 90%;
+}
+
+p.password-validation span.valid {
+    color: rgb(0, 175, 117);
+    opacity: 1;
+}

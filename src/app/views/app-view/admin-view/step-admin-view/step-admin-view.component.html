@@ -1,0 +1,69 @@
+<div class="mb-4 d-flex justify-content-between">
+    <span class="title">
+        <h2>Gérer les steps</h2>
+    </span>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-secondary">Catégories</button>
+        <button class="btn btn-sm btn-primary ms-2 btn-icon" (click)="openDialogCreateStep()">
+            <i class="bi bi-plus"></i>
+            Ajouter
+        </button>
+    </div>
+</div>
+
+@if(stepsAdmin$ | async; as stepsAdmin) {
+<table class="table table-sm table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th style="width: 20%;">Titre</th>
+            <th>Sous-titre</th>
+            <th>Variables</th>
+            <th>Prompts</th>
+            <th style="width: 60px;text-align:center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(step of stepsAdmin; track step.id) {
+        <tr (click)="openDialogUpdateStep($event, step)">
+            <th>{{step.id}}</th>
+            <td>{{step.title}}</td>
+            <td>{{step.subtitle}}</td>
+            <td>
+                <!-- step > user Variables -->
+                <div class="d-inline-flex flex-column">
+                    @if(!step.variables.length) {
+                    <a (click)="openDialogCreateUserFormVariables($event, step)" class="link">Ajouter</a>
+                    }
+                    @else {
+                    @for(userVariables of step.variables; track userVariables) {
+                    <span (click)="openDialogUpdateUserFormVariables($event, step)"
+                        class="badge badge-sm text-bg-secondary">{{userVariables.key}}</span>
+                    }
+                    }
+                </div>
+
+            </td>
+            <td>
+                <!-- step > prompts -->
+                <div class="d-inline-flex flex-column">
+                    @if(!step.prompts.length) {
+                    <a (click)="openDialogCreatePrompt($event, step)" class="link">Ajouter</a>
+                    }
+                    @else {
+                    @for(prompt of step.prompts; track prompt) {
+                    <span (click)="openDialogUpdatePrompt($event, step)"
+                        class="badge fw-400 text-bg-light my-1">{{prompt.title}}</span>
+                    }
+                    }
+                </div>
+            </td>
+            <td style="text-align:center">
+                <button (click)="deleteStepAction($event,step)" class="btn btn-sm btn-secondatry"><i
+                        class="bi bi-trash"></i></button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+}

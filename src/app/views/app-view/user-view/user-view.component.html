@@ -1,0 +1,17 @@
+<ui-navbar title="A.IApp"></ui-navbar>
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- sidebar-->
+        <div class="col-12 col-md-4 col-lg-3 col-xxl-2 p-0">
+            <ui-sidebar></ui-sidebar>
+        </div>
+
+        <!-- content app-->
+        <div style="transform: translateX(-45px);" class="col-12 col-md-8 col-lg-9 col-xxl-10">
+            <div class="container py-3">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

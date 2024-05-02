@@ -1,0 +1,56 @@
+@if(step$ | async; as step) {
+
+<div class="row mb-3">
+
+    <div class="d-flex align-items-center">
+        <a class="btn btn-link fs-3 btn-back" routerLink="/dashboard"><i class="bi bi-arrow-left"></i></a>
+        <nav aria-label="breadcrumb ms-3">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{step.subtitle}}</li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="fs-4">{{step.subtitle}}</h2>
+                <p class="fs-6">0/ {{step.prompts.length}} prompts</p>
+                <hr>
+                <p [innerHTML]="step.desc"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row justify-content-center">
+    <div class="col-md-10 steps-list">
+
+        <div class="alert" [class.alert-warning]="user?.variables?.length"
+            [class.alert-info]="!user?.variables?.length">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span>
+                Pour continuer à l'étape suivante
+                <a style="font-weight: 500;font-size: .975rem;" class="link text-underline"
+                    (click)="openVariablesModal(user)">
+
+                    <span *ngIf="!isFormCompleted">renseignez vos variables</span>
+                    <span *ngIf="isFormCompleted">Modifiez vos variables</span>
+                </a>
+            </span>
+        </div>
+
+        <ul class="list-group">
+            @for(prompt of step.prompts; track prompt.id) {
+            <a class="list-group-item list-group-item-action fade show" [class.disabled]="!isFormCompleted"
+                [routerLink]="['prompt', prompt.id]">
+                {{prompt.title}}
+            </a>
+            }
+        </ul>
+    </div>
+</div>
+}
