@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
+import { UserGateway } from '../../../core/ports/user.gateway';
 
 @Component({
   selector: 'ui-navbar',
@@ -17,7 +18,7 @@ export class NavbarComponent {
 
   user$ = this.authService.user$;
 
-  constructor(private authService: AuthGateway, private router: Router) { }
+  constructor(private authService: AuthGateway, private router: Router, private userService: UserGateway) { }
 
   logoutAction() {
     this.authService.logout().subscribe();

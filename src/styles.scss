@@ -122,6 +122,10 @@ table tbody tr th:first-child {
     color: #111;
     padding: 0rem 1rem 0 0;
     transform: translate(0px, 2px);
+
+    &:hover {
+        color: rgb(79, 70, 229);
+    }
 }
 
 // Then add additional custom code here
@@ -231,4 +235,12 @@ body {
 
 .p-listbox:not(.p-disabled) .p-listbox-item:not(.p-highlight):not(.p-disabled).p-focus {
     background-color: #cda7ea;
+}
+
+.p-progressbar .p-progressbar-value {
+    background-color: #cda7ea !important;
+}
+
+::selection {
+    background: #6f42c1;
 }

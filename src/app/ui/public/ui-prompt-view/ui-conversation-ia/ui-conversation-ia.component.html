@@ -1,0 +1,19 @@
+<!-- loading skeleton-->
+@if(isLoadingResponse) {
+<ui-conversation-loader-skeleton></ui-conversation-loader-skeleton>
+}
+
+@if(responseAI && responseAI?.text?.length && !isLoadingResponse) {
+<div style="position: relative" class="prompt-result-view animate__animated animate__fadeIn iaresponse">
+    <div class="prompt-result-view__title d-flex align-items-center">
+        <i class="bi bi-robot"></i>
+        <p><strong>Ai Bot</strong><span class="silent">- {{responseAI.createdAt | date:'dd/MM/yyyy hh:mm'}}</span></p>
+    </div>
+    <p style="white-space: pre-wrap;
+            padding: 0px 42px 0px 0px;
+            line-height: 21px;
+            font-size: 16.5px;" [innerHTML]="responseAI.text"></p>
+    <i (click)="copyToClipBoard(responseAI?.text)" class="bi bi-copy copypaste"></i>
+</div>
+
+}

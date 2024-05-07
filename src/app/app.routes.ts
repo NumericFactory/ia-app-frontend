@@ -36,7 +36,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: DashboardViewComponent },
             { path: 'step/:id', component: StepViewComponent },
-            { path: 'step/:stepid/prompt/:promptid', component: PromptViewComponent }
+            { path: 'step/:stepid/prompt', component: PromptViewComponent }
         ]
     },
     // Dashboard ADMIN Routes
@@ -52,3 +52,9 @@ export const routes: Routes = [
         ]
     }
 ];
+
+const routerOptions = {
+    enableTracing: false,
+    useHash: false,
+    relativeLinkResolution: 'corrected'
+};

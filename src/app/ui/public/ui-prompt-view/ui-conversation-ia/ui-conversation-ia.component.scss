@@ -1,0 +1,123 @@
+i.copypaste {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1.5rem;
+    opacity: .85;
+    transition-duration: .2s;
+
+    &:hover {
+        opacity: 1;
+        cursor: pointer;
+        color: #b990ec;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+div.prompt-result-view {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    padding: 16px 25px 25px 55px;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    background-color: #23232b;
+    width: 100%;
+    transition: box-shadow 0.3s;
+    // height: calc(100vh - 210px);
+    color: #c1c3d2;
+    font-size: .97rem;
+
+    &:hover {
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+
+    p {
+        margin-bottom: 0.8rem;
+    }
+
+    .prompt-result-view__title {
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 10px;
+
+        strong {
+            font-weight: 500;
+        }
+
+        i {
+            font-size: 1.4rem;
+            margin-right: 10px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .silent {
+            font-size: 85%;
+            opacity: .55;
+            margin-left: 5px;
+        }
+
+        transform: translateX(-40px);
+    }
+
+    .prompt-result-view__content {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .prompt-result-view__button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+
+    .prompt-result-view__button--disabled {
+        background-color: #e0e0e0;
+        color: #9e9e9e;
+        cursor: not-allowed;
+
+        &:hover {
+            background-color: #e0e0e0;
+        }
+    }
+
+    .prompt-result-view__button--delete {
+        background-color: #dc3545;
+
+        &:hover {
+            background-color: #c82333;
+        }
+    }
+
+    .prompt-result-view__button--delete--disabled {
+        background-color: #f8d7da;
+        color: #721c24;
+        cursor: not-allowed;
+
+        &:hover {
+            background-color: #f8d7da;
+        }
+    }
+
+    .prompt-result-view__button--cancel {
+        background-color: #6c757d;
+
+        &:hover {
+            background-color: #5a6268;
+        }
+    }
+}

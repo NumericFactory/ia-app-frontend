@@ -35,6 +35,9 @@ export interface PromptModel {
     desc?: string
     categoryId?: number // category of the prompt
     order: number
+    secretprompt?: string // visible only by admin
+    createdAt: string
+    updatedAt: string
 }
 export interface Category {
     id: number

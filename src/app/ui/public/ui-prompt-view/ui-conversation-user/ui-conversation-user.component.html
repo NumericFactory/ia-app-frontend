@@ -1,0 +1,25 @@
+<!-- USER Question-->
+@if(prompt) {
+
+<div class="encart-user-question">
+
+    <div style="position:relative" [id]="'prompt'+prompt.id" class="prompt animate__animated animate__fadeIn">
+        <div class="prompt-result-view__title d-flex align-items-center">
+            <i class="bi bi-person-circle"></i>
+            <p><strong>User</strong><span class="silent"></span></p>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <span>{{ prompt.title}}</span>
+        </div>
+        <p-progressBar [style.opacity]="isLoadingResponse?1:0" mode="indeterminate"
+            [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
+
+        <button (click)="refreshPromptAction(prompt)" title="Redemander à l'IA" class="btn btn-sm btn-light refresh-ia">
+            <i class="bi bi-arrow-repeat"></i>
+        </button>
+    </div>
+
+</div>
+
+}

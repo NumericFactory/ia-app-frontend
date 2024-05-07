@@ -3,27 +3,46 @@
     <a href="/"
         class="d-flex align-items-center justify-content-center mb-2 mb-md-0 link-body-emphasis text-decoration-none">
         <h3 class="text-center fs-6 mb-0">Hello,
-            <span *ngIf="(user$ | async) as user">{{user.firstname}} {{user.lastname}}</span>
+            <span *ngIf="(authUser$ | async) as authUser">{{ authUser.firstname}} {{ authUser.lastname}}</span>
         </h3>
     </a>
 
     <hr>
 
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column">
         <li class="nav-item">
             <a class="nav-link active">
                 <i class="bi bi-house"></i>
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link link-body-emphasis">
-                <i class="bi bi-card-list"></i>
-                <span>Historique prompts</span>
-            </a>
-        </li>
-
     </ul>
+
+
+    <div class="mb-auto" style="background-color: #fff; margin-top: 8px;">
+        <h2 style="position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 0;
+    padding: 8px 15px;
+    font-weight: 400;" class="nav-link link-body-emphasis">
+            <i class="bi bi-card-list"></i>
+            <span>Historique prompts</span>
+        </h2>
+        <ul class="nav nav-pills flex-column mb-auto" style="position: relative; background:#fff; padding: 5px;">
+            @if(user$ | async; as user) {
+            @for(prompt of user.prompts; track prompt.id) {
+            <li class="nav-item">
+                <a [routerLink]="['/dashboard/step/', prompt.step_id, 'prompt']"
+                    style="position: relative; padding-right: 28px;" class="nav-link link-body-emphasis">
+                    <span>{{prompt.title}}</span>
+                    <i style="position: absolute; right:5px; top:10px; transform: translateX(8px);"
+                        class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            }
+            }
+        </ul>
+    </div>
 
 
     <hr>

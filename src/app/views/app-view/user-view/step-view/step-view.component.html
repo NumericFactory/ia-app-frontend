@@ -2,7 +2,7 @@
 
 <div class="row mb-3">
 
-    <div class="d-flex align-items-center">
+    <div style="transform: translateY(-10px);" class="d-flex align-items-center">
         <a class="btn btn-link fs-3 btn-back" routerLink="/dashboard"><i class="bi bi-arrow-left"></i></a>
         <nav aria-label="breadcrumb ms-3">
             <ol class="breadcrumb m-0">
@@ -46,7 +46,7 @@
         <ul class="list-group">
             @for(prompt of step.prompts; track prompt.id) {
             <a class="list-group-item list-group-item-action fade show" [class.disabled]="!isFormCompleted"
-                [routerLink]="['prompt', prompt.id]">
+                [routerLink]="['prompt']">
                 {{prompt.title}}
             </a>
             }

@@ -1,158 +1,36 @@
-@if(step$ | async; as step) {
-<div class="row mb-3">
-    <div class="d-flex align-items-center">
-        <a class="btn btn-link fs-3 btn-back" (click)="goBack()"><i class="bi bi-arrow-left"></i></a>
-        <!-- <h1 class="fs-3 m-0 me-2">{{step.title}}</h1> -->
-        <nav aria-label="breadcrumb ms-3">
-            <ol class="breadcrumb m-0">
-                <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item"><a routerLink="../../">{{step.subtitle}}</a></li>
-                @if(prompt$ | async; as prompt) {
-                <li class="breadcrumb-item active" aria-current="page">{{prompt.title}}</li>
-                }
-            </ol>
-        </nav>
-    </div>
-
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <h2 class="fs-4">{{step.subtitle}}</h2>
-                <p class="fs-6">0/ {{step.prompts.length}} prompts</p>
-                <hr>
-                <p [innerHTML]="step.desc"></p>
-            </div>
-        </div>
-    </div>
-</div>
-}
+@if(step) {
+<!-- 1 HEADER-->
+<ui-header-prompt-view [step]="step" [promptsToDisplay]="promptsList" />
 
 <div class="row">
-    <div class="col-9">
-
-        <!-- USER Question-->
-        <div style="background: transparent;
-        color: #2c2b40;
-        border-color: transparent;" class="prompt-result-view animate__animated animate__fadeIn">
-            <div class="prompt-result-view__title d-flex align-items-center">
-                <i class="bi bi-person-circle"></i>
-                <p><strong>User</strong><span class="silent">- 24/04/ 2024 - 12:07</span></p>
-            </div>
-            Quel problème mon produit résoud ?
-        </div>
-        <!-- BOT Question-->
-        <div style="color: #000000;
-        background: #ecf4ff;
-        border-color: #b3d3ff;" class="prompt-result-view animate__animated animate__fadeIn">
-            <div class="prompt-result-view__title d-flex align-items-center">
-                <i class="bi bi-robot"></i>
-                <p><strong>Ai Bot</strong><span class="silent">- 24/04/ 2024 - 12:07</span></p>
-            </div>
-            <p>I can't directly generate images, but I can describe how you can create one using various tools. You
-                could
-                use graphic design software like Adobe Photoshop, Illustrator, or free alternatives like GIMP or Canva.
-            </p>
-
-            <p>Find the Logos: First, search for high-resolution images of the AdonisJS and SQL database logos. You can
-                find these on their official websites or by searching for them on platforms like Google Images. Make
-                sure to
-                select images with transparent backgrounds for easier integration.</p>
-
-            <p>Canvas Setup: Open your chosen design software and create a new canvas with dimensions suitable for your
-                image. A square canvas is often a good choice for logos.</p>
-
-            <p>Import Logos: Import the AdonisJS and SQL database logos into your canvas. Place them where you want them
-                to
-                appear in your image.</p>
-
-            <p>Arrange and Customize: Arrange the logos in a visually appealing way. You might want to resize, rotate,
-                or
-                adjust the position of the logos to achieve the desired layout. You can also add text, shapes, or other
-                design elements to complement the logos.</p>
-
-            <p>Final Touches: Once you're satisfied with the arrangement, add any final touches such as effects,
-                filters,
-                or color adjustments to enhance the overall look of the image.</p>
-            <p>Export: Finally, export your image in a suitable format such as PNG or JPEG. Make sure to save a
-                high-resolution version for quality purposes.</p>
-            <p>Remember to respect the usage guidelines for the logos, especially if you plan to use the image for any
-                public or commercial purposes.</p>
-        </div>
-
-        <!-- USER Question-->
-        <div style="background: transparent;
-         color: #2c2b40;
-         border-color: transparent;" class="prompt-result-view animate__animated animate__fadeIn">
-            <div class="prompt-result-view__title d-flex align-items-center">
-                <i class="bi bi-person-circle"></i>
-                <p><strong>User</strong><span class="silent">- 24/04/ 2024 - 12:07</span></p>
-            </div>
-            Quel produits pourrai-je créer ?
-        </div>
-        <!-- BOT Question-->
-        <div style="color: #000000;
-        background: #ecf4ff;
-         border-color: #b3d3ff;" class="prompt-result-view animate__animated animate__fadeIn">
-            <div class="prompt-result-view__title d-flex align-items-center">
-                <i class="bi bi-robot"></i>
-                <p><strong>Ai Bot</strong><span class="silent">- 24/04/ 2024 - 12:07</span></p>
-            </div>
-            <p>I can't directly generate images, but I can describe how you can create one using various tools. You
-                could
-                use graphic design software like Adobe Photoshop, Illustrator, or free alternatives like GIMP or Canva.
-            </p>
-
-            <p>Find the Logos: First, search for high-resolution images of the AdonisJS and SQL database logos. You can
-                find these on their official websites or by searching for them on platforms like Google Images. Make
-                sure to
-                select images with transparent backgrounds for easier integration.</p>
-
-            <p>Canvas Setup: Open your chosen design software and create a new canvas with dimensions suitable for your
-                image. A square canvas is often a good choice for logos.</p>
-
-            <p>Import Logos: Import the AdonisJS and SQL database logos into your canvas. Place them where you want them
-                to
-                appear in your image.</p>
-
-            <p>Arrange and Customize: Arrange the logos in a visually appealing way. You might want to resize, rotate,
-                or
-                adjust the position of the logos to achieve the desired layout. You can also add text, shapes, or other
-                design elements to complement the logos.</p>
-
-            <p>Final Touches: Once you're satisfied with the arrangement, add any final touches such as effects,
-                filters,
-                or color adjustments to enhance the overall look of the image.</p>
-            <p>Export: Finally, export your image in a suitable format such as PNG or JPEG. Make sure to save a
-                high-resolution version for quality purposes.</p>
-            <p>Remember to respect the usage guidelines for the logos, especially if you plan to use the image for any
-                public or commercial purposes.</p>
-        </div>
-
-        <div style="position: sticky;
-        bottom: 3px;
-        background: #fbfbfbd6;
-        padding: 10px 1px 6px 0;
-        box-shadow: 0px -8px 10px -10px rgba(0, 0, 0, .2);
-        border-top: 1px solid #ccc;" class="d-flex justify-content-end align-items-center">
-            <button title="copier" class="btn btn-outline-secondary btn-sm me-2"><i
-                    class="bi bi-copy fs-6"></i></button>
-            <button title="recommencer" class="btn btn-outline-secondary btn-sm me-2"><i
-                    class="bi bi-arrow-clockwise fs-6"></i></button>
-            <button class="btn btn-primary">Passer au prompt suivant <i
-                    class="bi bi-arrow-right fs-6 ms-2"></i></button>
-        </div>
-
+    <!-- 2 CONVERSATION VIEW -->
+    <div *ngIf="step" class="col-12 col-md-9">
+        @for(conv of conversationSate.items; track conv.promptId) {
+        @if(conv.checked || conv.iaResponse.text.length || conv.nextItem) {
+        <ui-conversation-user [prompt]="conv.userQuestion" [isLoadingResponse]="conv.isLoadingResponse" />
+        }
+        <ui-conversation-ia [responseAI]="conv.iaResponse" [isLoadingResponse]="conv.isLoadingResponse" />
+        }
     </div>
-    <div class="col-3">
-        @if(step$ | async; as step) {
+
+    <!-- 3 PROMPT LIST -->
+    <div class="col-12 col-md-3">
+        @if(step) {
         <ul class="prompt-list list-group animate__animated animate__fadeIn">
-            @for(prompt of step.prompts; track prompt.id) {
-            <a class="list-group-item list-group-item-action fade show align-items-center d-flex"
-                [routerLink]="['../', prompt.id]" routerLinkActive="active">
-                <i class="bi bi-check fs-3"></i> <span>{{prompt.title}}</span>
-            </a>
+            @for(conv of conversationSate.items; track conv.promptId) {
+            <button [disabled]="!conv.checked && !conv.iaResponse.text.trim() && !conv.nextItem"
+                class="list-group-item list-group-item-action fade show align-items-center d-flex"
+                [class.active]="conv.promptId === selectedPrompt?.id" (click)="selectPrompt(conv.userQuestion)"
+                [routerLink]='"."' [fragment]="'prompt'+selectedPrompt?.id">
+                <i [class.statusOk]="conv.iaResponse.text.trim()!=''" class="bi bi-check-circle-fill fs-5 me-1"></i>
+                <span>{{conv.userQuestion.title}}</span>
+            </button>
             }
         </ul>
         }
     </div>
 </div>
+
+<!-- 4 TOOLBAR -->
+<ui-toolbar-prompt-view />
+}

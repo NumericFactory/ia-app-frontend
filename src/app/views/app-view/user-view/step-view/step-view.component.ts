@@ -93,6 +93,11 @@ export class StepViewComponent {
 
     @for(question of questions; track question) {
       <app-question [isFormSubmitted]="formIsSubmit" [question]="question" [form]="userVariablesForm"></app-question>
+      @if(question.information && question.information.length) {
+      <div style="margin-top:-0.55rem" class="alert alert-dark py-1 border-0">
+        <p class="m-0">{{question.information}}</p>
+      </div>
+      }
     }
 
     <div class="form-group d-flex justify-content-end">
@@ -139,17 +144,7 @@ export class UserVariablesDialog {
   stepId: number = this.data.id;
 
   formIsSubmit: boolean = false;
-  questions: QuestionBase<string>[] = [
-    // new QuestionBase({
-    //   key: 'productname',
-    //   label: 'Nom de votre produit/service',
-    //   required: true,
-    //   order: 1,
-    //   controlType: 'input',
-    //   type: 'text',
-    //   options: [{ key: 'user', value: 'User' }]
-    // })
-  ]
+  questions: QuestionBase<string>[] = [];
 
   constructor(
     public dialogRef: DialogRef<string>,
@@ -200,9 +195,8 @@ export class UserVariablesDialog {
     }
   }
 
-  /**
-   * Close dialog
-   */
+
+  // Close dialog
   closeDialog() {
     this.dialogRef.close();
   }

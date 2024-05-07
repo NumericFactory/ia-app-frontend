@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './ui/public/navbar/navbar.component';
 import { AuthGateway } from './core/ports/auth.gateway';
 
@@ -34,6 +34,16 @@ export class AppComponent {
         }
       })
     })();
+
+
+    // remove # from url
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationStart) {
+    //     if (!!event.url && event.url.match(/^\/#/)) {
+    //       this.router.navigate([event.url.replace('/#', '')]);
+    //     }
+    //   }
+    // });
   }
 
 

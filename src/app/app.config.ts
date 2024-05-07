@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 import { routes } from './app.routes';
 import { AuthGateway } from './core/ports/auth.gateway';
@@ -15,10 +15,14 @@ import { StepGateway } from './core/ports/step.gateway';
 import { StepService } from './core/adapters/step.service';
 import { UserGateway } from './core/ports/user.gateway';
 import { UserService } from './core/adapters/user.service';
+import { IAGateway } from './core/ports/ia.gateway';
+import { IaService } from './core/adapters/ia.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes,
+      withHashLocation()
+    ),
     provideHttpClient(
       withInterceptors([
         loaderInterceptor, tokenInterceptor, errorInterceptor,
@@ -29,6 +33,8 @@ export const appConfig: ApplicationConfig = {
     { provide: UserGateway, useClass: UserService },
     // steps 
     { provide: StepGateway, useClass: StepService },
+    // ia 
+    { provide: IAGateway, useClass: IaService },
     provideAnimationsAsync()
   ]
 };

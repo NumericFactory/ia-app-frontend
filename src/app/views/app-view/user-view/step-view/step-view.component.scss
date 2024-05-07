@@ -9,13 +9,18 @@
     border: 1px solid #aaa;
     border-radius: 7px;
     transition-duration: .3s;
+    background: #f7f7f7;
+
+    &:hover {
+        background: #f0f0f0;
+    }
 }
 
 .list-group-item.disabled,
 .list-group-item:disabled {
     color: rgba(129, 135, 142, 0.75);
     pointer-events: none;
-    background-color: #f7f7f7;
+    background-color: #e8e8e8;
 }
 
 .list-group-item.disabled:hover,

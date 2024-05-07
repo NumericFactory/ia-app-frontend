@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://localhost:3333'
+    apiUrl: 'https://ia-app-backend.onrender.com/api/v1'
 };

@@ -15,7 +15,9 @@ export const stepsTestData: StepModel[] = [
                 title: 'Quel problème mon produit résoud ? ',
                 desc: `Décrivez le problème que votre produit résout.`,
                 categoryId: 1,
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 2,
@@ -23,7 +25,9 @@ export const stepsTestData: StepModel[] = [
                 title: 'Quels produits je pourrai créer ? ',
                 desc: `Décrivez les produits que vous pourriez créer pour résoudre le problème identifié.`,
                 categoryId: 1,
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 3,
@@ -31,7 +35,9 @@ export const stepsTestData: StepModel[] = [
                 title: 'Le nom de mon produit',
                 desc: `Donnez un nom à votre produit.`,
                 categoryId: 2,
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 4,
@@ -39,7 +45,9 @@ export const stepsTestData: StepModel[] = [
                 title: 'Le slogan de mon produit',
                 desc: `Donnez un slogan à votre produit.`,
                 categoryId: 2,
-                order: 4
+                order: 4,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 5,
@@ -47,7 +55,9 @@ export const stepsTestData: StepModel[] = [
                 title: 'Le slogan de mon module',
                 desc: `Donnez un slogan à votre module.`,
                 categoryId: 3,
-                order: 5
+                order: 5,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -64,25 +74,33 @@ export const stepsTestData: StepModel[] = [
                 id: 6,
                 stepId: 2,
                 title: 'Prompt 4',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 7,
                 stepId: 2,
                 title: 'Prompt 5',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 8,
                 stepId: 2,
                 title: 'Prompt 6',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 9,
                 stepId: 2,
                 title: 'Prompt 7',
-                order: 4
+                order: 4,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -99,13 +117,17 @@ export const stepsTestData: StepModel[] = [
                 id: 10,
                 stepId: 3,
                 title: 'Prompt 8',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 11,
                 stepId: 3,
                 title: 'Prompt 9',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -123,19 +145,25 @@ export const stepsTestData: StepModel[] = [
                 id: 12,
                 stepId: 4,
                 title: 'Prompt 10',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 13,
                 stepId: 4,
                 title: 'Prompt 11',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 14,
                 stepId: 4,
                 title: 'Prompt 12',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -153,19 +181,25 @@ export const stepsTestData: StepModel[] = [
                 id: 15,
                 stepId: 5,
                 title: 'Prompt 13',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 16,
                 stepId: 5,
                 title: 'Prompt 14',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 17,
                 stepId: 5,
                 title: 'Prompt 15',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -183,19 +217,25 @@ export const stepsTestData: StepModel[] = [
                 id: 18,
                 stepId: 6,
                 title: 'Prompt 16',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 19,
                 stepId: 6,
                 title: 'Prompt 17',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 20,
                 stepId: 6,
                 title: 'Prompt 18',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -213,19 +253,25 @@ export const stepsTestData: StepModel[] = [
                 id: 21,
                 stepId: 7,
                 title: 'Prompt 19',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 22,
                 stepId: 7,
                 title: 'Prompt 20',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 23,
                 stepId: 7,
                 title: 'Prompt 21',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -243,19 +289,25 @@ export const stepsTestData: StepModel[] = [
                 id: 24,
                 stepId: 8,
                 title: 'Prompt 22',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 25,
                 stepId: 8,
                 title: 'Prompt 23',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 26,
                 stepId: 8,
                 title: 'Prompt 24',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -273,19 +325,25 @@ export const stepsTestData: StepModel[] = [
                 id: 27,
                 stepId: 9,
                 title: 'Prompt 25',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 28,
                 stepId: 9,
                 title: 'Prompt 26',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 29,
                 stepId: 9,
                 title: 'Prompt 27',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -303,20 +361,25 @@ export const stepsTestData: StepModel[] = [
                 id: 30,
                 stepId: 10,
                 title: 'Prompt 28',
-
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 31,
                 stepId: 10,
                 title: 'Prompt 29',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 32,
                 stepId: 10,
                 title: 'Prompt 30',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -334,20 +397,25 @@ export const stepsTestData: StepModel[] = [
                 id: 33,
                 stepId: 11,
                 title: 'Prompt 31',
-
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 34,
                 stepId: 11,
                 title: 'Prompt 32',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 35,
                 stepId: 11,
                 title: 'Prompt 33',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
@@ -365,31 +433,41 @@ export const stepsTestData: StepModel[] = [
                 id: 36,
                 stepId: 12,
                 title: 'Prompt 34',
-                order: 1
+                order: 1,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 37,
                 stepId: 12,
                 title: 'Prompt 35',
-                order: 2
+                order: 2,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 38,
                 stepId: 12,
                 title: 'Prompt 36',
-                order: 3
+                order: 3,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 39,
                 stepId: 12,
                 title: 'Prompt 37',
-                order: 4
+                order: 4,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             },
             {
                 id: 40,
                 stepId: 12,
                 title: 'Prompt 38',
-                order: 5
+                order: 5,
+                createdAt: '2021-08-01 15:58:00',
+                updatedAt: '2021-08-01 12:37:00'
             }
         ],
         stepUservariables: [],
