@@ -6,6 +6,7 @@ import { ListboxChangeEvent, ListboxModule } from 'primeng/listbox';
 import { map, merge, switchMap } from 'rxjs';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { PromptModelAdmin } from '../../../../core/models/step.model';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 
 @Component({
   selector: 'app-update-prompts-form',
@@ -27,6 +28,7 @@ export class UpdatePromptsFormComponent {
     public dialogRef: DialogRef<string>,
     public dialog: Dialog,
     private adminService: AdminGateway,
+    private confirmDialog: ConfirmDialogService,
     @Inject(DIALOG_DATA) public data: any,
   ) { }
 
@@ -102,7 +104,9 @@ export class UpdatePromptsFormComponent {
   }
 
   // Au clic de l'utilisateur sur le bouton "Supprimer la ligne"
-  removePromptItem(index: number): void {
+  async removePromptItem(index: number) {
+    const deleteIsConfirmed = await this.confirmDialog.confirm('Supprimer', 'Attention! vous vous apprêtez à supprimer ce prompt. Vous devez Confirmer.');
+    if (!deleteIsConfirmed) return;
     if (this.promptsForm.value.prompts[index].id) {
       this.adminService.deletePrompt(this.promptsForm.value.prompts[index].id).subscribe();
     }
