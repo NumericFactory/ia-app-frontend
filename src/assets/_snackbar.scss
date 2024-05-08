@@ -1,10 +1,28 @@
+.cdk-overlay-container {
+    z-index: 999999 !important;
+}
+
+mat-snack-bar-container {
+    transform: scale(0.95) !important;
+}
+
+.mat-mdc-button .mdc-button__label {
+    font-size: .9rem !important;
+    font-weight: 400 !important;
+    opacity: .6 !important;
+}
+
 .mat-mdc-snack-bar-container {
-    margin: 60px !important;
+    margin: 35px !important;
     position: static;
+    z-index: 999999;
 }
 
 .mat-mdc-snack-bar-container .mdc-snackbar__label {
     --mdc-snackbar-supporting-text-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+
 }
 
 .success-snackbar {
@@ -21,7 +39,7 @@
 }
 
 .info-snackbar {
-    --mdc-snackbar-container-color: #217dec;
+    --mdc-snackbar-container-color: #202a37;
     --mat-mdc-button: black !important;
     --mdc-snackbar-supporting-text-color: rgb(185, 208, 226) !important;
     --mat-snack-bar-button-color: #ffffff !important;
