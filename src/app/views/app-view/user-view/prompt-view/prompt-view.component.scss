@@ -5,9 +5,18 @@
 // }
 
 .p-progressbar .p-progressbar-value {
-    background-color: #592dac !important;
+    background-color: #2d1eaf !important;
 }
 
+button p-progressbar {
+    z-index: 999999;
+    position: absolute;
+    bottom: 3px;
+    height: 0px;
+    width: 97%;
+    left: 3px;
+    border-radius: 31px;
+}
 
 .alert-info {
     color: #604496;

@@ -10,6 +10,7 @@ import { UiConversationIaComponent } from '../../../../ui/public/ui-prompt-view/
 import { UiHeaderPromptViewComponent } from '../../../../ui/public/ui-prompt-view/ui-header/ui-header.component';
 import { UiToolbarPromptViewComponent } from '../../../../ui/public/ui-prompt-view/ui-toolbar/ui-toolbar.component';
 import { combineLatest } from 'rxjs';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 interface IAResponseModel {
   createdAt: string;
@@ -29,7 +30,7 @@ interface ConversationModel {
   selector: 'app-prompt-view',
   standalone: true,
   imports: [
-    RouterLink, RouterLinkActive, AsyncPipe, JsonPipe, NgIf,
+    RouterLink, RouterLinkActive, AsyncPipe, JsonPipe, NgIf, ProgressBarModule,
     UiConversationUserComponent, UiConversationIaComponent, UiHeaderPromptViewComponent, UiToolbarPromptViewComponent
   ],
   templateUrl: './prompt-view.component.html',

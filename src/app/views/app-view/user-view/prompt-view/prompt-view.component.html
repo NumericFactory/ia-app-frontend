@@ -22,11 +22,10 @@
                 class="list-group-item list-group-item-action fade show align-items-center d-flex"
                 [class.active]="conv.promptId === selectedPrompt?.id" (click)="selectPrompt(conv.userQuestion)"
                 [routerLink]='"."' [fragment]="'prompt'+selectedPrompt?.id">
-                <!-- <i [class.statusOk]="conv.iaResponse.text.trim()!=''"
-                    class="bi bi-check-circle-fill spinner-border fs-5 me-1"></i> -->
-                <i [class.statusOk]="conv.iaResponse.text.trim()!=''" class="spinner-border me-1"></i>
-
+                <i [class.statusOk]="conv.iaResponse.text.trim()!=''" class="bi bi-check-circle-fill fs-5 me-1"></i>
                 <span>{{conv.userQuestion.title}}</span>
+                <p-progressBar [style.opacity]="conv.isLoadingResponse?0.5:0" mode="indeterminate"
+                    [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
             </button>
             }
         </ul>
