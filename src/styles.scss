@@ -77,6 +77,36 @@ h2 {
     font-size: 1.5rem;
 }
 
+.p-accordion .p-accordion-header .p-accordion-header-link {
+    border-radius: 6px !important;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 0.725rem 0.125rem 0.725rem 0.825rem;
+    border: 0 none;
+    color: #9b9b9b !important;
+    background: transparent;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+    font-weight: 500;
+    font-size: .875rem;
+}
+
+.p-accordion .p-accordion-content {
+    padding: 0px;
+    border: 0;
+    background: transparent;
+    color: #4b5563;
+    border-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    font-size: .875rem !important;
+}
+
 .close-dialog-btn {
     right: 16px;
     top: 1px;

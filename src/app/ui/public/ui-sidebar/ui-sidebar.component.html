@@ -19,29 +19,35 @@
     </ul>
 
 
-    <div class="mb-auto" style="background-color: #fff; margin-top: 8px;">
-        <h2 style="position: relative;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 0;
-    padding: 8px 15px;
-    font-weight: 400;" class="nav-link link-body-emphasis">
-            <i class="bi bi-card-list"></i>
+    <div class="mb-auto" style="background-color: transparent; margin-top: 8px;">
+        <h2 style="position: relative;border-bottom: 1px solid rgba(0, 0, 0, .1);border-radius: 0;padding: 6px 0px;font-weight: 400;"
+            class="nav-link">
+            <!-- <i class="bi bi-card-list"></i> -->
             <span>Historique prompts</span>
         </h2>
-        <ul class="nav nav-pills flex-column mb-auto" style="position: relative; background:#fff; padding: 5px;">
-            @if(user$ | async; as user) {
-            @for(prompt of user.prompts; track prompt.id) {
-            <li class="nav-item">
-                <a [routerLink]="['/dashboard/step/', prompt.step_id, 'prompt']"
-                    style="position: relative; padding-right: 28px;" class="nav-link link-body-emphasis">
-                    <span>{{prompt.title}}</span>
-                    <i style="position: absolute; right:5px; top:10px; transform: translateX(8px);"
-                        class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-            }
-            }
-        </ul>
+        @if(user$ | async; as user) {
+        @for(step of userPromptsHistory; track step.id) {
+        <p-accordion [activeIndex]="0">
+            <p-accordionTab [header]="step.step_title">
+                <ul class="nav nav-pills flex-column mb-auto" style="padding: 0; list-style: none;">
+                    @for(prompt of step.prompts; track prompt.id) {
+                    <li class="nav-item ps-1">
+                        <!-- [routerLink]="['/dashboard/step/', prompt.step_id, 'prompt']" -->
+                        <a style="position: relative;" class="nav-link link-body-emphasis d-flex align-items-center">
+                            <span>{{prompt.prompt_title}}</span>
+                            <i #iconStar (mouseover)="starMouseOver(iconStar)" (mouseout)="starMouseOut(iconStar)"
+                                style="position: absolute;right: 3px;font-size: 1.1rem;top: 4px;"
+                                class="bi bi-star"></i>
+                        </a>
+                    </li>
+                    }
+                </ul>
+            </p-accordionTab>
+        </p-accordion>
+        }
+        }
+
+
     </div>
 
 

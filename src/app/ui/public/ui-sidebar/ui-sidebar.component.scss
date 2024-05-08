@@ -3,12 +3,19 @@
     max-width: 311px;
     height: calc(100vh - 0px);
     border-right: 1px solid #b0b0b0;
-    background-color: #fff7ec !important;
+    background-color: #f5f5f5 !important;
+    padding: 12px !important;
 }
 
+
 .nav-link {
+    padding: 6px 13px;
+    margin-left: 5px;
+
     i {
+        opacity: 0;
         margin-right: 10px;
+        color: rgb(218, 171, 0);
     }
 
 }
@@ -28,4 +35,8 @@
     background-color: #e2e8f0;
     color: var(--bs-gray-800);
     cursor: pointer;
+
+    i {
+        opacity: 0.85;
+    }
 }

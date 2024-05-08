@@ -74,11 +74,13 @@ export class UserService implements UserGateway {
     const cleanPayload = { ...payloadAIResponse.prompt };
     return this.http.post(`${this.apiUrl}${endpoint}`, cleanPayload).pipe(
       tap((response: any) => {
+        console.log(response);
         const user = this.userSubject.getValue();
         if (user && response.data) {
           if (!user.prompts) {
             user.prompts = [];
           }
+          // set user.prompts
           let foundPromptInUserData = user.prompts.find((prompt) => prompt.id === promptId);
           if (foundPromptInUserData) {
             foundPromptInUserData = { ...response.data };
@@ -87,6 +89,22 @@ export class UserService implements UserGateway {
             user.prompts = [{ ...response.data }, ...user.prompts];
           }
           this.userSubject.next(user);
+          // set user.history
+          this.fetchUserPromptsHistoryByStep().subscribe();
+        }
+      })
+    )
+  }
+
+  fetchUserPromptsHistoryByStep(stepId?: number): Observable<any> {
+    const endpoint = `/me/prompts-history`;
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      map((response: any) => response.data),
+      tap((userPrompts: any) => {
+        const user = this.userSubject.getValue()
+        if (user && userPrompts) {
+          user.history = userPrompts;
+          this.userSubject.next(user)
         }
       })
     )

@@ -19,6 +19,7 @@ export interface CreateUserPromptAiReturnResponseDTO {
     updated_at: string
 }
 
+
 // UserGateway interface contract
 export abstract class UserGateway {
 
@@ -33,6 +34,7 @@ export abstract class UserGateway {
     abstract fetchUserVariables(): Observable<UserModel>
     abstract postStepUserVariables(stepId: number, payloadUserVar: any): Observable<any>
     abstract fetchUserPrompts(): Observable<any>
+    abstract fetchUserPromptsHistoryByStep(): Observable<any>
     abstract postUserPromptAIResponse(stepId: number, promptId: number, payloadAIResponse: CreateUserPromptAiReturnDTO): Observable<CreateUserPromptAiReturnResponseDTO>
 
 }
