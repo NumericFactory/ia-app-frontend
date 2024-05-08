@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormGroup, FormArray, FormBuilder, Validators } fr
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { AdminGateway } from "../../../../core/ports/admin.gateway";
+import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog.service";
 
 @Component({
   selector: 'ui-create-variables-form',
@@ -126,7 +127,8 @@ export class CreateVariablesFormComponent {
     private formBuilder: FormBuilder,
     public dialogRef: DialogRef<string>,
     @Inject(DIALOG_DATA) public data: any,
-    private adminService: AdminGateway
+    private adminService: AdminGateway,
+    private confirmDialog: ConfirmDialogService
   ) { }
 
   ngOnInit() {
@@ -159,7 +161,9 @@ export class CreateVariablesFormComponent {
   }
 
   // Au clic de l'utilisateur sur le bouton "Supprimer la ligne"
-  removeQuestionItem(index: number): void {
+  async removeQuestionItem(index: number) {
+    const deleteIsConfirmed = await this.confirmDialog.confirm('Supprimer', 'Attention! vous vous apprêtez à supprimer cette question. Confirmer ?');
+    if (!deleteIsConfirmed) return;
     this.questions = this.questionsForm.get('questions') as FormArray;
     this.questions.removeAt(index);
     this.questions.controls.forEach((control, index) => {

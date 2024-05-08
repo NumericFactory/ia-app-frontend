@@ -6,6 +6,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { AdminGateway } from "../../../../core/ports/admin.gateway";
 import { FormUISchema } from "../../../../core/models/step.model";
+import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog.service";
 
 @Component({
   selector: 'ui-update-variables-form',
@@ -129,7 +130,9 @@ export class UpdateVariablesFormComponent {
     private formBuilder: FormBuilder,
     public dialogRef: DialogRef<string>,
     private adminService: AdminGateway,
+    private confirmDialog: ConfirmDialogService,
     @Inject(DIALOG_DATA) public data: any,
+
   ) { }
 
   ngOnInit() {
@@ -166,7 +169,9 @@ export class UpdateVariablesFormComponent {
   }
 
   // Au clic de l'utilisateur sur le bouton "Supprimer la ligne"
-  removeQuestionItem(index: number): void {
+  async removeQuestionItem(index: number) {
+    const deleteIsConfirmed = await this.confirmDialog.confirm('Supprimer', 'Attention! vous vous apprêtez à supprimer cette question. Confirmer ?');
+    if (!deleteIsConfirmed) return;
     if (this.questionsForm.value.questions[index].id) {
       this.adminService.deleteVariable(this.questionsForm.value.questions[index].id).subscribe();
     }
