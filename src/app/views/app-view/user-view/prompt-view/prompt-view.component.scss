@@ -1,8 +1,14 @@
-// .iaresponse {
-//     // color: #000000 !important;
-//     // background: #dbdcdd !important;
-//     // border-color: #e2e2e2 !important;
-// }
+.clickable {
+    background: #f7f8fa !important;
+
+    &:hover {
+        background: #f0f0f0 !important;
+
+        i {
+            color: #069f8d !important;
+        }
+    }
+}
 
 .p-progressbar .p-progressbar-value {
     background-color: #2d1eaf !important;

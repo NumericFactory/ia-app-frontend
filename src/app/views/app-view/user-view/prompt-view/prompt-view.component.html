@@ -19,11 +19,20 @@
         <ul class="prompt-list list-group animate__animated animate__fadeIn">
             @for(conv of conversationSate.items; track conv.promptId) {
             <button [disabled]="!conv.checked && !conv.iaResponse.text.trim() && !conv.nextItem"
+                [class.clickable]="!conv.checked && conv.nextItem"
                 class="list-group-item list-group-item-action fade show align-items-center d-flex"
                 [class.active]="conv.promptId === selectedPrompt?.id" (click)="selectPrompt(conv.userQuestion)"
                 [routerLink]='"."' [fragment]="'prompt'+selectedPrompt?.id">
+                @if(!conv.checked && conv.nextItem){
+                <i [class.statusOk]="conv.iaResponse.text.trim()!=''" style="font-size: 1.2rem;
+                padding-right: 1px;
+                color: #3c3c3c;" class="bi bi-chevron-right"></i>
+                }
+                @else {
                 <i [class.statusOk]="conv.iaResponse.text.trim()!=''" style="font-size: 1.15rem;padding-right: 2px;"
                     class="bi bi-check-circle-fill me-1"></i>
+
+                }
                 <span>{{conv.userQuestion.title}}</span>
                 <p-progressBar [style.opacity]="conv.isLoadingResponse?0.5:0" mode="indeterminate"
                     [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
