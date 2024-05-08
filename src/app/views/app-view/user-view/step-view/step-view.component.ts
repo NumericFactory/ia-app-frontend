@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { StepGateway } from '../../../../core/ports/step.gateway';
 import { Observable } from 'rxjs';
 import { FormUISchema, StepModel } from '../../../../core/models/step.model';
@@ -34,9 +34,11 @@ export class StepViewComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private stepService: StepGateway,
     private dialog: Dialog,
-    private auth: AuthGateway
+    private auth: AuthGateway,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -63,6 +65,24 @@ export class StepViewComponent {
       console.log('payload', payload)
       this.isFormCompleted = true;
     })
+  }
+
+  isThisStepHasUserVariables(step: StepModel): boolean {
+    return Boolean(this.user?.variables.find((v) => v.step_id == step.id));
+  }
+
+  goToPromptView(step: StepModel) {
+    if (!this.isThisStepHasUserVariables(step)) {
+      this.openVariablesModal(this.user);
+      this.alertService.show('Veuillez renseigner vos informations', 'info');
+      return;
+    }
+    else {
+      // navigate to prompt view
+      this.router.navigate(['/dashboard/step', step.id, 'prompt']);
+
+    }
+
   }
 
 }

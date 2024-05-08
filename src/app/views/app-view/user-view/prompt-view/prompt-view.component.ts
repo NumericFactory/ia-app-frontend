@@ -11,6 +11,7 @@ import { UiHeaderPromptViewComponent } from '../../../../ui/public/ui-prompt-vie
 import { UiToolbarPromptViewComponent } from '../../../../ui/public/ui-prompt-view/ui-toolbar/ui-toolbar.component';
 import { combineLatest } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { UserModel } from '../../../../core/models/user.model';
 
 interface IAResponseModel {
   createdAt: string;
@@ -37,6 +38,7 @@ interface ConversationModel {
   styleUrl: './prompt-view.component.scss'
 })
 export class PromptViewComponent {
+  user!: UserModel;
 
   // current stepId and promptId (from url)
   stepId!: number;
@@ -63,6 +65,7 @@ export class PromptViewComponent {
   ) { }
 
   ngOnInit(): void {
+    this.user = this.userService.getUserFromSubject() || {} as UserModel;
 
     // get step id from url
     this.stepId = this.route.snapshot.params['stepid'];

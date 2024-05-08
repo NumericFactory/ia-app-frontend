@@ -1,8 +1,8 @@
 @if(step$ | async; as step) {
 
-<div class="row mb-3">
+<div class="row mb-3 justify-content-center">
 
-    <div style="transform: translateY(-10px);" class="d-flex align-items-center">
+    <div style="transform: translateY(-10px);" class="d-flex align-items-center col-12 col-xl-10">
         <a class="btn btn-link fs-3 btn-back" routerLink="/dashboard"><i class="bi bi-arrow-left"></i></a>
         <nav aria-label="breadcrumb ms-3">
             <ol class="breadcrumb m-0">
@@ -13,7 +13,8 @@
     </div>
 
 
-    <div class="col-md-12">
+
+    <div class="col-12 col-xl-10">
         <div class="card">
             <div class="card-body">
                 <h2 class="fs-4">{{step.subtitle}}</h2>
@@ -25,28 +26,59 @@
     </div>
 </div>
 
-
 <div class="row justify-content-center">
     <div class="col-md-10 steps-list">
 
-        <div class="alert" [class.alert-warning]="user?.variables?.length"
-            [class.alert-info]="!user?.variables?.length">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <!-- alert si user n'a pas renseigner ses variables -->
+        @if(!isThisStepHasUserVariables(step)) {
+        <div class="alert alert-warning d-flex align-items-center">
+            <i style="font-size: 27px;" class="bi bi-exclamation-triangle-fill me-3"></i>
             <span>
                 Pour continuer à l'étape suivante
                 <a style="font-weight: 500;font-size: .975rem;" class="link text-underline"
                     (click)="openVariablesModal(user)">
-
-                    <span *ngIf="!isFormCompleted">renseignez vos variables</span>
-                    <span *ngIf="isFormCompleted">Modifiez vos variables</span>
+                    <span>renseignez vos variables</span>
                 </a>
             </span>
         </div>
+        }
 
+        <!-- alert si user a renseigné ses variables -->
+        @if(isThisStepHasUserVariables(step)) {
+        <div style="background: #d3e6ff;
+        color: #00326e;
+        border-color: #1c5ed7;" class="alert d-flex justify-content-between align-items-center">
+            <span class="d-flex align-items-center">
+                <i style="font-size: 33px;" class="bi bi-robot me-3"></i>
+                Continuez à l'étape suivante
+                | Ou <a style="font-weight: 400;
+                color: #426fb2;
+                text-decoration: underline;
+                margin-left: 5px;" (click)="openVariablesModal(user)">
+                    <span>Modifiez vos variables</span>
+                </a>
+
+            </span>
+            <span>
+                <button style="font-size: 1rem;
+                background: rgba(255, 255, 255, .35);
+                color: #000;
+                border-color: rgba(0, 0, 0, .2);
+                padding: 5px 13px;
+                font-weight: 600;" class="btn btn-sm btn-success text-underline ms-3" [routerLink]="['prompt']">
+                    <span *ngIf="isFormCompleted">Continuer</span>
+                    <i class="bi bi-arrow-right ms-3"></i>
+                </button>
+
+            </span>
+        </div>
+        }
+        <!-- (click)="goToPromptView(step)" -->
+        <!-- liste des prompts -->
         <ul class="list-group">
             @for(prompt of step.prompts; track prompt.id) {
-            <a class="list-group-item list-group-item-action fade show" [class.disabled]="!isFormCompleted"
-                [routerLink]="['prompt']">
+            <a disabled class="list-group-item list-group-item-action fade show" [class.disabled]="!isFormCompleted"
+                (click)="goToPromptView(step)">
                 {{prompt.title}}
             </a>
             }

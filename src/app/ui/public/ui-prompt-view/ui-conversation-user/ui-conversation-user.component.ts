@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, booleanAttribute } from '@angul
 import { PromptModel } from '../../../../core/models/step.model';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { DatePipe } from '@angular/common';
+import { UserModel } from '../../../../core/models/user.model';
 
 @Component({
   selector: 'ui-conversation-user',
@@ -15,6 +16,7 @@ export class UiConversationUserComponent {
   // role : affiche le prompt de l'utilisateur
   @Input() prompt!: PromptModel;
   @Input({ transform: booleanAttribute }) isLoadingResponse = false;
+  @Input() user!: UserModel;
 
   @Output() refreshPromptEvent = new EventEmitter<PromptModel>();
 

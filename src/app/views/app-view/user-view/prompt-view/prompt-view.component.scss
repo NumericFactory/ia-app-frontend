@@ -42,7 +42,8 @@ button p-progressbar {
 
         &.statusOk {
             color: #00a18f;
-            transform: translateY(2px);
+            transform: translateY(1px);
+            transform: translateX(-1px);
         }
     }
 
