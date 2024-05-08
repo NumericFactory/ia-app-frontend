@@ -38,6 +38,7 @@ export class StepAdminViewComponent {
   openDialogCreateUserFormVariables(ev: Event, step: StepModelAdmin) {
     ev.stopPropagation();
     const dialogRef = this.dialog.open(CreateVariablesFormComponent, {
+      disableClose: true,
       width: 'auto',
       minWidth: '900px',
       maxWidth: '100%',
@@ -57,6 +58,7 @@ export class StepAdminViewComponent {
   openDialogUpdateUserFormVariables(ev: Event, step: StepModelAdmin) {
     ev.stopPropagation();
     const dialogRef = this.dialog.open(UpdateVariablesFormComponent, {
+      disableClose: true,
       width: 'auto',
       minWidth: '900px',
       maxWidth: '100%',
@@ -71,6 +73,7 @@ export class StepAdminViewComponent {
 
   openDialogCreateStep() {
     const dialogRef = this.dialog.open(CreateStepFormComponent, {
+      disableClose: true,
       width: '100%',
       minWidth: '320px',
       maxWidth: '750px',
@@ -89,6 +92,7 @@ export class StepAdminViewComponent {
   openDialogUpdateStep(ev: Event, step: StepModelAdmin) {
     ev.stopPropagation();
     const dialogRef = this.dialog.open(UpdateStepFormComponent, {
+      disableClose: true,
       width: '100%',
       minWidth: '320px',
       maxWidth: '750px',
@@ -110,6 +114,7 @@ export class StepAdminViewComponent {
     ev.stopPropagation();
     console.log(step);
     const dialogRef = this.dialog.open(CreatePromptsFormComponent, {
+      disableClose: true,
       width: '100%',
       minWidth: '320px',
       maxWidth: '1299px',
@@ -127,6 +132,7 @@ export class StepAdminViewComponent {
     ev.stopPropagation();
     console.log(step);
     const dialogRef = this.dialog.open(UpdatePromptsFormComponent, {
+      disableClose: true,
       width: '100%',
       minWidth: '320px',
       maxWidth: '1299px',

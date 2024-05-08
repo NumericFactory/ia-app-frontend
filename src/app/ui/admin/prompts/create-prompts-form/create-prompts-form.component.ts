@@ -70,9 +70,6 @@ export class CreatePromptsFormComponent {
         });
       }
     });
-
-
-
   }
 
   // Permet de créer un Prompt Form à la volée
@@ -115,6 +112,11 @@ export class CreatePromptsFormComponent {
     if (this.createPromptsForm.invalid) return;
     this.adminService.createPrompts(this.createPromptsForm.value, this.data.id)
       .subscribe(() => this.dialogRef.close());
+  }
+
+  closeDialog() {
+    console.log('close dialog');
+    this.dialogRef.close();
   }
 
 

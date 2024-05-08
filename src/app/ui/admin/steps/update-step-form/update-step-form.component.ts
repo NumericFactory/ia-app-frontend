@@ -47,6 +47,10 @@ export class UpdateStepFormComponent {
     this.dialogRef.close(this.updateStepForm.value);
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
 
 
 }

@@ -132,6 +132,10 @@ export class UpdatePromptsFormComponent {
       .subscribe(() => this.dialogRef.close());
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
 
 } // end of CreatePromptsFormComponent
 

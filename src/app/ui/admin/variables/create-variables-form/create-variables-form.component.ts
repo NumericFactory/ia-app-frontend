@@ -13,6 +13,7 @@ import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog
   imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf],
   template: `
   <h3 class="fs-5">Ajouter des questions</h3>
+  <button (click)="closeDialog()" class="btn"><i class="bi bi-x-lg close-dialog-btn"></i></button>
   <!-- info text -->
   <p class="text-secondary info-text">
     <i class="bi bi-info-circle-fill text-primary"></i>
@@ -180,6 +181,10 @@ export class CreateVariablesFormComponent {
     if (this.questionsForm.invalid) return;
     this.adminService.createVariables(this.questionsForm.value, this.data.id)
       .subscribe(() => this.dialogRef.close());
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 
 
