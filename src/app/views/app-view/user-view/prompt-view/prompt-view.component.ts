@@ -39,11 +39,10 @@ interface ConversationModel {
   styleUrl: './prompt-view.component.scss'
 })
 export class PromptViewComponent {
-  user!: UserModel;
 
+  user!: UserModel;
   // current stepId and promptId (from url)
   stepId!: number;
-
   // step data and his prompts data array to display (from stepId)
   step!: StepModel;
   promptsList: PromptModel[] = []
@@ -57,6 +56,9 @@ export class PromptViewComponent {
     nextItemIndex: 0,
     items: this.items as ConversationModel[]
   }
+
+  loadingGeneral: boolean = false
+  // true if the user has already asked a question
 
   constructor(
     private route: ActivatedRoute,
@@ -90,9 +92,13 @@ export class PromptViewComponent {
               createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
               text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
             },
-            nextItem: false,
-            checked: false
+            checked: false,
+            nextItem: false
           }
+        });
+        this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+          item.checked = item.iaResponse.text.trim() === '' ? false : true;
+          item.nextItem = false;
         });
         if (!this.conversationHasIAResponse()) {
           this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
@@ -117,7 +123,9 @@ export class PromptViewComponent {
     // build secret prompt with user variables
     const newPrompt: string = this.buildPrompt(prompt, this.userService.getUserFromSubject()?.variables);
     // ask the question
+    this.loadingGeneral = true;
     this.iaService.ask(newPrompt!).subscribe(response => {
+      this.loadingGeneral = false;
       // updtate conversationSate with IA response
       this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.content[0].text;
       this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
@@ -133,6 +141,7 @@ export class PromptViewComponent {
         (response: any) => {
           this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.createdAt = response.data.created_at;
           this.setStateOfPrompts();
+
         }
       );
     });

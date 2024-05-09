@@ -12,12 +12,39 @@ button:disabled {
 .btn.refresh-ia {
     position: absolute;
     right: 7px;
-    top: 6px;
-    font-size: 1.3rem;
-    transition-duration: 0.2s;
+    font-size: 1.35rem;
     opacity: 0;
     padding: 0px 5px;
-    transition-duration: .5s;
+    transition-duration: 0.3s;
+    top: 17px;
+    background: rgba(0, 0, 0, 0.1);
+    border: 0;
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: .35 !important;
+    }
+}
+
+.btn.ask-ia {
+    opacity: 1;
+    background-color: #a3e0e0;
+    color: #369388;
+    border-radius: 2px;
+    padding: 11px 24px;
+    font-size: 2.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 0;
+    position: absolute;
+    right: 0;
+    z-index: 999;
+
+    &:hover {
+        background-color: #afe8e8;
+        color: #35b0a1;
+    }
 }
 
 .encart-user-question {
@@ -25,7 +52,7 @@ button:disabled {
     padding: 8px 0;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .encart-user-question:hover {
@@ -50,9 +77,9 @@ div.prompt {
     margin-bottom: 4px;
     padding: 6px 65px 8px 55px;
     border: 1px solid #bbbbbb;
-    border-radius: 2px;
+    border-radius: 9px 0 0 9px;
     background-color: #2c2b40;
-    width: 100%;
+    // width: 100%;
     transition: box-shadow 0.3s;
     color: #c1c3d2;
     font-size: .98rem;
@@ -62,10 +89,6 @@ div.prompt {
     top: -4px;
     background: #f0f1f1;
     z-index: 999;
-
-    &:hover {
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-    }
 
     p {
         margin-bottom: 0.8rem;

@@ -1,9 +1,10 @@
 <!-- USER Question-->
 @if(prompt) {
 
-<div class="encart-user-question">
+<div class="encart-user-question d-flex align-items-stretch">
 
-    <div style="position:relative" [id]="'prompt'+prompt.id" class="prompt animate__animated animate__fadeIn">
+    <div [style.background]="isChecked?'rgb(224 226 234)':'#e0f7f7'" [id]="'prompt'+prompt.id"
+        class="col-11 prompt animate__animated animate__fadeIn">
         <div class="prompt-result-view__title d-flex align-items-center">
             <!-- <i class="bi bi-person-circle"></i> -->
             <img class="avatar" style="width: 31px;height: 31px;border-radius: 50%;margin-left: -5px;"
@@ -16,11 +17,22 @@
         </div>
         <p-progressBar [style.opacity]="isLoadingResponse?1:0" mode="indeterminate"
             [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
+    </div>
 
-        <button #refreshBtn (click)="refreshPromptAction(prompt)" title="Redemander à l'IA"
-            class="btn btn-sm btn-light refresh-ia">
+    <div style="background: #e0e2ea; display: flex; align-items: center; justify-content: center;    margin-top: 2px;
+    margin-bottom: 4px;" class="col-1">
+        @if(isChecked) {
+        <button #refreshBtn (click)="refreshPromptAction(prompt)" pTooltip="demander à nouveau à l'IA"
+            tooltipPosition="left" [disabled]="!isChecked || loadingGeneral" class="btn btn-sm btn-light refresh-ia">
             <i class="bi bi-arrow-repeat"></i>
         </button>
+        }
+        @if(!isChecked) {
+        <button (click)="refreshPromptAction(prompt)" pTooltip="Envoyer" tooltipPosition="right"
+            [disabled]="loadingGeneral" class="btn btn-sm btn-light ask-ia">
+            <i class="bi bi-send"></i>
+        </button>
+        }
     </div>
 
 </div>

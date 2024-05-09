@@ -7,7 +7,8 @@
     <div *ngIf="step" class="col-12 col-md-9">
         @for(conv of conversationSate.items; track conv.promptId) {
         @if(conv.checked || conv.iaResponse.text.length || conv.nextItem) {
-        <ui-conversation-user [user]="user" [prompt]="conv.userQuestion" [isLoadingResponse]="conv.isLoadingResponse"
+        <ui-conversation-user [user]="user" [prompt]="conv.userQuestion" [isChecked]="conv.checked"
+            [isLoadingResponse]="conv.isLoadingResponse" [loadingGeneral]="loadingGeneral"
             (refreshPromptEvent)="selectPrompt(conv.userQuestion)" />
         }
         <ui-conversation-ia [responseAI]="conv.iaResponse" [isLoadingResponse]="conv.isLoadingResponse" />
@@ -46,7 +47,7 @@
 </div>
 
 <!-- 4 TOOLBAR -->
-<ui-toolbar-prompt-view />
+<!-- <ui-toolbar-prompt-view /> -->
 
 <!-- 5 SCROLL to TOP -->
 <!-- <p-scrollTop></p-scrollTop> -->

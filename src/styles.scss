@@ -292,6 +292,16 @@ body {
     background: #717a8d;
 }
 
+.p-tooltip {
+    border-radius: 2px;
+    padding: 2px;
+}
+
+
+.p-tooltip .p-tooltip-text {
+    font-size: 12.5px;
+}
+
 ::selection {
     background: #ab8be7;
 }
