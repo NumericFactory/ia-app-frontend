@@ -9,7 +9,8 @@
         <i class="bi bi-robot"></i>
         <p><strong>Ai Bot</strong><span class="silent">- {{responseAI.createdAt | date:'dd/MM/yyyy hh:mm'}}</span></p>
     </div>
-    <p style="white-space: pre-wrap;
+    <p (selectstart)="onSelectionText($event)" (selectionchange)="onSelectionText($event)"
+        (select)="onSelectionText($event)" style="white-space: pre-wrap;
             padding: 0px 42px 0px 0px;
             line-height: 21px;
             font-size: 16.5px;" [innerHTML]="responseAI.text"></p>

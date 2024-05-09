@@ -39,15 +39,4 @@ export class UiConversationUserComponent {
     //this.renderer.setAttribute(this.refreshBtn.nativeElement, 'disabled', 'true');
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
-    // if (changes['isLoadingResponse']
-    //   && changes['isLoadingResponse'].previousValue === true
-    //   && changes['isLoadingResponse'].currentValue === false) {
-    //   this.renderer.removeAttribute(this.refreshBtn.nativeElement, 'disabled');
-    // }
-    //this.renderer.removeAttribute(this.refreshBtn.nativeElement, 'disabled');
-  }
-
-
 }

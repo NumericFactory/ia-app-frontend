@@ -14,6 +14,33 @@
     background-color: #2d1eaf !important;
 }
 
+.relaunch-conversation-new-variables {
+    font-size: 15px;
+    background: #0e0e0e05;
+    border-color: rgba(0, 0, 0, .2);
+    padding: 21px 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0 !important;
+    border: 0;
+    position: fixed;
+    bottom: 30px;
+    color: #3a434d45;
+
+    &:hover {
+        background: #f6f6f6;
+        color: #3c3c47df;
+
+        i {
+            color: #25244df9;
+            ;
+        }
+
+    }
+}
+
 button p-progressbar {
     z-index: 999999;
     position: absolute;

@@ -13,6 +13,8 @@ import { combineLatest } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { UserModel } from '../../../../core/models/user.model';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { UserVariablesDialog } from '../step-view/step-view.component';
+import { Dialog } from '@angular/cdk/dialog';
 
 interface IAResponseModel {
   createdAt: string;
@@ -64,7 +66,8 @@ export class PromptViewComponent {
     private route: ActivatedRoute,
     private stepService: StepGateway,
     private iaService: IAGateway,
-    private userService: UserGateway
+    private userService: UserGateway,
+    private dialog: Dialog
   ) { }
 
   ngOnInit(): void {
@@ -185,6 +188,27 @@ export class PromptViewComponent {
       }
     });
     this.conversationSate.items[nextIndexTodiscover].nextItem = true;
+  }
+
+
+  openVariablesModal(user: UserModel | null) {
+    console.log('this.step', this.step)
+    console.log('user', user)
+    const dialogRef = this.dialog.open(UserVariablesDialog, {
+      width: '650px',
+      minWidth: '350px',
+      maxWidth: '95%',
+      maxHeight: '85%',
+      panelClass: 'dialog-user-var',
+      data: { step: this.step, user }
+    });
+
+    dialogRef.closed.subscribe((result: any) => {
+      if (!result) return;
+      let payload = result;
+      console.log('payload', payload)
+      //this.isVariablesFormCompleted = true;
+    })
   }
 
 

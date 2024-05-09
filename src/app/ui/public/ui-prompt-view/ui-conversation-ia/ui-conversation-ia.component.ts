@@ -20,7 +20,10 @@ export class UiConversationIaComponent {
   copyToClipBoard(responseAIText: string) {
     navigator.clipboard.writeText(responseAIText);
     this.alertService.show('Copié!', 'info', 2000, 'center');
+  }
 
+  onSelectionText(event: Event) {
+    console.log('onSelectionText', event);
   }
 
 }
