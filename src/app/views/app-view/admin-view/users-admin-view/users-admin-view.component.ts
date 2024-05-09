@@ -132,7 +132,7 @@ export class UsersAdminViewComponent {
 @Component({
   selector: 'ui-admin-role-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule],
+  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf],
   template: `
   <h3>{{data.firstname}} {{data.lastname}}</h3>
    <form [formGroup]="roles">
