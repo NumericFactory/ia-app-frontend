@@ -2,6 +2,13 @@
     background-color: #592dac !important;
 }
 
+button:disabled {
+    cursor: not-allowed;
+    background-color: #f0f1f1;
+    color: #c1c3d2;
+    border-color: #f0f1f1;
+}
+
 .btn.refresh-ia {
     position: absolute;
     right: 7px;

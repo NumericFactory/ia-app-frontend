@@ -7,7 +7,8 @@
     <div *ngIf="step" class="col-12 col-md-9">
         @for(conv of conversationSate.items; track conv.promptId) {
         @if(conv.checked || conv.iaResponse.text.length || conv.nextItem) {
-        <ui-conversation-user [user]="user" [prompt]="conv.userQuestion" [isLoadingResponse]="conv.isLoadingResponse" />
+        <ui-conversation-user [user]="user" [prompt]="conv.userQuestion" [isLoadingResponse]="conv.isLoadingResponse"
+            (refreshPromptEvent)="selectPrompt(conv.userQuestion)" />
         }
         <ui-conversation-ia [responseAI]="conv.iaResponse" [isLoadingResponse]="conv.isLoadingResponse" />
         }
@@ -18,11 +19,12 @@
         @if(step) {
         <ul class="prompt-list list-group animate__animated animate__fadeIn">
             @for(conv of conversationSate.items; track conv.promptId) {
-            <button [disabled]="!conv.checked && !conv.iaResponse.text.trim() && !conv.nextItem"
+            <button (click)="selectPrompt(conv.userQuestion)"
+                [disabled]="!conv.checked && !conv.iaResponse.text.trim() && !conv.nextItem"
                 [class.clickable]="!conv.checked && conv.nextItem"
                 class="list-group-item list-group-item-action fade show align-items-center d-flex"
-                [class.active]="conv.promptId === selectedPrompt?.id" (click)="selectPrompt(conv.userQuestion)"
-                [routerLink]='"."' [fragment]="'prompt'+selectedPrompt?.id">
+                [class.active]="conv.promptId === selectedPrompt?.id" [routerLink]='"."'
+                [fragment]="'prompt'+selectedPrompt?.id">
                 @if(!conv.checked && conv.nextItem){
                 <i [class.statusOk]="conv.iaResponse.text.trim()!=''" style="font-size: 1.2rem;
                 padding-right: 6px;

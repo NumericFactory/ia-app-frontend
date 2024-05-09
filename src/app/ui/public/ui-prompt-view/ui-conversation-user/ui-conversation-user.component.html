@@ -17,7 +17,8 @@
         <p-progressBar [style.opacity]="isLoadingResponse?1:0" mode="indeterminate"
             [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
 
-        <button (click)="refreshPromptAction(prompt)" title="Redemander à l'IA" class="btn btn-sm btn-light refresh-ia">
+        <button #refreshBtn (click)="refreshPromptAction(prompt)" title="Redemander à l'IA"
+            class="btn btn-sm btn-light refresh-ia">
             <i class="bi bi-arrow-repeat"></i>
         </button>
     </div>
