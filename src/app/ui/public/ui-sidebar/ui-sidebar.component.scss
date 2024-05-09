@@ -1,6 +1,6 @@
 .sidebar-left {
     min-width: 250px;
-    max-width: 311px;
+    max-width: 320px;
     height: calc(100vh - 0px);
     border-right: 1px solid #b0b0b0;
     background-color: #fff !important;
@@ -16,6 +16,12 @@
         opacity: 0;
         margin-right: 10px;
         color: #4a21cc;
+    }
+
+    &.accordion-item {
+        font-size: .9rem;
+        border-radius: 5px;
+        margin-left: 13px;
     }
 
 }

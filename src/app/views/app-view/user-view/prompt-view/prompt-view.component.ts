@@ -12,6 +12,7 @@ import { UiToolbarPromptViewComponent } from '../../../../ui/public/ui-prompt-vi
 import { combineLatest } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { UserModel } from '../../../../core/models/user.model';
+import { ScrollTopModule } from 'primeng/scrolltop';
 
 interface IAResponseModel {
   createdAt: string;
@@ -31,7 +32,7 @@ interface ConversationModel {
   selector: 'app-prompt-view',
   standalone: true,
   imports: [
-    RouterLink, RouterLinkActive, AsyncPipe, JsonPipe, NgIf, ProgressBarModule,
+    RouterLink, RouterLinkActive, AsyncPipe, JsonPipe, NgIf, ProgressBarModule, ScrollTopModule,
     UiConversationUserComponent, UiConversationIaComponent, UiHeaderPromptViewComponent, UiToolbarPromptViewComponent
   ],
   templateUrl: './prompt-view.component.html',
@@ -138,16 +139,6 @@ export class PromptViewComponent {
   }
 
 
-  // UTILS
-  replaceVariable(chaine: string | undefined, variables: any) {
-    if (!chaine || !variables) return chaine
-    // Extraire la clé et la valeur de l'objet variables
-    const { key, value } = variables
-    // Remplacer la variable dans la chaîne
-    const newString = chaine.replace(`{${key}}`, value)
-    return newString
-  }
-
   buildPrompt(prompt: PromptModel, allUserVariables: any): string {
     let newPrompt: string | undefined = prompt.secretprompt || undefined;
     // replace variables in prompt
@@ -178,12 +169,24 @@ export class PromptViewComponent {
       this.conversationSate.items[index].nextItem = false;
       if (index < nextIndexTodiscover) {
         item.checked = true;
+
       }
       if (index >= nextIndexTodiscover) {
         item.checked = false;
       }
     });
     this.conversationSate.items[nextIndexTodiscover].nextItem = true;
+  }
+
+
+  // UTILS
+  replaceVariable(chaine: string | undefined, variables: any) {
+    if (!chaine || !variables) return chaine
+    // Extraire la clé et la valeur de l'objet variables
+    const { key, value } = variables
+    // Remplacer la variable dans la chaîne
+    const newString = chaine.replace(`{${key}}`, value)
+    return newString
   }
 
 }

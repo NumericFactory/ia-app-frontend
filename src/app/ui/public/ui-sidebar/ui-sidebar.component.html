@@ -33,7 +33,8 @@
                     @for(prompt of step.prompts; track prompt.id) {
                     <li class="nav-item ps-1">
                         <!-- [routerLink]="['/dashboard/step/', prompt.step_id, 'prompt']" -->
-                        <a style="position: relative;" class="nav-link link-body-emphasis d-flex align-items-center">
+                        <a style="position: relative;"
+                            class="nav-link accordion-item link-body-emphasis d-flex align-items-center">
                             <span>{{prompt.prompt_title}}</span>
                             <i #iconStar (mouseover)="starMouseOver(iconStar)" (mouseout)="starMouseOut(iconStar)"
                                 style="position: absolute;right: 1px;font-size: 1.1rem;top: 4px;"

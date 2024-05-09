@@ -14,7 +14,7 @@
 <div class="row g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
     <div class="col-12 col-xl-10">
-        <div class="row">
+        <div class="row g-3">
             @for(step of steps; track step.id) {
             <div class="col-12 col-md-6 col-xl-4 steps-list">
                 <ui-step-card [step]="step"></ui-step-card>

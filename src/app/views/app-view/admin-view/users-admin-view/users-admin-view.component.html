@@ -1,12 +1,19 @@
 <!--admins -->
 
 <div class="row mb-4">
-    <span class="title col-8">
+    <span class="title col-5">
         <h2>Utilisateurs</h2>
     </span>
-    <span class="search col-4">
-        <input #searchText (keyup)="searchUser(searchText.value)" class="form-control" placeholder="Rechercher"
+    <span class="search d-flex align-items-center justify-content-end col-7">
+        <input #searchText (keyup)="searchUser(searchText.value)" class="form-control w-50" placeholder="Rechercher"
             type="text">
+        <button class="btn btn-sm btn-primary ms-2 btn-icon" (click)="openDialogManageUserSettings()">
+            <i style="font-size: 1.2rem;
+            margin-right: 5px;
+            padding: 3px;
+            opacity: .7;" class="bi bi-gear"></i>
+            Gérer les settings user
+        </button>
     </span>
 </div>
 

@@ -284,6 +284,14 @@ body {
     background-color: #2114e1 !important;
 }
 
+.custom-scrolltop {
+    z-index: 9999 !important;
+    opacity: 1;
+    border-radius: 11px;
+    transform: scale(0.65);
+    background: #717a8d;
+}
+
 ::selection {
     background: #ab8be7;
 }
