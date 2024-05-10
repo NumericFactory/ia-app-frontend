@@ -29,10 +29,10 @@ button:disabled {
 .btn.ask-ia {
     opacity: 1;
     background-color: #a3e0e0;
-    color: #369388;
+    color: #259487;
     border-radius: 2px;
-    padding: 11px 24px;
-    font-size: 2.2rem;
+    padding: 9px 24px;
+    font-size: 2.1rem;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -75,7 +75,7 @@ div.prompt {
     flex-direction: column;
     margin-top: 2px;
     margin-bottom: 4px;
-    padding: 6px 65px 8px 55px;
+    padding: 4px 65px 3px 55px;
     border: 1px solid #bbbbbb;
     border-radius: 9px 0 0 9px;
     background-color: #2c2b40;

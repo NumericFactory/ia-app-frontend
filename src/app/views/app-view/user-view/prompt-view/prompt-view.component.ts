@@ -191,16 +191,20 @@ export class PromptViewComponent {
   }
 
 
-  openVariablesModal(user: UserModel | null) {
+  openVariablesModal(
+    user: UserModel | null,
+    title: string = 'Relancer une nouvelle conversation avec l\'IA',
+    message: string = 'Modifiez vos données et relancer. Attention vous perdrez les réponses déjà obtenues.',
+    modalTextbutton: string = 'Relancer') {
     console.log('this.step', this.step)
     console.log('user', user)
     const dialogRef = this.dialog.open(UserVariablesDialog, {
-      width: '650px',
-      minWidth: '350px',
+      width: '850px',
+      minWidth: '320px',
       maxWidth: '95%',
       maxHeight: '85%',
       panelClass: 'dialog-user-var',
-      data: { step: this.step, user }
+      data: { step: this.step, user, modalTitle: title, modalMessage: message, modalTextbutton }
     });
 
     dialogRef.closed.subscribe((result: any) => {

@@ -49,14 +49,19 @@ export class StepViewComponent {
     });
   }
 
-  openVariablesModal(user: UserModel | null) {
+  openVariablesModal(
+    user: UserModel | null,
+    title: string = 'Renseignez vos informations',
+    message: string = 'Validez pour mettre à jour',
+    modalTextbutton: string = 'Valider'
+  ) {
     const dialogRef = this.dialog.open(UserVariablesDialog, {
       width: '650px',
       minWidth: '350px',
       maxWidth: '95%',
       maxHeight: '85%',
       panelClass: 'dialog-user-var',
-      data: { step: this.step, user }
+      data: { step: this.step, user, modalTitle: title, modalMessage: message, modalTextbutton }
     });
 
     dialogRef.closed.subscribe((result: any) => {
@@ -102,10 +107,10 @@ export class StepViewComponent {
   ],
   template: `
   <div>
-    <h3 class="fs-5 mb-0">Renseignez vos informations</h3>
+    <h3 class="fs-5 mb-0">{{data.modalTitle}}</h3>
     <p class="text-secondary info-text">
       <i class="bi bi-info-circle-fill text-primary"></i>
-      Validez pour mettre à jour.
+      {{data.modalMessage}}
     </p>
     <hr>
 
@@ -121,7 +126,7 @@ export class StepViewComponent {
     }
 
     <div class="form-group d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary">Valider</button>
+        <button type="submit" class="btn btn-primary">{{data.modalTextbutton}}</button>
     </div>
   </form>
 
