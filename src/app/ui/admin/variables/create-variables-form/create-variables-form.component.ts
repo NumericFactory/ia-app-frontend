@@ -148,7 +148,8 @@ export class CreateVariablesFormComponent {
       type: 'text',
       required: true,
       information: '',
-      order: 1
+      order: 1,
+      is_usersetting: false
     });
   }
 

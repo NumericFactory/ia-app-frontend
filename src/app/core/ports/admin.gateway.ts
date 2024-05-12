@@ -1,6 +1,7 @@
 import { Observable, ObservableInput } from "rxjs";
 import { Role, UserModel } from "../models/user.model";
-import { FormUISchema, PromptModel, PromptModelAdmin, StepModelAdmin } from "../models/step.model";
+import { FormUISchema, PromptModelAdmin, StepModelAdmin } from "../models/step.model";
+import { UserSettingsModel } from "../models/user-settings.model";
 
 export type ResponseMessage = { message: string }
 
@@ -49,5 +50,10 @@ export abstract class AdminGateway {
     abstract createVariables(variables: FormUISchema[], stepId: number): Observable<any>;
     abstract updateVariables(variable: FormUISchema[], stepId: number): Observable<any>;
     abstract deleteVariable(id: number): Observable<any>;
+
+    abstract createUserSettings(settings: UserSettingsModel): Observable<any>;
+    //abstract UpdateUserSettings(settings: UserSettingsModel): Observable<any>;
+    //abstract deleteUserSetting(id: number): Observable<any>;
+
 
 }

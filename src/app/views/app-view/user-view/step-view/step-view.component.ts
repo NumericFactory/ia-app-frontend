@@ -55,6 +55,7 @@ export class StepViewComponent {
     message: string = 'Validez pour mettre à jour',
     modalTextbutton: string = 'Valider'
   ) {
+    console.log('step', this.step);
     const dialogRef = this.dialog.open(UserVariablesDialog, {
       width: '650px',
       minWidth: '350px',
@@ -166,7 +167,7 @@ export class UserVariablesDialog {
   stepVariables: FormUISchema[] = this.data.step.variables;
   user: UserModel | null = this.data.user;
   userVariablesForm!: FormGroup;
-  stepId: number = this.data.id;
+  stepId: number = this.data.step.id;
 
   formIsSubmit: boolean = false;
   questions: QuestionBase<string>[] = [];
@@ -205,6 +206,7 @@ export class UserVariablesDialog {
 
   //Submit form
   onSubmit() {
+    console.log('form', this.stepId);
     this.formIsSubmit = true;
     if (this.userVariablesForm.valid) {
       const payload: any = {};

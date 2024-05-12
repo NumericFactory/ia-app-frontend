@@ -1,0 +1,33 @@
+<div>
+    <h3 class="fs-5 mb-0">{{data.modalTitle}}</h3>
+    <p class="text-secondary info-text">
+        <i class="bi bi-info-circle-fill text-primary"></i>
+        {{data.modalMessage}}
+    </p>
+    <hr>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="userVariablesForm">
+
+        @for(question of questions; track question) {
+        <app-question [isFormSubmitted]="formIsSubmit" [question]="question" [form]="userVariablesForm"></app-question>
+        @if(question.information && question.information.length) {
+        <div style="margin-top:-0.55rem" class="alert alert-dark py-1 border-0">
+            <p class="m-0">{{question.information}}</p>
+        </div>
+        }
+        }
+
+        <div class="form-group d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">{{data.modalTextbutton}}</button>
+        </div>
+    </form>
+
+    <hr>
+    <p style="font-size: 0.875rem" class="text-center text-secondary">
+        *Renseignez tous les champs requis.
+    </p>
+
+    <!-- <div *ngIf="payLoad" class="form-row">
+    <strong>Saved the following values</strong><br>{{payLoad}}
+  </div> -->
+</div>

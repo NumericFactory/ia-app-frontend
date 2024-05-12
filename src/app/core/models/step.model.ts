@@ -67,7 +67,8 @@ export interface FormUISchema {
     type?: FieldType
     required: boolean
     information?: string
-    order?: number
+    order?: number,
+    is_usersetting?: boolean
 }
 export interface PromptModelAdmin {
     id?: number

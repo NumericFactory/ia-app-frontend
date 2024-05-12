@@ -111,7 +111,7 @@ export class UsersAdminViewComponent {
       maxWidth: '100%',
       maxHeight: '85%',
       panelClass: 'dialog-user-var',
-      //data: { ...step } as StepModelAdmin
+      // data: { ...step } as StepModelAdmin
     });
 
     dialogRef.closed.subscribe((result: any) => {
@@ -190,7 +190,7 @@ export class RoleDialog {
 
 
 @Component({
-  selector: 'ui-create-variables-form',
+  selector: 'ui-create-variables-form-settings-user',
   standalone: true,
   imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf],
   template: `
@@ -204,8 +204,8 @@ export class RoleDialog {
   </p>
   <hr>
 
-  <form [formGroup]="questionsForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="questions" *ngFor="let item of formData.controls; let i = index; let c = count">
+  <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="settings" *ngFor="let item of formData.controls; let i = index; let c = count">
       <div class="line" [formGroupName]="i">
        <!-- <span>{{i+1}}</span> -->
         <div class="row mb-4">
@@ -304,7 +304,7 @@ export class RoleDialog {
 })
 export class DialogManageUserSettings {
 
-  questionsForm !: FormGroup;
+  settingsForm !: FormGroup;
   questions!: FormArray;
 
   constructor(
@@ -317,8 +317,8 @@ export class DialogManageUserSettings {
 
   ngOnInit() {
 
-    this.questionsForm = this.formBuilder.group({
-      questions: this.formBuilder.array([this.createQuestionFormControl()]),
+    this.settingsForm = this.formBuilder.group({
+      settings: this.formBuilder.array([this.createQuestionFormControl()]),
     });
   }
 
@@ -337,7 +337,7 @@ export class DialogManageUserSettings {
 
   // Au clic de l'utilisateur sur le bouton "Ajouter une ligne"
   addQuestionItem(): void {
-    this.questions = this.questionsForm.get('questions') as FormArray;
+    this.questions = this.settingsForm.get('settings') as FormArray;
     this.questions.push(this.createQuestionFormControl());
     this.questions.controls.forEach((control, index) => {
       control.get('order')?.setValue(index + 1);
@@ -348,7 +348,7 @@ export class DialogManageUserSettings {
   async removeQuestionItem(index: number) {
     const deleteIsConfirmed = await this.confirmDialog.confirm('Supprimer', 'Attention! vous vous apprêtez à supprimer cette question. Confirmer ?');
     if (!deleteIsConfirmed) return;
-    this.questions = this.questionsForm.get('questions') as FormArray;
+    this.questions = this.settingsForm.get('settings') as FormArray;
     this.questions.removeAt(index);
     this.questions.controls.forEach((control: any, index: any) => {
       control.get('order')?.setValue(index + 1);
@@ -357,12 +357,12 @@ export class DialogManageUserSettings {
 
   // Permet de récupérer formData dans la vue qui est une instance de FormArray
   get formData() {
-    return <FormArray>this.questionsForm.get('questions');
+    return <FormArray>this.settingsForm.get('settings');
   }
 
   onSubmit() {
-    if (this.questionsForm.invalid) return;
-    this.adminService.createVariables(this.questionsForm.value, this.data.id)
+    if (this.settingsForm.invalid) return;
+    this.adminService.createUserSettings(this.settingsForm.value)
       .subscribe(() => this.dialogRef.close());
   }
 

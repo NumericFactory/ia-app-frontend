@@ -161,6 +161,8 @@ export class UpdateVariablesFormComponent {
       type: variable?.type || 'text',
       required: variable?.required || false,
       information: variable?.information || '',
+      order: variable?.order || 1,
+      is_usersetting: false
     });
   }
 

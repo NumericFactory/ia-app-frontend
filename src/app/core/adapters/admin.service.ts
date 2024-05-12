@@ -9,6 +9,7 @@ import { FormUISchema, PromptModelAdmin, StepModelAdmin } from '../models/step.m
 import { of } from 'rxjs';
 // data
 import { stepsTestDataAdmin } from '../data-admin';
+import { UserSettingsModel } from '../models/user-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -283,6 +284,25 @@ export class AdminService implements AdminGateway {
         this.stepsSubject.next(steps);
       })
     )
+  }
+
+  createUserSettings(settings: UserSettingsModel): Observable<any> {
+    console.log('settings', settings)
+    const endpoint = '/admin/users/parameters';
+    return this.http.post(`${this.apiUrl}${endpoint}`, settings).pipe(
+      tap((response: any) => {
+        console.log('response', response)
+        this.alert.show('Paramètres utilisateur ajoutés', 'success');
+      })
+    )
+  }
+
+  updateUserSettings(settings: UserSettingsModel): Observable<any> {
+    return of(null);
+  }
+
+  deleteUserSettings(id: number): Observable<any> {
+    return of(null);
   }
 
 
