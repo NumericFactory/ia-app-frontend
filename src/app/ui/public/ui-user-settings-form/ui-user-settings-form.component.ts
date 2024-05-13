@@ -1,6 +1,5 @@
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -11,6 +10,7 @@ import { AlertService } from '../../../shared/services/alert.service';
 import { DynamicFormQuestionComponent } from '../../../shared/services/question/dynamic-form-question/dynamic-form-question.component';
 import { QuestionControlService } from '../../../shared/services/question/question-control.service';
 import { QuestionBase } from '../../../shared/services/question/question.model';
+import { FormUserSettingSchema, UserSettingsModel } from '../../../core/models/user-settings.model';
 
 
 /**
@@ -30,24 +30,23 @@ import { QuestionBase } from '../../../shared/services/question/question.model';
 
 export class UserSettingsFormComponent {
 
-  stepVariables: FormUISchema[] = this.data.step.variables;
-  user: UserModel | null = this.data.user;
-  userVariablesForm!: FormGroup;
-  stepId: number = this.data.step.id;
+  @Input() userSettingsFields!: FormUserSettingSchema[];
+  @Input() user!: UserModel | null
+
+  userSettingsForm!: FormGroup;
 
   formIsSubmit: boolean = false;
   questions: QuestionBase<string>[] = [];
 
   constructor(
-    public dialogRef: DialogRef<string>,
-    @Inject(DIALOG_DATA) public data: any,
     public qcs: QuestionControlService,
     private userService: UserGateway,
     private alertService: AlertService
   ) { }
 
   ngOnInit() {
-    this.stepVariables.forEach((variable: FormUISchema) => {
+    console.log('userSettingsFields', this.userSettingsFields)
+    this.userSettingsFields.forEach((variable: FormUISchema) => {
       let question = new QuestionBase<string>({
         variable_id: variable.id,
         key: variable.key,
@@ -62,37 +61,32 @@ export class UserSettingsFormComponent {
       this.questions.push(question);
     });
 
-    // create userVariablesForm
-    this.userVariablesForm = this.qcs.toFormGroup(
+    // create userSettingsForm
+    this.userSettingsForm = this.qcs.toFormGroup(
       this.questions as QuestionBase<string>[]
     );
     // fill form with user variables
-    this.logKeyValuePairs(this.userVariablesForm);
+    this.logKeyValuePairs(this.userSettingsForm);
   }
 
   //Submit form
   onSubmit() {
-    console.log('form', this.stepId);
+
     this.formIsSubmit = true;
-    if (this.userVariablesForm.valid) {
+    if (this.userSettingsForm.valid) {
       const payload: any = {};
-      for (const [key, value] of Object.entries(this.userVariablesForm.value)) {
+      for (const [key, value] of Object.entries(this.userSettingsForm.value)) {
         payload[key] = { value }
       }
-      this.userService.postStepUserVariables(this.stepId, payload).subscribe((response) => {
-        this.dialogRef.close(this.userVariablesForm.value);
-      });
+      console.log(payload)
+      // this.userService.postStepUserVariables(this.stepId, payload).subscribe((response) => {
+      // });
     }
     else {
       this.alertService.show('Veuillez renseigner tous les champs requis', 'error');
     }
   }
 
-
-  // Close dialog
-  closeDialog() {
-    this.dialogRef.close();
-  }
 
 
   /********* UTIL******* */

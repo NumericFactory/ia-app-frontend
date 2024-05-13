@@ -1,0 +1,9 @@
+<!-- <pre>{{ userSettingsFields | json }}</pre> -->
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-8">
+        @if(userSettingsFields) {
+        <ui-user-settings-form [userSettingsFields]="userSettingsFields" [user]="user" />
+        }
+
+    </div>
+</div>

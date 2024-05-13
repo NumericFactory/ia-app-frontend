@@ -1,15 +1,15 @@
 <div>
-    <h3 class="fs-5 mb-0">{{data.modalTitle}}</h3>
+    <h3 class="fs-5 mb-0">Paramètres</h3>
     <p class="text-secondary info-text">
         <i class="bi bi-info-circle-fill text-primary"></i>
-        {{data.modalMessage}}
+        Renseignez vos informations personnelles pour une meilleure expérience.
     </p>
     <hr>
 
-    <form (ngSubmit)="onSubmit()" [formGroup]="userVariablesForm">
+    <form (ngSubmit)="onSubmit()" [formGroup]="userSettingsForm">
 
         @for(question of questions; track question) {
-        <app-question [isFormSubmitted]="formIsSubmit" [question]="question" [form]="userVariablesForm"></app-question>
+        <app-question [isFormSubmitted]="formIsSubmit" [question]="question" [form]="userSettingsForm"></app-question>
         @if(question.information && question.information.length) {
         <div style="margin-top:-0.55rem" class="alert alert-dark py-1 border-0">
             <p class="m-0">{{question.information}}</p>
@@ -18,7 +18,7 @@
         }
 
         <div class="form-group d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">{{data.modalTextbutton}}</button>
+            <button type="submit" class="btn btn-primary">Valider</button>
         </div>
     </form>
 

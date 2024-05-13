@@ -51,9 +51,10 @@ export abstract class AdminGateway {
     abstract updateVariables(variable: FormUISchema[], stepId: number): Observable<any>;
     abstract deleteVariable(id: number): Observable<any>;
 
-    abstract createUserSettings(settings: UserSettingsModel): Observable<any>;
+    abstract getUserParametersFields(): Observable<any>;
+    abstract createOrUpdateUserSettings(settings: UserSettingsModel): Observable<any>;
     //abstract UpdateUserSettings(settings: UserSettingsModel): Observable<any>;
-    //abstract deleteUserSetting(id: number): Observable<any>;
+    abstract deleteUserSettings(id: number): Observable<any>;
 
 
 }

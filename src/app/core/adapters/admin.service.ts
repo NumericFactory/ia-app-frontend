@@ -286,10 +286,14 @@ export class AdminService implements AdminGateway {
     )
   }
 
-  createUserSettings(settings: UserSettingsModel): Observable<any> {
-    console.log('settings', settings)
+  getUserParametersFields(): Observable<any> {
+    const endpoint = '/users/parameters';
+    return this.http.get(`${this.apiUrl}${endpoint}`)
+  }
+
+  createOrUpdateUserSettings(settings: UserSettingsModel): Observable<any> {
     const endpoint = '/admin/users/parameters';
-    return this.http.post(`${this.apiUrl}${endpoint}`, settings).pipe(
+    return this.http.put(`${this.apiUrl}${endpoint}`, settings).pipe(
       tap((response: any) => {
         console.log('response', response)
         this.alert.show('Paramètres utilisateur ajoutés', 'success');
@@ -297,12 +301,15 @@ export class AdminService implements AdminGateway {
     )
   }
 
-  updateUserSettings(settings: UserSettingsModel): Observable<any> {
-    return of(null);
-  }
 
   deleteUserSettings(id: number): Observable<any> {
-    return of(null);
+    const endpoint = '/admin/users/parameters';
+    return this.http.delete(`${this.apiUrl}${endpoint}/${id}`).pipe(
+      tap((response: any) => {
+        console.log('response', response)
+        this.alert.show('Paramètre utilisateur supprimé', 'success');
+      })
+    )
   }
 
 

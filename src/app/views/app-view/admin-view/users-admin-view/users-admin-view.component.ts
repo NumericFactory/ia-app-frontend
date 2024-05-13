@@ -195,12 +195,12 @@ export class RoleDialog {
   imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf],
   template: `
   <h3 class="fs-5">Settings utilisateur</h3>
-  <button (click)="closeDialog()" class="btn close-dialog-btn">
-  <i class="bi bi-x-lg close-dialog-btn"></i></button>
+  <i (click)="closeDialog()" class="bi bi-x-lg close-dialog-btn"></i>
+
   <!-- info text -->
   <p class="text-secondary info-text">
     <i class="bi bi-info-circle-fill text-primary"></i>
-    valider pour ajouter des questions
+    valider pour sauvegarder les questions
   </p>
   <hr>
 
@@ -317,8 +317,17 @@ export class DialogManageUserSettings {
 
   ngOnInit() {
 
+    // build the form
     this.settingsForm = this.formBuilder.group({
       settings: this.formBuilder.array([this.createQuestionFormControl()]),
+    });
+    // set the form value
+    this.adminService.getUserParametersFields().subscribe((fields) => {
+      console.log('fields', fields);
+      this.settingsForm = this.formBuilder.group({
+        settings: this.formBuilder
+          .array(fields.map((field: any) => this.formBuilder.group(field))),
+      });
     });
   }
 
@@ -348,11 +357,17 @@ export class DialogManageUserSettings {
   async removeQuestionItem(index: number) {
     const deleteIsConfirmed = await this.confirmDialog.confirm('Supprimer', 'Attention! vous vous apprêtez à supprimer cette question. Confirmer ?');
     if (!deleteIsConfirmed) return;
+    if (this.settingsForm.value.settings[index].id) {
+      this.adminService.deleteUserSettings(this.settingsForm.value.settings[index].id).subscribe();
+    }
     this.questions = this.settingsForm.get('settings') as FormArray;
     this.questions.removeAt(index);
     this.questions.controls.forEach((control: any, index: any) => {
       control.get('order')?.setValue(index + 1);
     });
+    if (this.questions.length === 0) {
+      this.dialogRef.close();
+    }
   }
 
   // Permet de récupérer formData dans la vue qui est une instance de FormArray
@@ -362,7 +377,7 @@ export class DialogManageUserSettings {
 
   onSubmit() {
     if (this.settingsForm.invalid) return;
-    this.adminService.createUserSettings(this.settingsForm.value)
+    this.adminService.createOrUpdateUserSettings(this.settingsForm.value)
       .subscribe(() => this.dialogRef.close());
   }
 

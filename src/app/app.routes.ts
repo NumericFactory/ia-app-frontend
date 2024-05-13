@@ -13,6 +13,7 @@ import { PromptViewComponent } from './views/app-view/user-view/prompt-view/prom
 import { DashboardViewComponent } from './views/app-view/user-view/dashboard-view/dashboard-view.component';
 import { StepAdminViewComponent } from './views/app-view/admin-view/step-admin-view/step-admin-view.component';
 import { SettingsAdminViewComponent } from './views/app-view/admin-view/settings-admin-view/settings-admin-view.component';
+import { SettingsViewComponent } from './views/app-view/user-view/settings-view/settings-view.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -27,6 +28,17 @@ export const routes: Routes = [
             { path: 'remember-password', component: RememberpasswordViewComponent }
         ]
     },
+    // user Routes
+    {
+        path: 'user',
+        canActivate: [authGuard],
+        component: UserViewComponent,
+        children: [
+            { path: '', redirectTo: 'settings', pathMatch: 'full' },
+            { path: 'settings', component: SettingsViewComponent },
+        ]
+    },
+
     // Dashboard USER Routes
     {
         path: 'dashboard',

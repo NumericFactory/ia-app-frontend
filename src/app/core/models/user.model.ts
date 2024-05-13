@@ -20,6 +20,12 @@ export interface UserHistoryItemModel {
 
 export type UserHistoryModel = UserHistoryItemModel[]
 
+export interface userSettings {
+    id?: number
+    key: string
+    value?: string
+}
+
 export interface UserModel {
     id: number
     createdAt: string
@@ -30,6 +36,7 @@ export interface UserModel {
     roles: number[] | Role[]
     variables: any[],
     prompts?: any[],
+    settings: userSettings[],
     history?: UserHistoryModel
 }
 
