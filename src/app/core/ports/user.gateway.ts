@@ -31,6 +31,7 @@ export abstract class UserGateway {
     abstract setUserSubject(user: UserModel): void;
 
     // helper methods
+    abstract postUserSettings(payload: any): Observable<any>
     abstract fetchUserVariables(): Observable<UserModel>
     abstract postStepUserVariables(stepId: number, payloadUserVar: any): Observable<any>
     abstract fetchUserPrompts(): Observable<any>

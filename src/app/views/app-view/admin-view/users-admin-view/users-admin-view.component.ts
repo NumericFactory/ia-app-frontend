@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
-import { AsyncPipe, DatePipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe, CommonModule, NgFor, NgIf } from '@angular/common';
 import { Role, UserModel } from '../../../../core/models/user.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
@@ -11,7 +11,7 @@ import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog
 @Component({
   selector: 'app-users-admin-view',
   standalone: true,
-  imports: [AsyncPipe, JsonPipe, DatePipe, NgFor, DialogModule],
+  imports: [AsyncPipe, JsonPipe, DatePipe, DialogModule],
   templateUrl: './users-admin-view.component.html',
   styleUrl: './users-admin-view.component.scss'
 })
@@ -132,7 +132,7 @@ export class UsersAdminViewComponent {
 @Component({
   selector: 'ui-admin-role-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, MatCheckboxModule, MatButtonModule],
   template: `
   <h3>{{data.firstname}} {{data.lastname}}</h3>
    <form [formGroup]="roles">
@@ -187,12 +187,10 @@ export class RoleDialog {
 
 
 
-
-
 @Component({
-  selector: 'ui-create-variables-form-settings-user',
+  selector: 'ui-create-settings-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, CommonModule, NgFor, NgIf],
   template: `
   <h3 class="fs-5">Settings utilisateur</h3>
   <i (click)="closeDialog()" class="bi bi-x-lg close-dialog-btn"></i>

@@ -69,6 +69,19 @@ export class UserService implements UserGateway {
     )
   }
 
+  public postUserSettings(payload: any): Observable<any> {
+    const endpoint = '/user-parameters';
+    return this.http.post(`${this.apiUrl}${endpoint}`, { settings: payload }).pipe(
+      tap((response: any) => {
+        const user = this.userSubject.getValue();
+        if (user && response.data) {
+          user.settings = [...response.data];
+          this.userSubject.next(user);
+        }
+      })
+    )
+  }
+
   public postUserPromptAIResponse(stepId: number, promptId: number, payloadAIResponse: CreateUserPromptAiReturnDTO): Observable<CreateUserPromptAiReturnResponseDTO> {
     const endpoint = `/steps/${stepId}/prompts/${promptId}/ai-response`;
     const cleanPayload = { ...payloadAIResponse.prompt };

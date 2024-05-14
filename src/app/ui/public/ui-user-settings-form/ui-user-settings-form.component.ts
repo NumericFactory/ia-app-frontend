@@ -71,16 +71,13 @@ export class UserSettingsFormComponent {
 
   //Submit form
   onSubmit() {
-
     this.formIsSubmit = true;
     if (this.userSettingsForm.valid) {
       const payload: any = {};
       for (const [key, value] of Object.entries(this.userSettingsForm.value)) {
         payload[key] = { value }
       }
-      console.log(payload)
-      // this.userService.postStepUserVariables(this.stepId, payload).subscribe((response) => {
-      // });
+      this.userService.postUserSettings(payload).subscribe();
     }
     else {
       this.alertService.show('Veuillez renseigner tous les champs requis', 'error');
@@ -107,8 +104,8 @@ export class UserSettingsFormComponent {
         this.logKeyValuePairs(abstractControl);
         // If the control is not a FormGroup then we know it's a FormControl
       } else {
-        //console.log('Key = ' + key + ' && Value = ' + this.user?.variables.find((v) => v.id == key)?.value);
-        abstractControl?.setValue(this.user?.variables.find((v) => v.id == key)?.value);
+        console.log('Key = ' + key + ' && Value = ' + this.user?.settings.find((v) => v.id == key)?.value);
+        abstractControl?.setValue(this.user?.settings.find((v) => v.id == key)?.value);
       }
     });
   }
