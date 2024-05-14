@@ -37,12 +37,7 @@ export class UpdatePromptsFormComponent {
 
   ngOnInit() {
 
-    this.adminService.steps$.subscribe(
-      (steps) => {
-        console.log('steps', steps);
-        this.steps = steps;
-      }
-    );
+    this.adminService.steps$.subscribe((steps) => this.steps = steps);
 
     // console.log('data', this.data);
     // create PromptsForm

@@ -7,6 +7,7 @@ import { map, merge, switchMap } from 'rxjs';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UserGateway } from '../../../../core/ports/user.gateway';
+import { StepModelAdmin } from '../../../../core/models/step.model';
 
 @Component({
   selector: 'app-create-prompts-form',
@@ -19,6 +20,7 @@ export class CreatePromptsFormComponent {
 
   createPromptsForm!: FormGroup;
   prompts!: FormArray;
+  steps: StepModelAdmin[] = [];
 
   variables = ['variable1', 'variable2', 'variable3', 'variable4', 'variable5']
   selectedVariable: string = '';
@@ -37,8 +39,9 @@ export class CreatePromptsFormComponent {
     console.log('data', this.data);
     this.createPromptsForm = this.formBuilder.group({
       prompts: this.formBuilder.array([this.createPromptFormControl()]),
-
     });
+
+    this.adminService.steps$.subscribe((steps) => this.steps = steps);
 
     /**
      * detect if user type '@' in secretPrompt textarea
@@ -61,7 +64,11 @@ export class CreatePromptsFormComponent {
             maxWidth: '450px',
             maxHeight: '60%',
             panelClass: 'dialog-user-var',
-            data: { variables: this.data.variables, userSettings: this.userService.getUserFromSubject()?.settings }
+            data: {
+              variables: this.data.variables,
+              userSettings: this.userService.getUserFromSubject()?.settings,
+              steps: this.steps
+            }
           })
           dialogRef.closed.subscribe((result) => {
             if (x.i !== null) {
@@ -163,6 +170,18 @@ export class CreatePromptsFormComponent {
       [style]="{'width':'100%'}"
       [listStyle]="{'max-height': '450px'}"></p-listbox>
     }
+    @else if(tabInUsed === 3){
+      @for(variables of steps; track variables) {
+        @if(variables.length > 0) {
+          <!-- <pre>{{step.variables | json}}</pre> -->
+          <p-listbox [options]="variables" 
+          (onChange)="selectValue($event)"
+          [style]="{'width':'100%'}"
+          [listStyle]="{'max-height': '450px'}"></p-listbox>
+          <hr> 
+        }
+      }
+    }
   </div>
   `,
 
@@ -195,6 +214,9 @@ export class CreatePromptsFormComponent {
 export class SelectVariableComponent {
 
   variables = this.data.variables.map((variableObj: any) => variableObj.key);
+  steps = this.data.steps.map((stepObj: any) =>
+    stepObj.variables.map((variableObj: any) => variableObj.key)
+  );
   userSettings = this.data.userSettings.map((settingObj: any) => settingObj.key);
   selectedVariable: string = 'variable1';
   tabInUsed: number = 1;
