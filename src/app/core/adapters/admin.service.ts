@@ -350,11 +350,10 @@ export class AdminService implements AdminGateway {
         console.log('response', response)
         // update the categories
         let categories = this.categoriesSubject.value;
-        let category = categories.find(c => c.id !== id);
+        let category = categories.find(c => c.id === id);
         if (category) {
-          category = response.data;
+          Object.assign(category, response.data);
         }
-        // categories = [response.data, ...categories];
         this.categoriesSubject.next(categories);
         this.alert.show('Catégorie mise à jour', 'success');
       })

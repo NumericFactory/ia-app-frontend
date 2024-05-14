@@ -29,7 +29,7 @@
             <td>{{category.title}}</td>
             <td>{{category.slug}}</td>
             <td class="text-center">
-                <button class="btn btn-sm btn-secondary" (click)="deleteCategory(category)">x</button>
+                <button class="btn btn-sm btn-secondary" (click)="deleteCategory($event, category)">x</button>
             </td>
         </tr>
         }

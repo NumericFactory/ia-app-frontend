@@ -4,6 +4,8 @@ import { CategoryModel } from '../../../../core/models/category.model';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { CreateCategoryFormComponent } from '../create-category-form/create-category-form.component';
 import { AsyncPipe } from '@angular/common';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
+import { UpdateCategoryFormComponent } from '../update-category-form/update-category-form.component';
 
 @Component({
   selector: 'app-categories-list',
@@ -20,6 +22,7 @@ export class CategoriesListComponent {
     public dialogRef: DialogRef<any>,
     public dialog: Dialog,
     private adminService: AdminGateway,
+    private confirmationService: ConfirmDialogService,
     @Inject(DIALOG_DATA) public data: CategoryModel[],
   ) { }
 
@@ -44,11 +47,30 @@ export class CategoriesListComponent {
   }
 
   openDialogUpdateCategory(event: Event, category: CategoryModel) {
-    console.log('category', category);
+    event.stopPropagation();
+    // open dialog
+    this.dialog.open(UpdateCategoryFormComponent, {
+      disableClose: true,
+      width: 'auto',
+      minWidth: '900px',
+      maxWidth: '100%',
+      maxHeight: '85%',
+      panelClass: 'dialog-user-var',
+      data: category
+    });
   }
 
-  deleteCategory(category: CategoryModel) {
-    console.log('category', category);
+  async deleteCategory(event: Event, category: CategoryModel) {
+    event.stopPropagation();
+    if (category.id === undefined) {
+      return;
+    }
+    const deleteCategoryConfirmation = await this.confirmationService
+      .confirm('Supprimer', 'Confirmer pour supprimer cette catégorie')
+    if (!deleteCategoryConfirmation) {
+      return;
+    }
+    this.adminService.deleteCategory(category.id).subscribe();
   }
 
 }
