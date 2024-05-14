@@ -2,10 +2,9 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 import { UserGateway } from '../../../core/ports/user.gateway';
-import { PromptModel } from '../../../core/models/step.model';
-import { StepGateway } from '../../../core/ports/step.gateway';
 import { RouterLink } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
+import { AppStateService } from '../../../shared/services/app-state.service';
 
 @Component({
   selector: 'ui-sidebar',
@@ -22,13 +21,14 @@ export class UiSidebarComponent {
   // get iconStarElement #starIcon
   @ViewChild('iconStar') iconStar!: ElementRef<HTMLElement>;
 
-
+  isMenuOpened$ = this.appState.isMenuOpened$;
 
 
   constructor(
     private authService: AuthGateway,
     private userService: UserGateway,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private appState: AppStateService
   ) { }
 
   ngOnInit() {

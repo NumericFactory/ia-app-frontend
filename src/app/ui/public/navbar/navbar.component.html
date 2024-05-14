@@ -1,11 +1,21 @@
 <nav class="navbar bg-primary" data-bs-theme="dark">
     <div class="container-fluid">
         <!-- logo brand-->
+        @if(title==='Ai App') {
+        <div class="navbar-brand d-flex align-items-center">
+            <i (click)="openCloseMenu()" style="font-size: 29px;" class="bi bi-list me-3"></i>
+            <a class="navbar-brand" routerLink=" /dashboard">AI.App</a>
+        </div>
+        }
+
+        @if(title==='Admin') {
         <a title="retour Dashboard" class="navbar-brand align-items-center" routerLink="/dashboard">
-            @if(title==='Admin') {
             <i style="position: relative;top: 1px;font-size: 18px;" class="bi bi-arrow-left"></i>
-            <span class="ms-2">dashboard User</span> }
+            <span class="ms-2">dashboard User</span>
         </a>
+        }
+
+
 
         <ul class="nav">
 

@@ -6,6 +6,7 @@ import { ListboxChangeEvent, ListboxModule } from 'primeng/listbox';
 import { map, merge, switchMap } from 'rxjs';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
+import { UserGateway } from '../../../../core/ports/user.gateway';
 
 @Component({
   selector: 'app-create-prompts-form',
@@ -28,6 +29,7 @@ export class CreatePromptsFormComponent {
     public dialog: Dialog,
     private adminService: AdminGateway,
     private confirmDialog: ConfirmDialogService,
+    private userService: UserGateway,
     @Inject(DIALOG_DATA) public data: any,
   ) { }
 
@@ -55,11 +57,11 @@ export class CreatePromptsFormComponent {
         if (x.value?.includes('@')) {
           const dialogRef = this.dialog.open(SelectVariableComponent, {
             width: '100%',
-            minWidth: '220px',
-            maxWidth: '250px',
-            maxHeight: '55%',
+            minWidth: '320px',
+            maxWidth: '450px',
+            maxHeight: '60%',
             panelClass: 'dialog-user-var',
-            data: { variables: this.data.variables }
+            data: { variables: this.data.variables, userSettings: this.userService.getUserFromSubject()?.settings }
           })
           dialogRef.closed.subscribe((result) => {
             if (x.i !== null) {
@@ -135,10 +137,33 @@ export class CreatePromptsFormComponent {
   imports: [FormsModule, ListboxModule],
 
   template: `
-  <p-listbox [options]="variables" 
-    (onChange)="selectValue($event)"
-    [style]="{'width':'15rem'}"
-    [listStyle]="{'max-height': '220px'}"></p-listbox>
+   <div style="background: #fff" class="p-2">
+    <h3 class="mb-0 p-2 fs-5">Choisissez une variable</h3>
+    <ul class="nav nav-underline">
+      <li class="nav-item">
+        <a (click)="changeTab($event, 1)" [class.active]="tabInUsed==1" class="nav-link">Step variables</a>
+      </li>
+      <li class="nav-item">
+        <a (click)="changeTab($event,2)" [class.active]="tabInUsed==2" class="nav-link">User settings</a>
+      </li>
+      <li class="nav-item">
+        <a (click)="changeTab($event,3)" [class.active]="tabInUsed==3" class="nav-link">Toutes les variables</a>
+      </li>
+    </ul>
+
+    @if(tabInUsed === 1) {
+      <p-listbox [options]="variables" 
+       (onChange)="selectValue($event)"
+       [style]="{'width':'100%'}"
+       [listStyle]="{'max-height': '450px'}"></p-listbox>
+    }
+    @else if(tabInUsed === 2) {
+      <p-listbox [options]="userSettings" 
+      (onChange)="selectValue($event)"
+      [style]="{'width':'100%'}"
+      [listStyle]="{'max-height': '450px'}"></p-listbox>
+    }
+  </div>
   `,
 
   styles: [`
@@ -170,7 +195,9 @@ export class CreatePromptsFormComponent {
 export class SelectVariableComponent {
 
   variables = this.data.variables.map((variableObj: any) => variableObj.key);
+  userSettings = this.data.userSettings.map((settingObj: any) => settingObj.key);
   selectedVariable: string = 'variable1';
+  tabInUsed: number = 1;
 
   constructor(
     public dialogRef: DialogRef<string>,
@@ -179,6 +206,12 @@ export class SelectVariableComponent {
 
   selectValue(event: ListboxChangeEvent) {
     this.dialogRef.close(event.value);
+  }
+
+  changeTab(event: Event, tab: number) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.tabInUsed = tab;
   }
 
 }

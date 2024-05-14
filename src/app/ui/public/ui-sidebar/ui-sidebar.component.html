@@ -1,9 +1,11 @@
+@if(isMenuOpened$ | async; as isMenuOpened) {
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary sidebar-left">
 
     <a href="/"
         class="d-flex align-items-center justify-content-center mb-2 mb-md-0 link-body-emphasis text-decoration-none">
         <h3 class="text-center fs-6 mb-0">Hello,
             <span *ngIf="(authUser$ | async) as authUser">{{ authUser.firstname}} {{ authUser.lastname}}</span>
+            {{isMenuOpened}}
         </h3>
     </a>
 
@@ -63,3 +65,4 @@
 
     </div>
 </div>
+}

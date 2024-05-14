@@ -1,4 +1,4 @@
-<ui-navbar title="A.IApp"></ui-navbar>
+<ui-navbar title="Ai App"></ui-navbar>
 <div class="container-fluid">
     <div class="row">
 
@@ -8,10 +8,20 @@
         </div>
 
         <!-- content app-->
+        @if( isMenuOpened$ | async; as isMenuOpened) {
         <div class="col-12 col-md-8 col-lg-9 col-xxl-10">
             <div class="container py-3">
                 <router-outlet></router-outlet>
             </div>
         </div>
+        }
+        @else {
+        <div class="col-12">
+            <div class="container py-3">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        }
+
     </div>
 </div>

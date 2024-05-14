@@ -5,7 +5,7 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { ListboxChangeEvent, ListboxModule } from 'primeng/listbox';
 import { map, merge, switchMap } from 'rxjs';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
-import { PromptModelAdmin } from '../../../../core/models/step.model';
+import { PromptModelAdmin, StepModel, StepModelAdmin } from '../../../../core/models/step.model';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 
@@ -20,6 +20,7 @@ export class UpdatePromptsFormComponent {
 
   promptsForm!: FormGroup;
   prompts!: FormArray;
+  steps: StepModelAdmin[] = [];
 
   variables = ['variable1', 'variable2', 'variable3', 'variable4', 'variable5']
   selectedVariable: string = '';
@@ -35,6 +36,13 @@ export class UpdatePromptsFormComponent {
   ) { }
 
   ngOnInit() {
+
+    this.adminService.steps$.subscribe(
+      (steps) => {
+        console.log('steps', steps);
+        this.steps = steps;
+      }
+    );
 
     // console.log('data', this.data);
     // create PromptsForm
@@ -69,7 +77,11 @@ export class UpdatePromptsFormComponent {
           maxWidth: '450px',
           maxHeight: '60%',
           panelClass: 'dialog-user-var',
-          data: { variables: this.data.variables, userSettings: this.userService.getUserFromSubject()?.settings }
+          data: {
+            variables: this.data.variables,
+            userSettings: this.userService.getUserFromSubject()?.settings,
+            steps: this.steps
+          }
         })
         dialogRef.closed.subscribe((result) => {
           if (x.i !== null) {
@@ -151,20 +163,20 @@ export class UpdatePromptsFormComponent {
 @Component({
   selector: 'select-variable-dialog',
   standalone: true,
-  imports: [FormsModule, ListboxModule],
+  imports: [FormsModule, ListboxModule, JsonPipe],
 
   template: `
   <div style="background: #fff" class="p-2">
     <h3 class="mb-0 p-2 fs-5">Choisissez une variable</h3>
     <ul class="nav nav-underline">
       <li class="nav-item">
-        <a (click)="changeTab($event, 1)" class="nav-link active">Step variables</a>
+        <a (click)="changeTab($event, 1)" [class.active]="tabInUsed==1" class="nav-link">Step variables</a>
       </li>
       <li class="nav-item">
-        <a (click)="changeTab($event,2)" class="nav-link">User settings</a>
+        <a (click)="changeTab($event,2)" [class.active]="tabInUsed==2" class="nav-link">User settings</a>
       </li>
       <li class="nav-item">
-        <a (click)="changeTab($event,3)" class="nav-link disabled" aria-disabled="true">Toutes les variables</a>
+        <a (click)="changeTab($event,3)" [class.active]="tabInUsed==3" class="nav-link" aria-disabled="true">Toutes les variables</a>
       </li>
     </ul>
 
@@ -179,6 +191,18 @@ export class UpdatePromptsFormComponent {
       (onChange)="selectValue($event)"
       [style]="{'width':'100%'}"
       [listStyle]="{'max-height': '450px'}"></p-listbox>
+    }
+    @else if(tabInUsed === 3){
+      @for(variables of steps; track variables) {
+        @if(variables.length > 0) {
+          <!-- <pre>{{step.variables | json}}</pre> -->
+          <p-listbox [options]="variables" 
+          (onChange)="selectValue($event)"
+          [style]="{'width':'100%'}"
+          [listStyle]="{'max-height': '450px'}"></p-listbox>
+          <hr> 
+        }
+      }
     }
   </div>
 
@@ -213,6 +237,9 @@ export class UpdatePromptsFormComponent {
 export class SelectVariableComponent {
 
   variables = this.data.variables.map((variableObj: any) => variableObj.key);
+  steps = this.data.steps.map((stepObj: any) =>
+    stepObj.variables.map((variableObj: any) => variableObj.key)
+  );
   userSettings = this.data.userSettings.map((settingObj: any) => settingObj.key);
   selectedVariable: string = 'variable1';
   tabInUsed: number = 1;
@@ -221,6 +248,10 @@ export class SelectVariableComponent {
     public dialogRef: DialogRef<string>,
     @Inject(DIALOG_DATA) public data: any,
   ) { }
+
+  ngOnInit() {
+    console.log('stepsFlat', this.steps);
+  }
 
   selectValue(event: ListboxChangeEvent) {
     this.dialogRef.close(event.value);
