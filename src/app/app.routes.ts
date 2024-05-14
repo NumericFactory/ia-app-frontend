@@ -57,7 +57,7 @@ export const routes: Routes = [
         canActivate: [],
         component: AdminViewComponent,
         children: [
-            { path: '', redirectTo: 'users', pathMatch: 'full' },
+            { path: '', redirectTo: 'manage-step', pathMatch: 'full' },
             { path: 'users', component: UsersAdminViewComponent },
             { path: 'manage-step', component: StepAdminViewComponent },
             { path: 'settings', component: SettingsAdminViewComponent },

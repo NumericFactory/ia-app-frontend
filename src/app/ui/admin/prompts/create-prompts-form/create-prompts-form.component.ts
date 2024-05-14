@@ -42,34 +42,36 @@ export class CreatePromptsFormComponent {
      * detect if user type '@' in secretPrompt textarea
      * if true, open dialog to select a variable
      */
-    this.createPromptsForm.valueChanges.pipe(
-      switchMap((f) => {
-        const obs = this.formPrompts.controls.map((control, index) => {
-          return control.valueChanges.pipe(map((value) => ({ value: value.secretprompt, i: index })));
-        });
-        return merge(...obs);
-      })
-    ).subscribe(x => {
-      if (x.value?.includes('@')) {
-        const dialogRef = this.dialog.open(SelectVariableComponent, {
-          width: '100%',
-          minWidth: '220px',
-          maxWidth: '250px',
-          maxHeight: '55%',
-          panelClass: 'dialog-user-var',
-          data: { variables: this.data.variables }
+    this.createPromptsForm.valueChanges
+      .pipe(
+        switchMap((f) => {
+          const obs = this.formPrompts.controls.map((control, index) => {
+            return control.valueChanges.pipe(map((value) => ({ value: value.secretprompt, i: index })));
+          });
+          return merge(...obs);
         })
-        dialogRef.closed.subscribe((result) => {
-          if (x.i !== null) {
-            let text = this.formPrompts.controls[x.i].get('secretprompt')?.value;
-            !result
-              ? text = text.replace('@', '')
-              : text = text.replace('@', '{' + result + '}')
-            this.formPrompts.controls[x.i].get('secretprompt')?.setValue(text);
-          }
-        });
-      }
-    });
+      )
+      .subscribe(x => {
+        if (x.value?.includes('@')) {
+          const dialogRef = this.dialog.open(SelectVariableComponent, {
+            width: '100%',
+            minWidth: '220px',
+            maxWidth: '250px',
+            maxHeight: '55%',
+            panelClass: 'dialog-user-var',
+            data: { variables: this.data.variables }
+          })
+          dialogRef.closed.subscribe((result) => {
+            if (x.i !== null) {
+              let text = this.formPrompts.controls[x.i].get('secretprompt')?.value;
+              !result
+                ? text = text.replace('@', '')
+                : text = text.replace('@', '{' + result + '}')
+              this.formPrompts.controls[x.i].get('secretprompt')?.setValue(text);
+            }
+          });
+        }
+      });
   }
 
   // Permet de créer un Prompt Form à la volée
