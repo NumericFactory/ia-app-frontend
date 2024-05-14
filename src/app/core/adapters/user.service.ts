@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { UserModel } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AlertService } from '../../shared/services/alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class UserService implements UserGateway {
   private userSubject = new BehaviorSubject<UserModel | null>(null);
   public user$ = this.userSubject;
 
-  constructor() { }
+  constructor(private alert: AlertService) { }
 
   setUserSubject(user: UserModel): void {
     this.userSubject.next(user);
@@ -77,6 +78,7 @@ export class UserService implements UserGateway {
         if (user && response.data) {
           user.settings = [...response.data];
           this.userSubject.next(user);
+          this.alert.show('Paramètres sauvegardés', 'success');
         }
       })
     )

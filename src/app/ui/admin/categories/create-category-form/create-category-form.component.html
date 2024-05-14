@@ -1,0 +1,49 @@
+<p class="text-secondary info-text">
+    <i class="bi bi-info-circle-fill text-primary"></i>Ajouter une nouvelle catégorie
+</p>
+<i (click)="close()" class="bi bi-x-lg close-dialog-btn"></i>
+<hr>
+
+<form (ngSubmit)="createCategory()" [formGroup]="newCategoryForm">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="title">Titre de la catégorie*</label>
+                <input type="text" class="form-control" id="title" formControlName="title">
+                @if(newCategoryForm.get('title')?.invalid && isSubmitted) {
+                <p class="error">titre requis</p>
+                }
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="slug">Slug</label>
+                <input type="text" class="form-control" id="slug" formControlName="slug">
+                @if(newCategoryForm.get('slug')?.invalid && isSubmitted) {
+                <p class="error">slug requis</p>
+                }
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="desc">Description</label>
+                <!-- <textarea class="form-control" id="desc" formControlName="desc"></textarea> -->
+                <p-editor formControlName="description" [style]="{ height: '220px' }">
+                    <ng-template pTemplate="header">
+                        <span class="ql-formats">
+                            <button type="button" class="ql-bold" aria-label="Bold"></button>
+                            <button type="button" class="ql-italic" aria-label="Italic"></button>
+                            <button type="button" class="ql-underline" aria-label="Underline"></button>
+                        </span>
+                    </ng-template></p-editor>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary">Ajouter</button>
+            </div>
+        </div>
+    </div>
+
+
+</form>

@@ -1,0 +1,42 @@
+<h3 class="fs-5 mb-4">Catégories</h3>
+<i (click)="close()" class="bi bi-x-lg close-dialog-btn"></i>
+
+<div class="d-flex justify-content-between">
+    <p class="text-secondary info-text">
+        <i class="bi bi-info-circle-fill text-primary"></i>
+        Gérer les catégories des prompts
+    </p>
+    <button (click)="openDialogCreateCategory()" class="btn btn-sm btn-primary">
+        <i class="bi bi-plus"></i>
+        Ajouter</button>
+</div>
+<hr>
+
+@if((categories$ | async); as categories) {
+<table class="table table-sm table-hover">
+    <thead class="table-light">
+        <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 40%">Titre</th>
+            <th>slug</th>
+            <th style="width: 15%" style="width: 60px;text-align:center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(category of categories; track category.id) {
+        <tr (click)="openDialogUpdateCategory($event, category)">
+            <th>{{category.id}}</th>
+            <td>{{category.title}}</td>
+            <td>{{category.slug}}</td>
+            <td class="text-center">
+                <button class="btn btn-sm btn-secondary" (click)="deleteCategory(category)">x</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+@else {
+<p class="text-center">Aucune catégorie</p>
+<p class="text-center"><strong>Clickez sur "Ajouter"</strong></p>
+}

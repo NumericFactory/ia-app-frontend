@@ -29,6 +29,10 @@ export class AdminService implements AdminGateway {
   private stepsSubject = new BehaviorSubject<StepModelAdmin[]>([]);
   public steps$ = this.stepsSubject.asObservable();
 
+  // store the categories
+  private categoriesSubject = new BehaviorSubject<any[]>([]);
+  public categories$ = this.categoriesSubject.asObservable();
+
   constructor(private alert: AlertService) { }
 
   // get all users
@@ -308,6 +312,65 @@ export class AdminService implements AdminGateway {
       tap((response: any) => {
         console.log('response', response)
         this.alert.show('Paramètre utilisateur supprimé', 'success');
+      })
+    )
+  }
+
+  /**
+   * 
+   * @returns Categories
+   */
+  fetchCategories(): Observable<any> {
+    const endpoint = '/admin/categories';
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      tap((response: any) => {
+        this.categoriesSubject.next(response);
+      })
+    )
+  }
+
+  createCategory(newCategory: Omit<any, 'id'>): Observable<any> {
+    const endpoint = '/admin/categories';
+    return this.http.post(`${this.apiUrl}${endpoint}`, newCategory).pipe(
+      tap((response: any) => {
+        console.log('response', response)
+        // update the categories
+        let categories = this.categoriesSubject.value;
+        categories = [response.data, ...categories];
+        this.categoriesSubject.next(categories);
+        this.alert.show('Catégorie ajoutée', 'success');
+      })
+    )
+  }
+
+  updateCategory(id: number, category: any): Observable<any> {
+    const endpoint = '/admin/categories';
+    return this.http.put(`${this.apiUrl}${endpoint}/${id}`, category).pipe(
+      tap((response: any) => {
+        console.log('response', response)
+        // update the categories
+        let categories = this.categoriesSubject.value;
+        let category = categories.find(c => c.id !== id);
+        if (category) {
+          category = response.data;
+        }
+        // categories = [response.data, ...categories];
+        this.categoriesSubject.next(categories);
+        this.alert.show('Catégorie mise à jour', 'success');
+      })
+    )
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    const endpoint = '/admin/categories';
+    return this.http.delete(`${this.apiUrl}${endpoint}/${id}`).pipe(
+      tap((response: any) => {
+        console.log('response', response)
+        // update the categories
+        let categories = this.categoriesSubject.value;
+        categories = categories.filter(c => c.id !== id);
+        this.categoriesSubject.next(categories);
+        this.alert.show('Catégorie supprimée', 'success');
       })
     )
   }

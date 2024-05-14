@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { StepModelAdmin } from '../../../../core/models/step.model';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { AsyncPipe, DatePipe, JsonPipe, } from '@angular/common';
@@ -11,6 +12,8 @@ import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog
 import { CreateVariablesFormComponent } from '../../../../ui/admin/variables/create-variables-form/create-variables-form.component';
 import { UpdateVariablesFormComponent } from '../../../../ui/admin/variables/update-variables-form/update-variables-form.component';
 import { UpdatePromptsFormComponent } from '../../../../ui/admin/prompts/update-prompts-form/update-prompts-form.component';
+import { CategoryModel } from '../../../../core/models/category.model';
+import { CategoriesListComponent } from '../../../../ui/admin/categories/categories-list/categories-list.component';
 
 @Component({
   selector: 'app-step-admin-view',
@@ -33,6 +36,17 @@ export class StepAdminViewComponent {
 
   ngOnInit() {
     this.adminService.fetchSteps().subscribe();
+  }
+
+  openDialogCategories() {
+    const dialogRef = this.dialog.open(CategoriesListComponent, {
+      disableClose: true,
+      width: 'auto',
+      minWidth: '900px',
+      maxWidth: '100%',
+      maxHeight: '85%',
+      panelClass: 'dialog-user-var'
+    });
   }
 
   openDialogCreateUserFormVariables(ev: Event, step: StepModelAdmin) {
@@ -160,5 +174,3 @@ export class StepAdminViewComponent {
   }
 
 }
-
-

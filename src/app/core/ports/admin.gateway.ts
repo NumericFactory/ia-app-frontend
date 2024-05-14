@@ -2,6 +2,7 @@ import { Observable, ObservableInput } from "rxjs";
 import { Role, UserModel } from "../models/user.model";
 import { FormUISchema, PromptModelAdmin, StepModelAdmin } from "../models/step.model";
 import { UserSettingsModel } from "../models/user-settings.model";
+import { CategoryModel } from "../models/category.model";
 
 export type ResponseMessage = { message: string }
 
@@ -24,6 +25,7 @@ export abstract class AdminGateway {
     // observables for user and auth status
     abstract users$: Observable<UserModel[]>;
     abstract steps$: Observable<StepModelAdmin[]>;
+    abstract categories$: Observable<CategoryModel[]>;
     //abstract prompts$: Observable<PromptModelAdmin[]>;
 
     // get user or null
@@ -55,6 +57,11 @@ export abstract class AdminGateway {
     abstract createOrUpdateUserSettings(settings: UserSettingsModel): Observable<any>;
     //abstract UpdateUserSettings(settings: UserSettingsModel): Observable<any>;
     abstract deleteUserSettings(id: number): Observable<any>;
+
+    abstract fetchCategories(): Observable<CategoryModel[]>;
+    abstract createCategory(category: Omit<CategoryModel, 'id'>): Observable<any>;
+    abstract updateCategory(id: number, category: CategoryModel): Observable<any>;
+    abstract deleteCategory(id: number): Observable<any>;
 
 
 }

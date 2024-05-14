@@ -39,12 +39,6 @@ export interface PromptModel {
     createdAt: string
     updatedAt: string
 }
-export interface Category {
-    id: number
-    title: string
-    desc: string
-    order: number
-}
 
 
 /********* ADMIN **************/
