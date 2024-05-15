@@ -1,18 +1,25 @@
 import { DIALOG_DATA, Dialog, DialogRef } from '@angular/cdk/dialog';
-import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ListboxChangeEvent, ListboxModule } from 'primeng/listbox';
-import { map, merge, switchMap } from 'rxjs';
+import { DropdownModule } from 'primeng/dropdown';
+import { Observable, map, merge, switchMap } from 'rxjs';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
-import { PromptModelAdmin, StepModel, StepModelAdmin } from '../../../../core/models/step.model';
+import { PromptModelAdmin, StepModelAdmin } from '../../../../core/models/step.model';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UserGateway } from '../../../../core/ports/user.gateway';
+import { CategoryModel } from '../../../../core/models/category.model';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-update-prompts-form',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, ListboxModule, JsonPipe, NgFor, NgIf],
+  imports: [
+    ReactiveFormsModule, FormsModule,
+    DropdownModule, ListboxModule, MatDialogModule,
+    AsyncPipe, NgFor, NgIf
+  ],
   templateUrl: './update-prompts-form.component.html',
   styleUrl: './update-prompts-form.component.scss'
 })
@@ -36,7 +43,7 @@ export class UpdatePromptsFormComponent {
   ) { }
 
   ngOnInit() {
-
+    // subscribe to steps observable
     this.adminService.steps$.subscribe((steps) => this.steps = steps);
 
     // console.log('data', this.data);

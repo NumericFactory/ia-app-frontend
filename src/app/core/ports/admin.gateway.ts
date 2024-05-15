@@ -36,8 +36,6 @@ export abstract class AdminGateway {
     abstract fetchRoles(): Observable<Role[] | number[]>;
     abstract setRoles(userId: number, roles: Role[] | number[]): void;
 
-    // helper methods
-
     // step and prompt management methods
     abstract fetchSteps(): Observable<StepModelAdmin[]>;
     abstract createStep(step: StepModelAdmin): Observable<StepModelAdmin>;
@@ -55,7 +53,6 @@ export abstract class AdminGateway {
 
     abstract getUserParametersFields(): Observable<any>;
     abstract createOrUpdateUserSettings(settings: UserSettingsModel): Observable<any>;
-    //abstract UpdateUserSettings(settings: UserSettingsModel): Observable<any>;
     abstract deleteUserSettings(id: number): Observable<any>;
 
     abstract fetchCategories(): Observable<CategoryModel[]>;
@@ -63,5 +60,7 @@ export abstract class AdminGateway {
     abstract updateCategory(id: number, category: CategoryModel): Observable<any>;
     abstract deleteCategory(id: number): Observable<any>;
 
+    abstract addCategoryToPrompt(promptId: number, categoryId: number): Observable<any>;
+    abstract removeCategoryFromPrompt(promptId: number): Observable<any>;
 
 }

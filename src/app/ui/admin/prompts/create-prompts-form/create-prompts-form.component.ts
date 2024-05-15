@@ -8,11 +8,12 @@ import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { StepModelAdmin } from '../../../../core/models/step.model';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-prompts-form',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, ListboxModule, JsonPipe, NgFor, NgIf],
+  imports: [ReactiveFormsModule, FormsModule, ListboxModule, JsonPipe, NgFor, NgIf, MatDialogModule],
   templateUrl: './create-prompts-form.component.html',
   styleUrl: './create-prompts-form.component.scss'
 })
@@ -36,7 +37,6 @@ export class CreatePromptsFormComponent {
   ) { }
 
   ngOnInit() {
-    console.log('data', this.data);
     this.createPromptsForm = this.formBuilder.group({
       prompts: this.formBuilder.array([this.createPromptFormControl()]),
     });

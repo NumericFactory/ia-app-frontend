@@ -11,6 +11,7 @@
 */
 
 import { ControlType, FieldType } from "../../shared/services/question/question.model"
+import { CategoryModel } from "./category.model"
 
 export interface StepModel {
     id: number
@@ -31,9 +32,10 @@ export interface StepUserVariableModel {
 export interface PromptModel {
     id: number
     stepId?: number
+    categoryId?: number,
+    category?: CategoryModel // category of the prompt
     title: string
     desc?: string
-    categoryId?: number // category of the prompt
     order: number
     secretprompt?: string // visible only by admin
     createdAt: string
@@ -67,9 +69,10 @@ export interface FormUISchema {
 export interface PromptModelAdmin {
     id?: number
     stepId?: number
+    categoryId?: number,
+    category?: CategoryModel // category of the prompt
     title: string
     desc?: string
-    categoryId?: number // category of the prompt
     secretprompt: string // visible only by admin
     order: number
 }

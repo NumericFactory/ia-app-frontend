@@ -17,10 +17,9 @@
         <tr>
             <th>#</th>
             <th style="width: 10%;">Titre</th>
-            <th>Sous-titre</th>
-            <th>Catégorie</th>
+            <!-- <th>Sous-titre</th> -->
             <th>Variables</th>
-            <th>Prompts</th>
+            <th style="width: 50%;">Prompts</th>
             <th style="width: 60px;text-align:center">Actions</th>
         </tr>
     </thead>
@@ -29,8 +28,7 @@
         <tr (click)="openDialogUpdateStep($event, step)">
             <th>{{step.id}}</th>
             <td>{{step.title}}</td>
-            <td>{{step.subtitle}}</td>
-            <td></td>
+            <!-- <td>{{step.subtitle}}</td> -->
             <td>
                 <!-- step > user Variables -->
                 <div class="d-inline-flex flex-column">
@@ -44,18 +42,34 @@
                     }
                     }
                 </div>
-
             </td>
             <td>
                 <!-- step > prompts -->
-                <div class="d-inline-flex flex-column">
+                <div class="d-inline-flex flex-column w-100">
                     @if(!step.prompts.length) {
                     <a (click)="openDialogCreatePrompt($event, step)" class="link">Ajouter</a>
                     }
                     @else {
                     @for(prompt of step.prompts; track prompt) {
-                    <span (click)="openDialogUpdatePrompt($event, step)"
-                        class="badge fw-400 text-bg-light my-1">{{prompt.title}}</span>
+                    <div class="row gx-4">
+                        <span (click)="openDialogUpdatePrompt($event, step)" style="text-wrap: balance;"
+                            class="badge fw-400 text-bg-light my-1 col-8">{{prompt.title}}
+                        </span>
+                        @if(prompt.category) {
+                        <span (click)="openSelectCategoryDialog($event, prompt)" style="border-radius: 50px;
+                            background: #d9ecff !important;
+                            color: #0d6efd !important;"
+                            class="badge ps-3 pe-1 col-4 align-self-center d-flex justify-content-between align-items-center">
+                            <span>{{prompt.category.title}}</span>
+                            <i (click)="dissociateCategory($event, prompt)" class="bi bi-x fs-5"></i>
+                        </span>
+                        }
+                        @else {
+                        <button (click)="openSelectCategoryDialog($event, prompt)" class="btn btn-sm btn-link col-4">
+                            Choisir une categorie
+                        </button>
+                        }
+                    </div>
                     }
                     }
                 </div>

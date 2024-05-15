@@ -6,10 +6,10 @@ import { Role, UserModel } from '../models/user.model';
 import { AdminGateway } from '../ports/admin.gateway';
 import { AlertService } from '../../shared/services/alert.service';
 import { FormUISchema, PromptModelAdmin, StepModelAdmin } from '../models/step.model';
-import { of } from 'rxjs';
 // data
-import { stepsTestDataAdmin } from '../data-admin';
+// import { stepsTestDataAdmin } from '../data-admin';
 import { UserSettingsModel } from '../models/user-settings.model';
+import { CategoryModel } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class AdminService implements AdminGateway {
   public steps$ = this.stepsSubject.asObservable();
 
   // store the categories
-  private categoriesSubject = new BehaviorSubject<any[]>([]);
+  private categoriesSubject = new BehaviorSubject<CategoryModel[]>([]);
   public categories$ = this.categoriesSubject.asObservable();
 
   constructor(private alert: AlertService) { }
@@ -101,8 +101,15 @@ export class AdminService implements AdminGateway {
   fetchSteps(): Observable<StepModelAdmin[]> {
     return this.http.get(`${this.apiUrl}/admin/steps`).pipe(
       tap((response: any) => {
-        console.log('response fetchSteps: ', response)
-        this.stepsSubject.next(response as StepModelAdmin[]);
+        // add category Object to prompt.category
+        this.categoriesSubject.subscribe(categories => {
+          response.forEach((step: any) => {
+            step.prompts.forEach((prompt: any) => {
+              if (prompt.categoryId) prompt.category = categories.find(cat => cat.id === prompt.categoryId);
+            })
+          })
+          this.stepsSubject.next(response as StepModelAdmin[]);
+        })
       })
     )
   }
@@ -235,10 +242,11 @@ export class AdminService implements AdminGateway {
 
 
   fetchPrompts(stepId: number): Promise<PromptModelAdmin[]> {
-    let prompts: PromptModelAdmin[] = [];
-    const step = stepsTestDataAdmin.find(step => step.id === stepId)
-    if (step) { prompts = step.prompts }
-    console.log('prompts', prompts)
+    const prompts: PromptModelAdmin[] = [];
+    // let prompts: PromptModelAdmin[] = [];
+    // const step = stepsTestDataAdmin.find(step => step.id === stepId)
+    // if (step) { prompts = step.prompts }
+    // console.log('prompts', prompts)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(prompts);
@@ -370,6 +378,50 @@ export class AdminService implements AdminGateway {
         categories = categories.filter(c => c.id !== id);
         this.categoriesSubject.next(categories);
         this.alert.show('Catégorie supprimée', 'success');
+      })
+    )
+  }
+
+  addCategoryToPrompt(promptId: number, categoryId: number): Observable<any> {
+    const endpoint = `/admin/prompts/${promptId}/category`;
+    return this.http.post(`${this.apiUrl}${endpoint}`, { category_id: categoryId }).pipe(
+      tap((response: any) => {
+        const newCategoryAddedInDB: CategoryModel = response.data;
+        const steps = this.stepsSubject.value;
+        steps.forEach(step => {
+          step.prompts.forEach(prompt => {
+            if (prompt.id === promptId) {
+              prompt.categoryId = newCategoryAddedInDB.id;
+              prompt.category = {
+                id: newCategoryAddedInDB.id,
+                title: newCategoryAddedInDB.title,
+                slug: newCategoryAddedInDB.slug,
+                description: newCategoryAddedInDB.description
+              };
+            }
+          })
+        })
+        //set the updated steps'new steps', steps
+        this.stepsSubject.next(steps);
+        this.alert.show('Catégorie ajoutée au prompt', 'success');
+      })
+    )
+  }
+
+  removeCategoryFromPrompt(promptId: number): Observable<any> {
+    const endpoint = `/admin/prompts/${promptId}/category`;
+    return this.http.delete(`${this.apiUrl}${endpoint}`).pipe(
+      tap((response: any) => {
+        const steps = this.stepsSubject.value;
+        steps.forEach(step => {
+          step.prompts.forEach(prompt => {
+            if (prompt.id === promptId) {
+              prompt.categoryId = undefined;
+              prompt.category = undefined;
+            }
+          })
+        })
+        this.alert.show('Catégorie supprimée du prompt', 'success');
       })
     )
   }

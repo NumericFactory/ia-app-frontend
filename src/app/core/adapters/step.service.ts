@@ -1,5 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { stepsTestData } from '../data';
 import { PromptModel, StepModel } from '../models/step.model';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { StepGateway } from '../ports/step.gateway';
