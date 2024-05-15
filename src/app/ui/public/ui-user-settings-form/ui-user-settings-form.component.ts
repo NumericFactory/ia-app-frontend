@@ -10,8 +10,7 @@ import { AlertService } from '../../../shared/services/alert.service';
 import { DynamicFormQuestionComponent } from '../../../shared/services/question/dynamic-form-question/dynamic-form-question.component';
 import { QuestionControlService } from '../../../shared/services/question/question-control.service';
 import { QuestionBase } from '../../../shared/services/question/question.model';
-import { FormUserSettingSchema, UserSettingsModel } from '../../../core/models/user-settings.model';
-
+import { FormUserSettingSchema } from '../../../core/models/user-settings.model';
 
 /**
  * UserVariablesDialog Component

@@ -73,6 +73,34 @@ h2 {
     font-size: 1.5rem;
 }
 
+ol,
+ul {
+    padding-left: 0;
+    margin: 0;
+}
+
+.p-metergroup-label-icon {
+    font-size: 20px;
+    transform: translate(-1px, -6px);
+}
+
+.p-metergrouplabel ol {
+    margin: 0;
+    padding-left: 0 !important;
+}
+
+.p-metergroup-label-text {
+    font-size: 14px;
+}
+
+.p-metergroup {
+    gap: 0rem;
+}
+
+.p-metergroup.p-metergroup-horizontal .p-metergroup-meters {
+    height: 0.33rem;
+}
+
 .p-dropdown .p-dropdown-label.p-placeholder {
     color: #6b7280;
     // padding: 3px 5px !important;
