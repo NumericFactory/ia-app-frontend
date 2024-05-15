@@ -24,57 +24,62 @@
                 <hr style="opacity: .1">
                 <p [innerHTML]="step.desc"></p>
             </div>
+            <!-- alert si user n'a pas renseigner ses variables -->
+            @if(!isThisStepHasUserVariables(step)) {
+            <div style="margin: 7px;" class="alert alert-warning d-flex align-items-center">
+                <i style="font-size: 27px;" class="bi bi-exclamation-triangle-fill me-3"></i>
+                <span>
+                    Pour continuer à l'étape suivante
+                    <a style="font-weight: 500;font-size: .975rem;" class="link text-underline"
+                        (click)="openVariablesModal(user)">
+                        <span>renseignez vos variables</span>
+                    </a>
+                </span>
+            </div>
+            }
+
+            <!-- alert si user a renseigné ses variables -->
+            @if(isThisStepHasUserVariables(step)) {
+            <div style="background: #e4efff;
+                color: #00326e;margin: 7px;
+                border-color: #d1e1ff;" class="alert d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center">
+                    <i style="font-size: 33px;" class="bi bi-robot me-3"></i>
+                    Continuez à l'étape suivante
+                    | Ou <a style="font-weight: 400;
+                        color: #426fb2;
+                        text-decoration: underline;
+                        margin-left: 5px;" (click)="openVariablesModal(user)">
+                        <span>Modifiez vos variables</span>
+                    </a>
+
+                </span>
+                <span>
+                    <button style="font-size: 1rem;
+                        background: rgba(255, 255, 255, .35);
+                        color: #000;
+                        border-color: rgba(0, 0, 0, .2);
+                        padding: 5px 13px;
+                        font-weight: 600;" class="btn btn-sm btn-success text-underline ms-3"
+                        [routerLink]="['prompt']">
+                        <span *ngIf="isFormCompleted">Continuer</span>
+                        <i class="bi bi-arrow-right ms-3"></i>
+                    </button>
+
+                </span>
+            </div>
+            }
         </div>
+
+
+
     </div>
 </div>
 
 <div class="row justify-content-center">
     <div class="col-md-10 steps-list">
 
-        <!-- alert si user n'a pas renseigner ses variables -->
-        @if(!isThisStepHasUserVariables(step)) {
-        <div class="alert alert-warning d-flex align-items-center">
-            <i style="font-size: 27px;" class="bi bi-exclamation-triangle-fill me-3"></i>
-            <span>
-                Pour continuer à l'étape suivante
-                <a style="font-weight: 500;font-size: .975rem;" class="link text-underline"
-                    (click)="openVariablesModal(user)">
-                    <span>renseignez vos variables</span>
-                </a>
-            </span>
-        </div>
-        }
 
-        <!-- alert si user a renseigné ses variables -->
-        @if(isThisStepHasUserVariables(step)) {
-        <div style="background: #e4efff;
-        color: #00326e;
-        border-color: #d1e1ff;" class="alert d-flex justify-content-between align-items-center">
-            <span class="d-flex align-items-center">
-                <i style="font-size: 33px;" class="bi bi-robot me-3"></i>
-                Continuez à l'étape suivante
-                | Ou <a style="font-weight: 400;
-                color: #426fb2;
-                text-decoration: underline;
-                margin-left: 5px;" (click)="openVariablesModal(user)">
-                    <span>Modifiez vos variables</span>
-                </a>
-
-            </span>
-            <span>
-                <button style="font-size: 1rem;
-                background: rgba(255, 255, 255, .35);
-                color: #000;
-                border-color: rgba(0, 0, 0, .2);
-                padding: 5px 13px;
-                font-weight: 600;" class="btn btn-sm btn-success text-underline ms-3" [routerLink]="['prompt']">
-                    <span *ngIf="isFormCompleted">Continuer</span>
-                    <i class="bi bi-arrow-right ms-3"></i>
-                </button>
-
-            </span>
-        </div>
-        }
         <!-- (click)="goToPromptView(step)" -->
         <!-- liste des prompts -->
         <ul class="list-group">
