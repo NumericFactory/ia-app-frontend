@@ -27,8 +27,6 @@
 // Custom
 @import "assets/_snackbar.scss";
 
-
-
 // 3. Include any default variable overrides here
 $theme-colors: (
     "primary": $indigo,
@@ -41,15 +39,13 @@ $theme-colors: (
     "dark": $dark
 );
 
-// 4. Include any default map overrides here
-
-// 5. Import all the rest of Bootstrap 
+// 4. Import all the rest of Bootstrap 
 @import "bootstrap/scss/bootstrap";
 
 
 body {
     // background: #edf0f3 !important;
-    background: #fcfdff !important;
+    background: #fff !important;
     font-family: "Karla", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;

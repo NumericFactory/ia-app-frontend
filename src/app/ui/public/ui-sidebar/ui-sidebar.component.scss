@@ -1,10 +1,9 @@
 .sidebar-left {
     min-width: 250px;
-    // max-width: 320px;
     height: calc(100vh - 0px);
-    border-right: 1px solid #b0b0b0;
-    background-color: #fff !important;
-    padding: 12px !important;
+    border-right: 1px solid #dfdfdf;
+    background-color: #fafbfc !important;
+    padding: 11px !important;
 }
 
 
@@ -20,9 +19,9 @@
     }
 
     &.accordion-item {
-        font-size: .9rem;
-        border-radius: 5px;
-        margin-left: 13px;
+        font-size: 0.85rem;
+        border-radius: 7px;
+        margin-left: 7px;
     }
 
 }

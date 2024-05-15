@@ -403,7 +403,7 @@ export class AdminService implements AdminGateway {
         })
         //set the updated steps'new steps', steps
         this.stepsSubject.next(steps);
-        this.alert.show('Catégorie ajoutée au prompt', 'success');
+        this.alert.show('Catégorie associée au prompt', 'success');
       })
     )
   }
@@ -421,7 +421,7 @@ export class AdminService implements AdminGateway {
             }
           })
         })
-        this.alert.show('Catégorie supprimée du prompt', 'success');
+        this.alert.show('Catégorie dissociée du prompt', 'success');
       })
     )
   }
