@@ -8,8 +8,11 @@
         <p-meterGroup [style]="{'position':'relative', 'width':'50%'}" [value]="value">
             <ng-template pTemplate="label">
                 <ng-container *ngFor="let meterItem of value; let index = index">
-                    <span style="font-size: 13px;" class="font-bold">{{ completedStepPrompts }}/{{step.prompts.length}}
-                        prompts</span>
+                    <span style="font-size: 13px;" class="font-bold d-flex justify-content-between">
+                        <span>{{ completedStepPrompts }}/{{step.prompts.length}} prompts</span>
+                        <i class="bi bi-trophy-fill fs-6"
+                            [style.color]="value[0].value===100 ? '#c9a40e' : '#d8d8d8'"></i>
+                    </span>
                 </ng-container>
             </ng-template>
         </p-meterGroup>
