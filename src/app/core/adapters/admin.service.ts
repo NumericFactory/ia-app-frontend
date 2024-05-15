@@ -131,6 +131,7 @@ export class AdminService implements AdminGateway {
           variables: [],
           prompts: [],
           order: 0,
+          isVisible: true,
           createdAt: response.data.createdAt
         };
         steps = [newStep as StepModelAdmin, ...steps,];
@@ -173,6 +174,27 @@ export class AdminService implements AdminGateway {
         if (index > -1) {
           steps = steps.filter(s => s.id !== id);
           this.stepsSubject.next(steps);
+        }
+      })
+    )
+  }
+
+  /**
+   * role : set the visibility of a step
+   * @param id 
+   * @param isVisible 
+   * @returns 
+   */
+  setStepVisibility(id: number, isVisible: boolean): Observable<number> {
+    const endpoint = `/admin/steps/${id}/visibility`;
+    return this.http.put(`${this.apiUrl}${endpoint}`, { isVisible }).pipe(
+      tap((response: any) => {
+        const steps = this.stepsSubject.value;
+        const step = steps.find(s => s.id === id);
+        if (step) {
+          step.isVisible = isVisible;
+          this.stepsSubject.next(steps);
+          isVisible ? this.alert.show('Le step est visible', 'success') : this.alert.show('Le step est invisible', 'success');
         }
       })
     )

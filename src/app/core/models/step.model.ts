@@ -22,6 +22,7 @@ export interface StepModel {
     stepUservariables: StepUserVariableModel[]
     createdAt: string
     order: number
+    isVisible: boolean
 }
 export interface StepUserVariableModel {
     id?: number
@@ -53,6 +54,7 @@ export interface StepModelAdmin {
     prompts: PromptModelAdmin[]
     createdAt: string
     order: number
+    isVisible: boolean
 }
 export interface FormUISchema {
     id?: number,

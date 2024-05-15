@@ -41,6 +41,7 @@ export abstract class AdminGateway {
     abstract createStep(step: StepModelAdmin): Observable<StepModelAdmin>;
     abstract updateStep(step: StepModelAdmin): Observable<StepModelAdmin>;
     abstract deleteStep(id: number): Observable<number>;
+    abstract setStepVisibility(id: number, isVisible: boolean): Observable<number>;
 
     abstract fetchPrompts(stepId: number): Promise<PromptModelAdmin[]>;
     abstract createPrompts(prompt: PromptModelAdmin[], stepId: number): Observable<any>;

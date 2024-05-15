@@ -26,7 +26,11 @@
     <tbody>
         @for(step of stepsAdmin; track step.id) {
         <tr (click)="openDialogUpdateStep($event, step)">
-            <th>{{step.id}}</th>
+            <th>
+                @if(step.isVisible) { <i class="bi bi-eye-fill"></i> }
+                @else { <i class="bi bi-eye-slash"></i> }
+                {{step.id}}
+            </th>
             <td>{{step.title}}</td>
             <!-- <td>{{step.subtitle}}</td> -->
             <td>
