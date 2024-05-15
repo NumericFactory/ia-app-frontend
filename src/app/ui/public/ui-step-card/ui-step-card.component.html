@@ -5,10 +5,10 @@
         <h6>{{step.subtitle}}</h6>
         <!-- <p>{{step.desc}}</p> -->
         <!-- <pre>2/{{step.prompts.length}} prompts</pre> -->
-        <p-meterGroup [value]="value">
+        <p-meterGroup [style]="{'position':'relative', 'width':'50%'}" [value]="value">
             <ng-template pTemplate="label">
                 <ng-container *ngFor="let meterItem of value; let index = index">
-                    <span style="font-size: 13px;" class="font-bold">{{ meterItem.value }}/{{step.prompts.length}}
+                    <span style="font-size: 13px;" class="font-bold">{{ completedStepPrompts }}/{{step.prompts.length}}
                         prompts</span>
                 </ng-container>
             </ng-template>

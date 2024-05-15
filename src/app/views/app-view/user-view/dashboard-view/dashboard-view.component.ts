@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { UiStepCardComponent } from '../../../../ui/public/ui-step-card/ui-step-card.component';
 import { CategoryModel } from '../../../../core/models/category.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UserGateway } from '../../../../core/ports/user.gateway';
 
 @Component({
   selector: 'app-dashboard-view',
@@ -17,7 +18,9 @@ export class DashboardViewComponent {
 
   steps$ = this.stepService.steps$;
   categories$: Observable<CategoryModel[]> = this.stepService.categories$;
-  constructor(private stepService: StepGateway) { }
+  user$ = this.userService.user$;
+
+  constructor(private stepService: StepGateway, private userService: UserGateway) { }
 
   ngOnInit(): void {
 
