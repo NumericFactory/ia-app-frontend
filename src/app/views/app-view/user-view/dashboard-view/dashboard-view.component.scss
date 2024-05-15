@@ -1,0 +1,34 @@
+.section {
+    margin-top: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.categories-list .card {
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 5px rgba(183, 192, 206, 0.55);
+    margin-bottom: 30px;
+    text-align: center;
+    transition-duration: .2s;
+}
+
+.categories-list .card-body {
+    background: #4a21cc;
+    color: #bfbcff;
+    border-radius: 5px 5px 0 0;
+    border: 0;
+    font-weight: 700;
+}
+
+.categories-list .card-footer {
+    background: #fff;
+    font-size: .85rem;
+    text-align: right;
+}
+
+.categories-list .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px 5px rgba(183, 192, 206, 0.75);
+    cursor: pointer;
+}

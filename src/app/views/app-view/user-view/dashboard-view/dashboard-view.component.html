@@ -11,17 +11,43 @@
     </div>
 </div>
 
-<div class="row g-3 justify-content-center animate__animated animate__fadeIn">
+
+<div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
     <div class="col-12 col-xl-10">
+        <h2 class="fs-5 mb-3">Step</h2>
         <div class="row g-3">
             @for(step of steps; track step.id) {
-            <div class="col-12 col-md-6 col-xl-4 steps-list">
+            <div class="col-12 col-md-6 col-xl-6 steps-list">
                 <ui-step-card [step]="step"></ui-step-card>
             </div>
             }
             @empty {
-            <h2>Si vous êtes admin,<br> ajoutez des steps et des prompts</h2>
+            <p>Si vous êtes admin,<br> ajoutez des steps et des prompts</p>
+            }
+        </div>
+    </div>
+    }
+</div>
+
+
+<div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
+
+    @if(categories$ | async; as categories) {
+    <div class="col-12 col-xl-10">
+        <h2 class="fs-5 mb-3">Catégories</h2>
+        <div class="row g-3">
+            @for(category of categories; track category) {
+            <div class="col-12 col-md-6 col-xl-3 categories-list">
+                <div class="card">
+                    <div class="card-body">{{category.title | lowercase}}</div>
+                    <div class="card-footer">{{ category.count_prompts }} {{pluralize( category.count_prompts,
+                        'prompt')}}</div>
+                </div>
+            </div>
+            }
+            @empty {
+            <p>Si vous êtes admin,<br> ajoutez des steps et des prompts</p>
             }
         </div>
     </div>

@@ -3,4 +3,6 @@ export interface CategoryModel {
     title: string;
     slug: string;
     description: string;
+    order: number;
+    count_prompts: number | 0;
 }

@@ -5,6 +5,7 @@ import { StepGateway } from '../ports/step.gateway';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserGateway } from '../ports/user.gateway';
+import { CategoryModel } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class StepService implements StepGateway {
   public steps$: Observable<StepModel[]> = this.stepsSubject.asObservable();
   private promptsSubject = new BehaviorSubject<PromptModel[]>([]);
   public prompts$ = this.promptsSubject.asObservable();
+  private categoriesSubject = new BehaviorSubject<CategoryModel[]>([]);
+  public categories$ = this.categoriesSubject.asObservable();
 
   constructor() { }
 
@@ -55,10 +58,18 @@ export class StepService implements StepGateway {
     return this.steps$.pipe(
       map((steps: StepModel[]) => {
         const step = steps.find((step: StepModel) => step.id === stepId);
-        console.log('step', step);
         return step ? step.prompts.find((prompt: PromptModel) => prompt.id === promptId) || null : null;
       })
     );
+  }
+
+  fetchCategories(): Observable<any> {
+    const endpoint = '/categories';
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      tap((response: any) => {
+        this.categoriesSubject.next(response);
+      })
+    )
   }
 
 

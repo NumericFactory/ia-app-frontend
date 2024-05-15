@@ -396,7 +396,9 @@ export class AdminService implements AdminGateway {
                 id: newCategoryAddedInDB.id,
                 title: newCategoryAddedInDB.title,
                 slug: newCategoryAddedInDB.slug,
-                description: newCategoryAddedInDB.description
+                description: newCategoryAddedInDB.description,
+                order: newCategoryAddedInDB.order,
+                count_prompts: newCategoryAddedInDB.count_prompts
               };
             }
           })
