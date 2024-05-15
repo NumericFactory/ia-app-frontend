@@ -4,7 +4,7 @@
 
 <div class="row">
     <!-- 2 CONVERSATION VIEW -->
-    <div *ngIf="step" class="col-12 col-xl-9">
+    <div style="margin-top:-9px" *ngIf="step" class="col-12 col-xl-9">
         @for(conv of conversationSate.items; track conv.promptId) {
         @if(conv.checked || conv.iaResponse.text.length || conv.nextItem) {
         <ui-conversation-user [user]="user" [prompt]="conv.userQuestion" [isChecked]="conv.checked"

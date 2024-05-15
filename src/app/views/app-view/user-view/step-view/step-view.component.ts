@@ -120,7 +120,7 @@ export class StepViewComponent {
     @for(question of questions; track question) {
       <app-question [isFormSubmitted]="formIsSubmit" [question]="question" [form]="userVariablesForm"></app-question>
       @if(question.information && question.information.length) {
-      <div style="margin-top:-0.55rem" class="alert alert-dark py-1 border-0">
+      <div style="margin-top:-0.55rem; background: #edeae6;" class="alert alert-dark py-1 border-0">
         <p class="m-0">{{question.information}}</p>
       </div>
       }
