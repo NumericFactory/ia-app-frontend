@@ -1,9 +1,9 @@
 .form-space {
     background: aliceblue;
-    height: 100vh;
-    position: fixed;
+    height: 90vh;
+    position: sticky;
     padding-top: 11px;
-    top: 59px;
     border-radius: 15px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    margin-top: -11px;
 }
