@@ -20,5 +20,6 @@ export abstract class StepGateway {
     abstract getPromptById(stepId: number, promptId: number): Observable<PromptModel | null>;
 
     abstract getPromptsByCategory(categoryId: number): Observable<PromptModel[]>;
+    abstract getPrompt(promptId: number): Observable<PromptModel | null>;
 
 }

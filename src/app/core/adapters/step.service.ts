@@ -80,9 +80,16 @@ export class StepService implements StepGateway {
         this.promptsSubject.next(response);
       })
     )
-    // return this.prompts$.pipe(
-    //   map((prompts: PromptModel[]) => prompts.filter((prompt: PromptModel) => prompt.categoryId === categoryId))
-    // );
+  }
+
+  getPrompt(promptId: number): Observable<PromptModel | null> {
+    const endpoint = `/prompts/${promptId}`;
+    return this.http.get<PromptModel>(`${this.apiUrl}${endpoint}`).pipe(
+      tap((response: any) => {
+        console.log('prompt', response)
+        //this.promptsSubject.next([response]);
+      })
+    )
   }
 
 
