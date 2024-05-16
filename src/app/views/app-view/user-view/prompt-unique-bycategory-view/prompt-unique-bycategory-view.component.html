@@ -24,13 +24,13 @@
     </div>
 
     <!-- 2 CONVERSATION VIEW -->
-    <div style="margin-top:-9px" class="col-12 col-md-6 col-lg-7 col-xl-8">
+    <div style="margin-top:-20px" class="col-12 col-md-6 col-lg-7 col-xl-8">
+        @if(user) {
+        <ui-conversation-user [user]="user" [prompt]="prompt" [isChecked]="false" [isLoadingResponse]="false"
+            [loadingGeneral]="false" (refreshPromptEvent)="selectPrompt(prompt)" />
+        }
 
-        <!-- <ui-conversation-user [user]="user" [prompt]="conv.userQuestion" [isChecked]="conv.checked"
-            [isLoadingResponse]="conv.isLoadingResponse" [loadingGeneral]="loadingGeneral"
-            (refreshPromptEvent)="selectPrompt(conv.userQuestion)" />
-      
-        <ui-conversation-ia [responseAI]="conv.iaResponse" [isLoadingResponse]="conv.isLoadingResponse" /> -->
+        <!-- <ui-conversation-ia [responseAI]="conv.iaResponse" [isLoadingResponse]="conv.isLoadingResponse" /> -->
 
     </div>
 

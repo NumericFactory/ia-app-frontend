@@ -13,11 +13,13 @@ import { DynamicFormQuestionComponent } from '../../../../shared/services/questi
 import { QuestionControlService } from '../../../../shared/services/question/question-control.service';
 import { QuestionBase } from '../../../../shared/services/question/question.model';
 import { UniquePromptUserVariablesForm } from '../../../../ui/public/ui-prompt-unique-view/ui-prompt-unique-form';
+import { UiConversationUserComponent } from '../../../../ui/public/ui-prompt-view/ui-conversation-user/ui-conversation-user.component';
+import { UiConversationIaComponent } from '../../../../ui/public/ui-prompt-view/ui-conversation-ia/ui-conversation-ia.component';
 
 @Component({
   selector: 'app-prompt-unique-bycategory-view',
   standalone: true,
-  imports: [UniquePromptUserVariablesForm],
+  imports: [UniquePromptUserVariablesForm, UiConversationUserComponent, UiConversationIaComponent],
   templateUrl: './prompt-unique-bycategory-view.component.html',
   styleUrl: './prompt-unique-bycategory-view.component.scss'
 })
@@ -27,11 +29,13 @@ export class PromptUniqueBycategoryViewComponent {
   variables: any[] = []
   user_variables: any[] = []
   stepId!: number;
+  user = this.userService.getUserFromSubject()
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private stepService: StepGateway
+    private stepService: StepGateway,
+    private userService: UserGateway,
   ) { }
 
   ngOnInit() {
@@ -52,6 +56,10 @@ export class PromptUniqueBycategoryViewComponent {
 
   goBack() {
     this.router.navigate(['/dashboard']);
+  }
+
+  selectPrompt(prompt: PromptModel) {
+    console.log(prompt)
   }
 
 }
