@@ -1,0 +1,31 @@
+<!-- 1 HEADER-->
+<div class="row mb-3">
+    <div style="transform: translateY(-10px);" class="d-flex align-items-center">
+        <a class="btn btn-link fs-3 btn-back" (click)="goBack()"><i class="bi bi-arrow-left"></i></a>
+        <nav aria-label="breadcrumb ms-3">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a (click)="goBack()">Dashboard</a></li>
+                @if(prompt; as prompt) {
+                <li class="breadcrumb-item active" aria-current="page">{{prompt.title}}</li>
+                }
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <!-- 2 CONVERSATION VIEW -->
+    <div style="margin-top:-9px" class="col-12 col-xl-9">
+
+        <!-- <ui-conversation-user [user]="user" [prompt]="conv.userQuestion" [isChecked]="conv.checked"
+            [isLoadingResponse]="conv.isLoadingResponse" [loadingGeneral]="loadingGeneral"
+            (refreshPromptEvent)="selectPrompt(conv.userQuestion)" />
+      
+        <ui-conversation-ia [responseAI]="conv.iaResponse" [isLoadingResponse]="conv.isLoadingResponse" /> -->
+
+    </div>
+
+    <!-- 3 PROMPT LIST -->
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+    </div>
+</div>

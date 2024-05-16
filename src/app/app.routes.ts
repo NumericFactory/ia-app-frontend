@@ -14,6 +14,7 @@ import { DashboardViewComponent } from './views/app-view/user-view/dashboard-vie
 import { StepAdminViewComponent } from './views/app-view/admin-view/step-admin-view/step-admin-view.component';
 import { SettingsAdminViewComponent } from './views/app-view/admin-view/settings-admin-view/settings-admin-view.component';
 import { SettingsViewComponent } from './views/app-view/user-view/settings-view/settings-view.component';
+import { PromptUniqueBycategoryViewComponent } from './views/app-view/user-view/prompt-unique-bycategory-view/prompt-unique-bycategory-view.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -48,7 +49,8 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: DashboardViewComponent },
             { path: 'step/:id', component: StepViewComponent },
-            { path: 'step/:stepid/prompt', component: PromptViewComponent }
+            { path: 'step/:stepid/prompt', component: PromptViewComponent },
+            { path: 'category/:categoryid/prompt/:promptid', component: PromptUniqueBycategoryViewComponent }
         ]
     },
     // Dashboard ADMIN Routes

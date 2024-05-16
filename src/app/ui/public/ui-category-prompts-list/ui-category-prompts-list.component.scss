@@ -27,3 +27,32 @@ form select.form-control,
 form textarea.form-control {
     padding: 0.325rem 0.65rem;
 }
+
+tbody tr td {
+    padding: 0.75rem;
+    font-size: 16px;
+}
+
+tbody tr:hover {
+    background: #aaa;
+    cursor: pointer;
+}
+
+tbody tr td i {
+    font-size: 1.1rem;
+}
+
+.done-false,
+.fav-false {
+    color: #aaaaaa;
+}
+
+.done-true {
+    color: #0bb672;
+}
+
+.fav-false:hover,
+.fav-true {
+    color: #291ba9;
+    cursor: pointer;
+}
