@@ -1,11 +1,11 @@
 <div [routerLink]="['../step', step.id]" class="card">
-    <div class="card-body">
+    <div style="position:relative;min-height: 207px;" class="card-body">
 
         <p>{{step.title}}</p>
         <h6>{{step.subtitle}}</h6>
-        <!-- <p>{{step.desc}}</p> -->
+        <div class="step-desc" [innerHTML]="step.desc"></div>
         <!-- <pre>2/{{step.prompts.length}} prompts</pre> -->
-        <p-meterGroup [style]="{'position':'relative', 'width':'50%'}" [value]="value">
+        <p-meterGroup [style]="{'position':'absolute', 'width':'50%', 'bottom':'5px'}" [value]="value">
             <ng-template pTemplate="label">
                 <ng-container *ngFor="let meterItem of value; let index = index">
                     <span style="font-size: 13px;" class="font-bold d-flex justify-content-between">

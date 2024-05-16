@@ -306,6 +306,13 @@ a {
     overflow-y: auto;
 }
 
+.bottomsheet-user-var {
+    min-height: 80vh;
+    overflow-y: hidden;
+    border-radius: 11px 11px 0 0;
+    margin: 0 auto;
+}
+
 html,
 body {
     height: 100%;

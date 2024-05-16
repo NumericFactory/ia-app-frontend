@@ -1,13 +1,27 @@
 .card {
-    background: #f0f2f3;
+    background: #f5f6f7;
     transition-duration: .2s;
     height: 100%;
     border-right: 5px solid #aaaaaa;
     border-radius: 5px;
+
 }
 
 .card:hover {
-    background: #f4f4f4;
+    background: #ffffff;
     transform: scale(1.03);
     cursor: pointer;
+}
+
+.step-desc {
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.card-body strong {
+    font-weight: normal !important;
 }
