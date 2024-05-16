@@ -17,10 +17,12 @@
 
     <!-- 3 PROMPT LIST -->
     <div class="col-12 col-md-6 col-lg-5 col-xl-4 form-space">
-        @if(variables.length && stepId) {
-        <ui-unique-prompt-variables-form [stepId]="stepId" [variables]="variables"
-            [user_variables]="user_variables"></ui-unique-prompt-variables-form>
-        }
+        <div style="position: sticky;top:0; background: aliceblue;">
+            @if(variables.length && stepId) {
+            <ui-unique-prompt-variables-form [stepId]="stepId" [variables]="variables"
+                [user_variables]="user_variables"></ui-unique-prompt-variables-form>
+            }
+        </div>
     </div>
 
     <!-- 2 CONVERSATION VIEW -->
@@ -30,7 +32,7 @@
             [loadingGeneral]="false" (refreshPromptEvent)="selectPrompt(prompt)" />
         }
 
-        <!-- <ui-conversation-ia [responseAI]="conv.iaResponse" [isLoadingResponse]="conv.isLoadingResponse" /> -->
+        <ui-conversation-ia [responseAI]="ia_response" [isLoadingResponse]="false" />
 
     </div>
 

@@ -29,6 +29,7 @@ export class PromptUniqueBycategoryViewComponent {
   variables: any[] = []
   user_variables: any[] = []
   stepId!: number;
+  ia_response: any = null;
   user = this.userService.getUserFromSubject()
 
   constructor(
@@ -46,10 +47,9 @@ export class PromptUniqueBycategoryViewComponent {
         this.variables = response.data.variables
         this.user_variables = response.data.user_variables
         this.stepId = response.data.step_id
-        console.log(this.prompt)
-        console.log(this.variables)
-        console.log(this.user_variables)
-        console.log(this.stepId)
+        if (response.data.ia_response) {
+          this.ia_response = response.data.ia_response
+        }
       }
     );
   }
