@@ -19,8 +19,8 @@
     <div class="col-12 col-md-6 col-lg-5 col-xl-4 form-space">
         <div style="position: sticky;top:0; background: aliceblue;">
             @if(variables.length && stepId) {
-            <ui-unique-prompt-variables-form [stepId]="stepId" [variables]="variables"
-                [user_variables]="user_variables"></ui-unique-prompt-variables-form>
+            <ui-unique-prompt-variables-form (formValidEvent)="formValidAction($event)" [stepId]="stepId"
+                [variables]="variables" [user_variables]="user_variables"></ui-unique-prompt-variables-form>
             }
         </div>
     </div>

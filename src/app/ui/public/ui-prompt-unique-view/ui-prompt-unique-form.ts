@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ReactiveFormsModule, FormGroup } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -16,13 +16,13 @@ import { QuestionBase } from "../../../shared/services/question/question.model";
  * Role : expose a form to collect user variables for a given step
  */
 @Component({
-    selector: 'ui-unique-prompt-variables-form',
-    standalone: true,
-    imports: [
-        CommonModule, ReactiveFormsModule, MatCheckboxModule, JsonPipe,
-        MatButtonModule, DynamicFormQuestionComponent
-    ],
-    template: `
+  selector: 'ui-unique-prompt-variables-form',
+  standalone: true,
+  imports: [
+    CommonModule, ReactiveFormsModule, MatCheckboxModule, JsonPipe,
+    MatButtonModule, DynamicFormQuestionComponent
+  ],
+  template: `
     <div>
       <h3 class="fs-5 mb-0">Vos informations</h3>
       <p class="text-secondary info-text">
@@ -57,8 +57,8 @@ import { QuestionBase } from "../../../shared/services/question/question.model";
     </div> -->
   </div>
     `,
-    styles: [
-        `:host {
+  styles: [
+    `:host {
       display: block;
       background: #f0f8ff;
       border-radius: 8px;
@@ -81,90 +81,96 @@ import { QuestionBase } from "../../../shared/services/question/question.model";
 })
 export class UniquePromptUserVariablesForm {
 
-    @Input() variables!: FormUISchema[];
-    @Input() user_variables!: any[];
-    @Input() stepId!: number;
-    user: UserModel | null = this.userService.getUserFromSubject();
-    userVariablesForm!: FormGroup;
+  @Input() variables!: FormUISchema[];
+  @Input() user_variables!: any[];
+  @Input() stepId!: number;
+  @Output() formValidEvent = new EventEmitter<boolean>();
+  user: UserModel | null = this.userService.getUserFromSubject();
+  userVariablesForm!: FormGroup;
 
-    formIsSubmit: boolean = false;
-    questions: QuestionBase<string>[] = [];
+  formIsSubmit: boolean = false;
+  questions: QuestionBase<string>[] = [];
 
-    constructor(
-        public qcs: QuestionControlService,
-        private userService: UserGateway,
-        private alertService: AlertService
-    ) { }
+  constructor(
+    public qcs: QuestionControlService,
+    private userService: UserGateway,
+    private alertService: AlertService
+  ) { }
 
-    ngOnInit() {
-        console.log('variables', this.variables);
-        console.log('user_variables', this.user_variables);
-        console.log('stepId', this.stepId);
-        this.variables.forEach((variable: FormUISchema) => {
-            let question = new QuestionBase<string>({
-                variable_id: variable.id,
-                key: variable.key,
-                label: variable.label,
-                controlType: variable.controltype,
-                type: variable.type,
-                required: variable.required,
-                order: variable.order,
-                //options: [{ key: 'user', value: 'User' }],
-                information: variable.information
-            });
-            this.questions.push(question);
-        });
+  ngOnInit() {
+    // create questions
+    this.variables.forEach((variable: FormUISchema) => {
+      let question = new QuestionBase<string>({
+        variable_id: variable.id,
+        key: variable.key,
+        label: variable.label,
+        controlType: variable.controltype,
+        type: variable.type,
+        required: variable.required,
+        order: variable.order,
+        //options: [{ key: 'user', value: 'User' }],
+        information: variable.information
+      });
+      this.questions.push(question);
+    });
 
-        // create userVariablesForm
-        this.userVariablesForm = this.qcs.toFormGroup(
-            this.questions as QuestionBase<string>[]
-        );
-        // fill form with user variables
-        this.logKeyValuePairs(this.userVariablesForm);
+    // create userVariablesForm
+    this.userVariablesForm = this.qcs.toFormGroup(
+      this.questions as QuestionBase<string>[]
+    );
+    // fill form with user variables
+    this.logKeyValuePairs(this.userVariablesForm);
+
+    // if form is invalid, emit event
+    this.userVariablesForm.valueChanges.subscribe(() => {
+      this.userVariablesForm.invalid ? this.formValidEvent.emit(false) : null;
+    });
+  }
+
+  //Submit form
+  onSubmit() {
+    this.formIsSubmit = true;
+    if (this.userVariablesForm.valid) {
+      const payload: any = {};
+      for (const [key, value] of Object.entries(this.userVariablesForm.value)) {
+        payload[key] = { value }
+      }
+      this.userService.postStepUserVariables(this.stepId, payload).subscribe((response) => {
+        this.formValidEvent.emit(true);
+      });
     }
-
-    //Submit form
-    onSubmit() {
-        console.log('form', this.stepId);
-        this.formIsSubmit = true;
-        if (this.userVariablesForm.valid) {
-            const payload: any = {};
-            for (const [key, value] of Object.entries(this.userVariablesForm.value)) {
-                payload[key] = { value }
-            }
-            this.userService.postStepUserVariables(this.stepId, payload).subscribe((response) => {
-                console.log('response', response)
-            });
-        }
-        else {
-            this.alertService.show('Veuillez renseigner tous les champs requis', 'error');
-        }
+    else {
+      this.formValidEvent.emit(false);
+      this.alertService.show('Veuillez renseigner tous les champs requis', 'error');
     }
+  }
 
 
-    /********* UTIL******* */
-    /**
-     * fill form with user variables
-     * @param group 
-     */
-    logKeyValuePairs(group: FormGroup): void {
-        console.log('user', this.user)
-        // loop through each key in the FormGroup
-        Object.keys(group.controls).forEach((key: any) => {
-            // Get a reference to the control using the FormGroup.get() method
-            const abstractControl = group.get(key);
-            // If the control is an instance of FormGroup i.e a nested FormGroup
-            // then recursively call this same method (logKeyValuePairs) passing it
-            // the FormGroup so we can get to the form controls in it
-            if (abstractControl instanceof FormGroup) {
-                this.logKeyValuePairs(abstractControl);
-                // If the control is not a FormGroup then we know it's a FormControl
-            } else {
-                //console.log('Key = ' + key + ' && Value = ' + this.user?.variables.find((v) => v.id == key)?.value);
-                abstractControl?.setValue(this.user?.variables.find((v) => v.id == key)?.value);
-            }
-        });
-    }
+
+
+  /********* UTIL******* */
+  /**
+   * fill form with user variables
+   * @param group 
+   */
+  logKeyValuePairs(group: FormGroup): void {
+    console.log('user', this.user)
+    // loop through each key in the FormGroup
+    Object.keys(group.controls).forEach((key: any) => {
+      // Get a reference to the control using the FormGroup.get() method
+      const abstractControl = group.get(key);
+      // If the control is an instance of FormGroup i.e a nested FormGroup
+      // then recursively call this same method (logKeyValuePairs) passing it
+      // the FormGroup so we can get to the form controls in it
+      if (abstractControl instanceof FormGroup) {
+        this.logKeyValuePairs(abstractControl);
+        // If the control is not a FormGroup then we know it's a FormControl
+      } else {
+        //console.log('Key = ' + key + ' && Value = ' + this.user?.variables.find((v) => v.id == key)?.value);
+        abstractControl?.setValue(this.user?.variables.find((v) => v.id == key)?.value);
+      }
+    });
+  }
 
 }
 

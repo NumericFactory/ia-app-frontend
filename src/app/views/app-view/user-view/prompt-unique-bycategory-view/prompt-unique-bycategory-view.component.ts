@@ -80,12 +80,18 @@ export class PromptUniqueBycategoryViewComponent {
     );
   }
 
+  formValidAction(event: any) {
+    console.log('form valid', event);
+    this.viewState.userVariables = event
+    console.log('view state', this.viewState);
+  }
+
   goBack() {
     this.router.navigate(['/dashboard']);
   }
 
   selectPrompt(prompt: PromptModel) {
-    if (this.user_variables.length === 0) {
+    if (this.user_variables.length === 0 || this.viewState.userVariables === false) {
       this.alertService.show('Veuillez remplir le formulaire', 'error', 3000, 'right');
       return;
     }
