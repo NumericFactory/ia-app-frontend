@@ -97,6 +97,7 @@ export class PromptUniqueBycategoryViewComponent {
     }
     // build secret prompt with user variables
     const newPrompt: string = this.buildPrompt(prompt, this.user_variables);
+    console.log('new prompt', newPrompt);
     // ask the question
     this.viewState.loadingIaResponse = true;
     this.iaService.ask(newPrompt).subscribe(
@@ -124,6 +125,29 @@ export class PromptUniqueBycategoryViewComponent {
 
 
   // UTILS
+
+
+  buildPrompt(prompt: PromptModel, allUserVariables: any): string {
+    let newPrompt: string | undefined = prompt.secretprompt || undefined;
+    // replace step_user_variables and user_settings in prompt
+    const userVariables = allUserVariables.filter((variable: any) => variable.step_id === prompt.stepId);
+    const userSettings = this.user?.settings;
+    let userVariablesAndSettings = [...userVariables];
+    if (userSettings) {
+      userVariablesAndSettings = [...userVariables, ...userSettings]
+    }
+    console.log('userVariablesAndSettings', userVariablesAndSettings);
+    // replace variables in prompt
+    if (newPrompt && userVariablesAndSettings) {
+      userVariablesAndSettings.forEach((variable: any) => {
+        newPrompt = this.replaceVariable(newPrompt, variable);
+      });
+    }
+    return newPrompt || '';
+  }
+
+
+  // replace a variable in a string
   replaceVariable(chaine: string | undefined, variables: any) {
     if (!chaine || !variables) return chaine
     // Extraire la clé et la valeur de l'objet variables
@@ -131,20 +155,6 @@ export class PromptUniqueBycategoryViewComponent {
     // Remplacer la variable dans la chaîne
     const newString = chaine.replace(`{${key}}`, value)
     return newString
-  }
-
-  buildPrompt(prompt: PromptModel, allUserVariables: any): string {
-    let newPrompt: string | undefined = prompt.secretprompt || undefined;
-    // replace variables in prompt
-    const userVariables = allUserVariables
-      .filter((variable: any) => variable.step_id === prompt.stepId);
-    // replace variables in prompt
-    if (newPrompt && userVariables) {
-      userVariables.forEach((variable: any) => {
-        newPrompt = this.replaceVariable(newPrompt, variable);
-      });
-    }
-    return newPrompt || '';
   }
 
 }
