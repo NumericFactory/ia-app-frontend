@@ -9,11 +9,12 @@ import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { StepModelAdmin } from '../../../../core/models/step.model';
 import { MatDialogModule } from '@angular/material/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-create-prompts-form',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, ListboxModule, JsonPipe, NgFor, NgIf, MatDialogModule],
+  imports: [ReactiveFormsModule, FormsModule, ListboxModule, JsonPipe, NgFor, NgIf, MatDialogModule, InputTextareaModule],
   templateUrl: './create-prompts-form.component.html',
   styleUrl: './create-prompts-form.component.scss'
 })

@@ -10,8 +10,8 @@
         <input class="form-control" *ngSwitchCase="'input'" [formControlName]="question.variable_id" [id]="question.key"
             [type]="question.type">
 
-        <textarea class="form-control" *ngSwitchCase="'textarea'" [formControlName]="question.variable_id"
-            [id]="question.key"></textarea>
+        <textarea pInputTextarea [autoResize]="true" class="form-control" *ngSwitchCase="'textarea'"
+            [formControlName]="question.variable_id" [id]="question.key"></textarea>
 
         <select class="form-control" [id]="question.key" *ngSwitchCase="'select'"
             [formControlName]="question.variable_id">

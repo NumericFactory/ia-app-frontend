@@ -11,6 +11,7 @@ import { PromptModelAdmin, StepModelAdmin } from '../../../../core/models/step.m
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { MatDialogModule } from '@angular/material/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   standalone: true,
   imports: [
     ReactiveFormsModule, FormsModule,
-    DropdownModule, ListboxModule, MatDialogModule,
+    DropdownModule, ListboxModule, MatDialogModule, InputTextareaModule,
     AsyncPipe, NgFor, NgIf
   ],
   templateUrl: './update-prompts-form.component.html',

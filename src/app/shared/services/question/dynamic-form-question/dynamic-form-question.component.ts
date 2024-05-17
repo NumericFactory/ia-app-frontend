@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgSwitchCase } from '@angular/common';
 import { QuestionBase } from '../question.model';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 
 
@@ -9,7 +10,7 @@ import { QuestionBase } from '../question.model';
   standalone: true,
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html',
-  imports: [CommonModule, ReactiveFormsModule, CommonModule, NgSwitchCase],
+  imports: [CommonModule, ReactiveFormsModule, CommonModule, InputTextareaModule, NgSwitchCase],
 })
 export class DynamicFormQuestionComponent {
 
