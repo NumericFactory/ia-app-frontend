@@ -16,6 +16,7 @@ import { UserGateway } from './core/ports/user.gateway';
 import { UserService } from './core/adapters/user.service';
 import { IAGateway } from './core/ports/ia.gateway';
 import { IaService } from './core/adapters/ia.service';
+import { provideMarkdown } from 'ngx-markdown';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
         loaderInterceptor, tokenInterceptor, errorInterceptor,
       ])
     ),
+    provideMarkdown(),
     { provide: AuthGateway, useClass: AuthService },
     { provide: AdminGateway, useClass: AdminService },
     { provide: UserGateway, useClass: UserService },

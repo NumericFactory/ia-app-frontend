@@ -126,3 +126,19 @@ div.prompt-result-view {
     background: #3b2abb;
     ;
 }
+
+markdown table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 1rem;
+    color: #c1c3d2;
+    font-size: .97rem;
+}
+
+markdown table tbody tr td {
+    border-width: 1px !important;
+    border-color: rgba(255, 255, 255, 0.8);
+    border-left-width: 1px;
+    padding: .25rem .75rem;
+}

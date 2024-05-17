@@ -4,16 +4,20 @@
 }
 
 @if(responseAI && responseAI?.text?.length && !isLoadingResponse) {
-<div style="position: relative" class="prompt-result-view animate__animated animate__fadeIn iaresponse">
+<div style="position: relative; overflow-y: scroll;"
+    class="prompt-result-view animate__animated animate__fadeIn iaresponse">
     <div class="prompt-result-view__title d-flex align-items-center">
         <i class="bi bi-robot"></i>
         <p><strong>Ai Bot</strong><span class="silent">- {{responseAI.createdAt | date:'dd/MM/yyyy hh:mm'}}</span></p>
     </div>
-    <p (selectstart)="onSelectionText($event)" (selectionchange)="onSelectionText($event)"
+    <!-- <p (selectstart)="onSelectionText($event)" (selectionchange)="onSelectionText($event)"
         (select)="onSelectionText($event)" style="white-space: pre-wrap;
             padding: 0px 42px 0px 0px;
             line-height: 21px;
-            font-size: 16.5px;" [innerHTML]="responseAI.text"></p>
+            font-size: 16.5px;" [innerHTML]="responseAI.text"></p> -->
+    <!-- variable binding -->
+    <markdown [data]="responseAI.text" (ready)="onReady()"></markdown>
+
     <i (click)="copyToClipBoard(responseAI?.text)" class="bi bi-copy copypaste"></i>
 </div>
 

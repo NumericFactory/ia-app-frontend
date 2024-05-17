@@ -2,11 +2,12 @@ import { Component, Input, booleanAttribute } from '@angular/core';
 import { UiConversationLoaderSkeletonComponent } from '../ui-loader-skeleton/ui-conversation-loader-skeleton.component';
 import { DatePipe } from '@angular/common';
 import { AlertService } from '../../../../shared/services/alert.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'ui-conversation-ia',
   standalone: true,
-  imports: [UiConversationLoaderSkeletonComponent, DatePipe],
+  imports: [UiConversationLoaderSkeletonComponent, DatePipe, MarkdownModule],
   templateUrl: './ui-conversation-ia.component.html',
   styleUrl: './ui-conversation-ia.component.scss'
 })
@@ -19,6 +20,10 @@ export class UiConversationIaComponent {
 
   ngOnInit() {
     console.log('UiConversationIaComponent', this.responseAI);
+  }
+
+  onReady() {
+    console.log('onReady');
   }
 
   copyToClipBoard(responseAIText: string) {
