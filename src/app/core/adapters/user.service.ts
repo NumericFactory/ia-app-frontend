@@ -60,7 +60,7 @@ export class UserService implements UserGateway {
     const endpoint = `/steps/${stepId}/user-variables`;
     return this.http.post(`${this.apiUrl}${endpoint}`, { variables: payloadUserVar }).pipe(
       tap((response: any) => {
-
+        this.alert.show('Variables sauvegardées', 'success');
         const user = this.userSubject.getValue();
         if (user && response.data) {
           user.variables = [...response.data];

@@ -26,7 +26,6 @@ export class UiStepCardComponent {
     this.userHistory = this.userHistory || []
     // count the number of prompts that have been completed
     this.completedStepPrompts = this.userHistory.find((story) => story.step_id === this.step.id)?.prompts.length || 0
-    console.log(this.completedStepPrompts)
     this.value = [
       {
         label: 'Prompt',

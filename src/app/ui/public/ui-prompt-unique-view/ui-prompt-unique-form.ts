@@ -24,8 +24,8 @@ import { QuestionBase } from "../../../shared/services/question/question.model";
   ],
   template: `
     <div>
-      <h3 class="fs-5 mb-0">Vos informations</h3>
-      <p class="text-secondary info-text">
+      <h3 class="fs-5 mb-0 text-center">Vos informations</h3>
+      <p class="text-secondary info-text text-center">
         <i class="bi bi-info-circle-fill text-primary me-2"></i>
         <small>Saisir les informations pour executer le prompt.</small>
       </p>

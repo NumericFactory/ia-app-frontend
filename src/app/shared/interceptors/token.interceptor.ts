@@ -54,16 +54,16 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   let cloneRequest: HttpRequest<any> = req;
 
-  // // SI API TMDB
-  // if (req.url.includes(this.TMDB_URL)) {
-  //   cloneRequest = this.addBearerToken(req, this.TMDB_TOKEN);
+  // // SI API 
+  // if (req.url.includes(this.URL)) {
+  //   cloneRequest = this.addBearerToken(req, this.TOKEN);
   // }
 
   // SI notre API et SI l'url necessite l'authentification
   // if (this.isUrlNeedsUserToken(req))
   if (true) {
     const token = authService.getToken();
-    console.log(token)
+    // console.log(token)
     if (token !== null)
       cloneRequest = addBearerToken(req, token)
   }
