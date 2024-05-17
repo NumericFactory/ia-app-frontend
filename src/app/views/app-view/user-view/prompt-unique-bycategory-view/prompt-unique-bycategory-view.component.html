@@ -28,11 +28,12 @@
     <!-- 2 CONVERSATION VIEW -->
     <div style="margin-top:-20px" class="col-12 col-md-6 col-lg-7 col-xl-8">
         @if(user) {
-        <ui-conversation-user [user]="user" [prompt]="prompt" [isChecked]="false" [isLoadingResponse]="false"
-            [loadingGeneral]="false" (refreshPromptEvent)="selectPrompt(prompt)" />
+        <ui-conversation-user [user]="user" [prompt]="prompt" [isChecked]="false"
+            [isLoadingResponse]="viewState.loadingIaResponse" [loadingGeneral]="viewState.loadingIaResponse"
+            (refreshPromptEvent)="selectPrompt(prompt)" />
         }
 
-        <ui-conversation-ia [responseAI]="ia_response" [isLoadingResponse]="false" />
+        <ui-conversation-ia [responseAI]="ia_response" [isLoadingResponse]="viewState.loadingIaResponse" />
 
     </div>
 

@@ -17,6 +17,10 @@ export class UiConversationIaComponent {
 
   constructor(private alertService: AlertService) { }
 
+  ngOnInit() {
+    console.log('UiConversationIaComponent', this.responseAI);
+  }
+
   copyToClipBoard(responseAIText: string) {
     navigator.clipboard.writeText(responseAIText);
     this.alertService.show('Copié!', 'info', 2000, 'center');
