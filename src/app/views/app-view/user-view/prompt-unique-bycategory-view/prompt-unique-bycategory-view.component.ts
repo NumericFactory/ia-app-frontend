@@ -97,6 +97,18 @@ export class PromptUniqueBycategoryViewComponent {
       (response: any) => {
         this.ia_response = response.data.content[0]; // .text and .createdAt
         this.viewState.loadingIaResponse = false;
+        // save the ia response
+        const payloadAIResponse = {
+          ia_response: response.data.content[0].text,
+          ia_model: response.data.model,
+          tokens_count_input: response.data.usage.input_tokens,
+          tokens_count_output: response.data.usage.output_tokens
+        };
+        this.userService.postUserPromptAIResponse(
+          this.stepId,
+          prompt.id,
+          { prompt: { ...payloadAIResponse } }
+        ).subscribe();
       }
     );
 
