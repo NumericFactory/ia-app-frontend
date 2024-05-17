@@ -1,23 +1,25 @@
 import { DIALOG_DATA, Dialog, DialogRef } from '@angular/cdk/dialog';
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ListboxChangeEvent, ListboxModule } from 'primeng/listbox';
 import { DropdownModule } from 'primeng/dropdown';
-import { Observable, map, merge, switchMap } from 'rxjs';
+import { map, merge, switchMap } from 'rxjs';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { PromptModelAdmin, StepModelAdmin } from '../../../../core/models/step.model';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UserGateway } from '../../../../core/ports/user.gateway';
-import { CategoryModel } from '../../../../core/models/category.model';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AutoResizeTextareaDirective } from '../../../../shared/directives/auto-resize-textarea.directive';
+
 
 @Component({
   selector: 'app-update-prompts-form',
   standalone: true,
   imports: [
     ReactiveFormsModule, FormsModule,
-    DropdownModule, ListboxModule, MatDialogModule,
+    DropdownModule, ListboxModule, MatDialogModule, AutoResizeTextareaDirective,
     AsyncPipe, NgFor, NgIf
   ],
   templateUrl: './update-prompts-form.component.html',
@@ -41,6 +43,7 @@ export class UpdatePromptsFormComponent {
     private userService: UserGateway,
     @Inject(DIALOG_DATA) public data: any,
   ) { }
+
 
   ngOnInit() {
     // subscribe to steps observable

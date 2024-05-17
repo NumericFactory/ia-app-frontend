@@ -240,13 +240,13 @@ markdown th {
 }
 
 ::-webkit-scrollbar {
-    height: 1rem;
-    width: .5rem
+    height: 1.2rem;
+    width: .6rem
 }
 
 ::-webkit-scrollbar:horizontal {
-    height: .5rem;
-    width: 1rem
+    height: .6rem;
+    width: 1.2rem
 }
 
 ::-webkit-scrollbar-track {
@@ -449,6 +449,10 @@ body {
     font-size: 12.5px;
 }
 
-::selection {
+*::selection {
     background: #c0c0ff;
+}
+
+markdown ::selection {
+    background: #3b2abb !important;
 }
