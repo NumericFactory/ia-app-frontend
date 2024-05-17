@@ -151,20 +151,6 @@ export class PromptViewComponent {
   }
 
 
-  buildPrompt(prompt: PromptModel, allUserVariables: any): string {
-    let newPrompt: string | undefined = prompt.secretprompt || undefined;
-    // replace variables in prompt
-    const userVariables = allUserVariables
-      .filter((variable: any) => variable.step_id === prompt.stepId);
-    // replace variables in prompt
-    if (newPrompt && userVariables) {
-      userVariables.forEach((variable: any) => {
-        newPrompt = this.replaceVariable(newPrompt, variable);
-      });
-    }
-    return newPrompt || '';
-  }
-
   conversationHasIAResponse(): boolean {
     return Boolean(this.conversationSate.items.find((item) => item.iaResponse.text !== ''));
   }
@@ -224,6 +210,25 @@ export class PromptViewComponent {
     // Remplacer la variable dans la chaîne
     const newString = chaine.replace(`{${key}}`, value)
     return newString
+  }
+
+  buildPrompt(prompt: PromptModel, allUserVariables: any): string {
+    let newPrompt: string | undefined = prompt.secretprompt || undefined;
+    // replace step_user_variables and user_settings in prompt
+    const userVariables = allUserVariables.filter((variable: any) => variable.step_id === prompt.stepId);
+    const userSettings = this.user?.settings;
+    let userVariablesAndSettings = [...userVariables];
+    if (userSettings) {
+      userVariablesAndSettings = [...userVariables, ...userSettings]
+    }
+    console.log('userVariablesAndSettings', userVariablesAndSettings);
+    // replace variables in prompt
+    if (newPrompt && userVariablesAndSettings) {
+      userVariablesAndSettings.forEach((variable: any) => {
+        newPrompt = this.replaceVariable(newPrompt, variable);
+      });
+    }
+    return newPrompt || '';
   }
 
 }

@@ -8,7 +8,9 @@
     class="prompt-result-view animate__animated animate__fadeIn iaresponse">
     <div class="prompt-result-view__title d-flex align-items-center">
         <i class="bi bi-robot"></i>
-        <p><strong>Ai Bot</strong><span class="silent">- {{responseAI.createdAt | date:'dd/MM/yyyy hh:mm'}}</span></p>
+        <p (textSelect)="renderRectangles($event)"><strong>Ai Bot</strong><span class="silent">-
+                {{responseAI.createdAt |
+                date:'dd/MM/yyyy hh:mm'}}</span></p>
     </div>
     <!-- <p (selectstart)="onSelectionText($event)" (selectionchange)="onSelectionText($event)"
         (select)="onSelectionText($event)" style="white-space: pre-wrap;

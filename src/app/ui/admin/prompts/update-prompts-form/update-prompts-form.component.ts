@@ -11,7 +11,6 @@ import { PromptModelAdmin, StepModelAdmin } from '../../../../core/models/step.m
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AutoResizeTextareaDirective } from '../../../../shared/directives/auto-resize-textarea.directive';
 
 
 @Component({
@@ -19,7 +18,7 @@ import { AutoResizeTextareaDirective } from '../../../../shared/directives/auto-
   standalone: true,
   imports: [
     ReactiveFormsModule, FormsModule,
-    DropdownModule, ListboxModule, MatDialogModule, AutoResizeTextareaDirective,
+    DropdownModule, ListboxModule, MatDialogModule,
     AsyncPipe, NgFor, NgIf
   ],
   templateUrl: './update-prompts-form.component.html',
