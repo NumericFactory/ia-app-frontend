@@ -1,9 +1,4 @@
-export enum Role {
-    user = 1,
-    admin = 2,
-    powerAdmin = 3,
-    guest = 4
-}
+export enum Role { user = 1, admin = 2, powerAdmin = 3, guest = 4 }
 
 export interface UserHistoryPromptItemModel {
     prompt_id: number,
