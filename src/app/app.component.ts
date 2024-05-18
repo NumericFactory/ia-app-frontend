@@ -29,7 +29,7 @@ export class AppComponent {
         if (!isAuth) this.router.navigate(['/auth/login'])
         else {
           user?.roles.find(role => role > 1)
-            ? this.router.navigate(['/dashboard'])
+            ? this.router.navigate(['/admin'])
             : this.router.navigate(['/dashboard'])
         }
       })

@@ -1,7 +1,6 @@
 import { DIALOG_DATA, Dialog, DialogRef } from '@angular/cdk/dialog';
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ListboxChangeEvent, ListboxModule } from 'primeng/listbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -12,6 +11,8 @@ import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { MatDialogModule } from '@angular/material/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { SetCursorPositionDirective } from '../../../../shared/directives/set-cursor-position.directive';
+
 
 
 @Component({
@@ -19,7 +20,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
   standalone: true,
   imports: [
     ReactiveFormsModule, FormsModule,
-    DropdownModule, ListboxModule, MatDialogModule, InputTextareaModule,
+    DropdownModule, ListboxModule, MatDialogModule, InputTextareaModule, SetCursorPositionDirective,
     AsyncPipe, NgFor, NgIf
   ],
   templateUrl: './update-prompts-form.component.html',
@@ -34,6 +35,12 @@ export class UpdatePromptsFormComponent {
   variables = ['variable1', 'variable2', 'variable3', 'variable4', 'variable5']
   selectedVariable: string = '';
 
+  cursorPositions: number[] = [];
+
+  setCursor(index: number, position: number) {
+    this.cursorPositions[index] = position; // Example position
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: DialogRef<string>,
@@ -42,7 +49,8 @@ export class UpdatePromptsFormComponent {
     private confirmDialog: ConfirmDialogService,
     private userService: UserGateway,
     @Inject(DIALOG_DATA) public data: any,
-  ) { }
+  ) {
+  }
 
 
   ngOnInit() {
@@ -62,6 +70,8 @@ export class UpdatePromptsFormComponent {
       this.prompts.push(this.createPromptFormControl(prompt));
     }
 
+    this.cursorPositions = [0]; // Initial cursor positions
+
     /**
      * detect if user type '@' in secretPrompt textarea
      * if true, open dialog to select a variable
@@ -69,7 +79,9 @@ export class UpdatePromptsFormComponent {
     this.promptsForm.valueChanges.pipe(
       switchMap((f) => {
         const obs = this.formPrompts.controls.map((control, index) => {
-          return control.valueChanges.pipe(map((value) => ({ value: value.secretprompt, i: index })));
+          return control.valueChanges.pipe(
+            map((value) => ({ value: value.secretprompt, i: index }))
+          );
         });
         return merge(...obs);
       })
@@ -89,12 +101,20 @@ export class UpdatePromptsFormComponent {
           }
         })
         dialogRef.closed.subscribe((result) => {
+          console.log('result', result);
           if (x.i !== null) {
             let text = this.formPrompts.controls[x.i].get('secretprompt')?.value;
-            !result
-              ? text = text.replace('@', '')
-              : text = text.replace('@', '{' + result + '}')
+            // get cursor position
+            let cursorPosIndex = [...text].findIndex((char) => char === '@');
+            if (result === undefined) {
+              text = text.replace('@', ''); // remove @ if no result
+            }
+            else {
+              text = text.replace('@', '{' + result + '}')
+              cursorPosIndex = cursorPosIndex + String(result).length + 2;
+            }
             this.formPrompts.controls[x.i].get('secretprompt')?.setValue(text);
+            this.setCursor(x.i, cursorPosIndex);
           }
         });
       }
