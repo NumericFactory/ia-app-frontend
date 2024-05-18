@@ -1,17 +1,9 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormUISchema, PromptModel } from '../../../../core/models/step.model';
+import { PromptModel } from '../../../../core/models/step.model';
 import { StepGateway } from '../../../../core/ports/step.gateway';
-import { CommonModule, JsonPipe } from '@angular/common';
-import { ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { UserModel } from '../../../../core/models/user.model';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { AlertService } from '../../../../shared/services/alert.service';
-import { DynamicFormQuestionComponent } from '../../../../shared/services/question/dynamic-form-question/dynamic-form-question.component';
-import { QuestionControlService } from '../../../../shared/services/question/question-control.service';
-import { QuestionBase } from '../../../../shared/services/question/question.model';
 import { UniquePromptUserVariablesForm } from '../../../../ui/public/ui-prompt-unique-view/ui-prompt-unique-form';
 import { UiConversationUserComponent } from '../../../../ui/public/ui-prompt-view/ui-conversation-user/ui-conversation-user.component';
 import { UiConversationIaComponent } from '../../../../ui/public/ui-prompt-view/ui-conversation-ia/ui-conversation-ia.component';
@@ -34,11 +26,11 @@ export class PromptUniqueBycategoryViewComponent {
   user = this.userService.getUserFromSubject()
 
   viewState = { // manage the view state of the component
-    loadingPrompt: true, //1
-    variables: false, //2
-    userVariables: false, //3
-    iaResponse: false, //4
-    loadingIaResponse: false //5
+    loadingPrompt: true,      //1
+    variables: false,         //2
+    userVariables: false,     //3
+    iaResponse: false,        //4
+    loadingIaResponse: false  //5
   }
 
   constructor(
@@ -52,7 +44,13 @@ export class PromptUniqueBycategoryViewComponent {
 
   ngOnInit() {
     const promptId = this.route.snapshot.params['promptid']
-    // get the prompt with the variables, user variables and ia response
+
+    this.userService.user$.subscribe(
+      (user) => {
+        this.user_variables = user?.variables ?? []
+      }
+    )
+    // get the prompt with the *variables, *user variables and *ia response
     this.stepService.getPrompt(Number(promptId)).subscribe(
       (response: any) => {
         this.prompt = response.data.prompt
@@ -64,7 +62,6 @@ export class PromptUniqueBycategoryViewComponent {
         }
 
         // manage the view state
-
         // 1 hide the loading prompt
         this.viewState.loadingPrompt = false
         // 2 show the variables form
