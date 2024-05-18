@@ -1,7 +1,7 @@
 <!-- USER Question-->
 @if(prompt) {
 
-<div class="encart-user-question d-flex align-items-stretch">
+<div class="encart-user-question d-flex align-items-stretch g-0">
 
     <div [style.background]="isChecked?'rgb(224 226 234)':'#e0f7f7'" [id]="'prompt'+prompt.id"
         class="col-11 prompt animate__animated animate__fadeIn">
@@ -19,8 +19,9 @@
             [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
     </div>
 
-    <div style="background: #e0e2ea; display: flex; align-items: center; justify-content: center;    margin-top: 2px;
-    margin-bottom: 4px;" class="col-1">
+    <div [style.background]="isChecked?'rgb(224 226 234)':'#e0f7f7'"
+        style="background: #e0e2ea; display: flex; align-items: center; justify-content: center; margin-top: 2px;margin-bottom: 4px;"
+        class="col-1">
         @if(isChecked) {
         <button #refreshBtn (click)="refreshPromptAction(prompt)" pTooltip="demander à nouveau à l'IA"
             tooltipPosition="left" [disabled]="!isChecked || loadingGeneral" class="btn btn-sm btn-light refresh-ia">
