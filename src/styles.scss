@@ -156,7 +156,7 @@ ul.p-dropdown-items {
 .p-accordion .p-accordion-header .p-accordion-header-link {
     padding: 0.725rem 0.125rem 0.725rem 0.825rem;
     border: 0 none;
-    color: #9b9b9b !important;
+    color: #a5a5a5 !important;
     background: transparent;
     border-radius: 6px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
@@ -226,9 +226,11 @@ markdown table {
 
 markdown table tbody tr td {
     border-bottom-width: 1px !important;
-    border-color: rgb(255 255 255 / 21%);
+    border-color: rgb(0 0 0 / 21%);
     border-left-width: 1px;
     padding: 0.25rem 0.75rem;
+    color: #111;
+    background: #eeeeee;
 }
 
 markdown th {

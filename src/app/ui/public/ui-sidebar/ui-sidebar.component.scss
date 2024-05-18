@@ -2,8 +2,19 @@
     min-width: 250px;
     height: calc(100vh - 0px);
     border-right: 1px solid #dfdfdf;
-    background-color: #fafbfc !important;
+    background-color: #1e1d2a !important;
     padding: 11px !important;
+}
+
+h2 {
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 0;
+    padding: 6px 0px;
+    font-weight: 400;
+    color: #a5a5a5;
+    font-size: 1.1rem;
+    margin-left: 11px;
 }
 
 
@@ -22,6 +33,7 @@
         font-size: 0.85rem;
         border-radius: 7px;
         margin-left: 7px;
+        color: #6c6c6f !important
     }
 
 }

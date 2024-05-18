@@ -18,8 +18,7 @@
             line-height: 21px;
             font-size: 16.5px;" [innerHTML]="responseAI.text"></p> -->
     <!-- variable binding -->
-    <markdown [data]="responseAI.text" (ready)="onReady()"></markdown>
-
+    <markdown (mouseup)="onSelectionText($event)" [data]="responseAI.text" (ready)="onReady()"></markdown>
     <i (click)="copyToClipBoard(responseAI?.text)" class="bi bi-copy copypaste"></i>
 </div>
 

@@ -1,10 +1,10 @@
-import { Component, Input, booleanAttribute } from '@angular/core';
+import { Component, Inject, Input, booleanAttribute } from '@angular/core';
 import { UiConversationLoaderSkeletonComponent } from '../ui-loader-skeleton/ui-conversation-loader-skeleton.component';
 import { DatePipe } from '@angular/common';
 import { AlertService } from '../../../../shared/services/alert.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { WINDOW } from '../../../../shared/services/window';
 
-import { TextSelectDirective, TextSelectEvent } from '../../../../shared/directives/text-select.directive';
 interface SelectionRectangle {
   left: number;
   top: number;
@@ -27,7 +27,10 @@ export class UiConversationIaComponent {
   public hostRectangle!: SelectionRectangle | null;
   private selectedText!: string;
 
-  constructor(private alertService: AlertService) { }
+  constructor(
+    private alertService: AlertService,
+    @Inject(WINDOW) private window: Window
+  ) { }
 
   ngOnInit() {
     console.log('UiConversationIaComponent', this.responseAI);
@@ -50,8 +53,15 @@ export class UiConversationIaComponent {
   }
 
   onSelectionText(event: Event) {
-    console.log('onSelectionText', event);
+    if (this.window.getSelection()) {
+      let selectedText: string | undefined = this.window.getSelection()?.toString();
+      if (selectedText && selectedText.length > 3) {
+        this.copyToClipBoard(selectedText)
+      }
+    }
   }
+
+
 
   /************************************ */
 

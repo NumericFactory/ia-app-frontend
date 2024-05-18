@@ -22,11 +22,10 @@ div.prompt-result-view {
     padding: 16px 25px 25px 55px;
     border: 1px solid #bbbbbb;
     border-radius: 5px;
-    background-color: #23232b;
+    background-color: #f3f3f3;
     width: 100%;
     transition: box-shadow 0.3s;
-    // height: calc(100vh - 210px);
-    color: #c1c3d2;
+    color: #23232b;
     font-size: .97rem;
 
     &:hover {
