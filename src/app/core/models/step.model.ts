@@ -41,6 +41,7 @@ export interface PromptModel {
     secretprompt?: string // visible only by admin
     createdAt: string
     updatedAt: string
+    done?: boolean
 }
 
 

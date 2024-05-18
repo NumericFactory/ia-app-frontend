@@ -10,7 +10,8 @@
         @for(prompt of prompts; track prompt.id) {
         <tr (click)="navigateToPromptPage(prompt)">
             <td>{{ prompt.title }}</td>
-            <td class="text-center"><i class="bi bi-check-circle-fill done-false"></i></td>
+            <td class="text-center"><i [class.done-true]="prompt.done" class="bi bi-check-circle-fill done-false"></i>
+            </td>
             <td class="text-center"><i class="bi bi-star fav-false"></i></td>
         <tr>
             }
