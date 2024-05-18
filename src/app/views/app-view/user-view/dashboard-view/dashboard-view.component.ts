@@ -9,11 +9,12 @@ import { UserGateway } from '../../../../core/ports/user.gateway';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UiCategoryPromptsListComponent } from '../../../../ui/public/ui-category-prompts-list/ui-category-prompts-list.component';
+import { StatCircleComponent } from '../../../../ui/public/ui-stats/ui-stat-circle/ui-stat-circle.component';
 
 @Component({
   selector: 'app-dashboard-view',
   standalone: true,
-  imports: [AsyncPipe, LowerCasePipe, RouterLink, UiStepCardComponent, MatBottomSheetModule],
+  imports: [AsyncPipe, LowerCasePipe, RouterLink, UiStepCardComponent, MatBottomSheetModule, StatCircleComponent],
   templateUrl: './dashboard-view.component.html',
   styleUrl: './dashboard-view.component.scss'
 })

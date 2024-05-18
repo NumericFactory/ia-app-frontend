@@ -3,10 +3,13 @@
     <h1 class="fs-3 mb-3 col-12 col-xl-12 col-xxl-10">Dashboard</h1>
 
     <div class="col-12 col-xl-12 col-xxl-10">
-        <div class="card">
-            <div class="card-body">
-                <h5>Statistiques</h5>
+        <div style="border: 0;
+        background: #f3f3f3;
+        border-radius: 11px;" class="card">
+            <div class="card-body px-3">
+                <!-- <h5>Statistiques</h5> -->
                 <p>Qu'avez-vous accompli ?</p>
+                <ui-stat-circle [value]="(user$ | async)?.prompts?.length!" [max]="150" [label]="'Prompts faits'" />
             </div>
         </div>
     </div>
