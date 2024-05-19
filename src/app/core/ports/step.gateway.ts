@@ -12,6 +12,7 @@ export abstract class StepGateway {
 
     // abstract methods
     abstract fetchCategories(): Observable<CategoryModel[]>;
+    abstract setCategories(categories: CategoryModel[]): void;
 
     abstract getSteps(): Observable<StepModel[]>;
     abstract getStepById(id: number): Observable<StepModel | null>;

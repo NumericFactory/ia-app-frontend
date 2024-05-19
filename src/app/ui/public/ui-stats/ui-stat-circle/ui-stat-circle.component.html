@@ -13,9 +13,8 @@
                 </div>
             </div>
 
-            @if(categories$ | async; as categoriesWithDoneCount) {
+            @if(categoriesWithDoneCount) {
             @for(category of categoriesWithDoneCount; track category.id ) {
-            {{category.count_done_prompts}} / {{category.count_prompts}}
             <div style="background: transparent;"
                 class="card flex justify-content-center col border-0 align-items-center">
                 <div class="card-header">

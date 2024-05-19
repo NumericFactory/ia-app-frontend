@@ -72,6 +72,10 @@ export class StepService implements StepGateway {
     )
   }
 
+  setCategories(categories: CategoryModel[]): void {
+    this.categoriesSubject.next(categories);
+  }
+
   getPromptsByCategory(categoryId: number): Observable<PromptModel[]> {
     const endpoint = `/categories/${categoryId}/prompts`
     return this.http.get<PromptModel[]>(`${this.apiUrl}${endpoint}`).pipe(

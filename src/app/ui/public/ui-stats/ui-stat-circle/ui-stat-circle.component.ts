@@ -22,6 +22,7 @@ export class StatCircleComponent {
 
   user$ = this.userService.user$;
   categories$ = this.stepService.categories$;
+  categoriesWithDoneCount: any[] = [];
 
   constructor(
     private stepService: StepGateway,
@@ -30,21 +31,15 @@ export class StatCircleComponent {
   ngOnInit(): void {
 
     combineLatest([this.user$, this.categories$]).subscribe(([user, categories]) => {
-      console.log(user?.prompts);
-      console.log(categories);
+      const updatedCategories = categories.map(category => { return { ...category, count_done_prompts: 0 } });
       user?.prompts?.forEach(prompt => {
-        const category: any = categories.find(category => category.id === prompt.category_id);
+        const category: any = updatedCategories.find(category => category.id === prompt.category_id);
         if (!category) return;
-        category.count_done_prompts = 0; // rest value before counting
         category.count_done_prompts = category.count_done_prompts ? category.count_done_prompts + 1 : 1;
-        // this.categoriesWithDoneCount = [category, ...this.categoriesWithDoneCount];
       });
-
+      this.categoriesWithDoneCount = [...updatedCategories];
+      console.log('UPDATED CATS: ', this.categoriesWithDoneCount);
     });
-    this.categories$.subscribe(categories => {
-      console.log(categories);
-    });
-
   }
 
   truncate(str: string): string {
