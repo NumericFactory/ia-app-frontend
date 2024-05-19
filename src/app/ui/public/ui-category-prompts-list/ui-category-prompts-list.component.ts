@@ -42,7 +42,7 @@ export class UiCategoryPromptsListComponent {
   ) { }
 
   ngOnInit(): void {
-    console.log('data', this.data)
+
     this.filterByPromptControl.setValue('')
     this.doneControl.setValue(true)
     this.todoControl.setValue(true)
@@ -50,20 +50,20 @@ export class UiCategoryPromptsListComponent {
     if (this.category?.id) {
       this.stepService.getPromptsByCategory(this.category.id).subscribe()
       this.stepService.prompts$.subscribe((prompts: any) => {
-        console.log('prompts', prompts)
+
         if (!prompts.data) return;
 
         this.prompts = prompts.data
-        console.log('THIS.prompts', this.prompts)
+
         // set done to true if the prompt is already done
         let donePrompts = this.userService.getUserFromSubject()?.prompts;
         this.prompts.forEach((prompt: PromptModel) => {
           prompt.done = donePrompts?.find((donePrompt: PromptModel) => donePrompt.id === prompt.id) ? true : false
 
           this.search$.subscribe(([filterByPrompt, done, todo]) => {
-            console.log('filterByPrompt', filterByPrompt)
-            console.log('done', done)
-            console.log('todo', todo)
+
+
+
             this.promptsFiltered = this.prompts.filter((prompt: PromptModel) => {
               const matchesText = prompt.title.toLowerCase().includes(filterByPrompt.toLowerCase());
               const matchesDone = done && prompt.done;

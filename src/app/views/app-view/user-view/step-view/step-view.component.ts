@@ -55,7 +55,7 @@ export class StepViewComponent {
     message: string = 'Validez pour mettre à jour',
     modalTextbutton: string = 'Valider'
   ) {
-    console.log('step', this.step);
+
     const dialogRef = this.dialog.open(UserVariablesDialog, {
       width: '650px',
       minWidth: '350px',
@@ -206,7 +206,7 @@ export class UserVariablesDialog {
 
   //Submit form
   onSubmit() {
-    console.log('form', this.stepId);
+
     this.formIsSubmit = true;
     if (this.userVariablesForm.valid) {
       const payload: any = {};
@@ -235,7 +235,7 @@ export class UserVariablesDialog {
    * @param group 
    */
   logKeyValuePairs(group: FormGroup): void {
-    console.log('user', this.user)
+
     // loop through each key in the FormGroup
     Object.keys(group.controls).forEach((key: any) => {
       // Get a reference to the control using the FormGroup.get() method
@@ -247,7 +247,7 @@ export class UserVariablesDialog {
         this.logKeyValuePairs(abstractControl);
         // If the control is not a FormGroup then we know it's a FormControl
       } else {
-        //console.log('Key = ' + key + ' && Value = ' + this.user?.variables.find((v) => v.id == key)?.value);
+        //
         abstractControl?.setValue(this.user?.variables.find((v) => v.id == key)?.value);
       }
     });

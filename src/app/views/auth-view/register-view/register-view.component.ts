@@ -14,7 +14,7 @@ export class RegisterViewComponent {
   constructor(private authService: AuthGateway) { }
 
   registerAction(user: registerUserPayload) {
-    console.log(user);
+
     this.authService.register(user).subscribe();
   }
 

@@ -43,12 +43,12 @@ export class UiSidebarComponent {
   }
 
   starMouseOver(iconStar: HTMLElement) {
-    console.log('hovered');
+
     this.renderer.removeClass(iconStar, 'bi-star');
     this.renderer.addClass(iconStar, 'bi-star-fill');
   }
   starMouseOut(iconStar: HTMLElement) {
-    console.log('hovered');
+
     this.renderer.removeClass(iconStar, 'bi-star-fill');
     this.renderer.addClass(iconStar, 'bi-star');
   }

@@ -78,7 +78,7 @@ export class PromptUniqueBycategoryViewComponent {
   }
 
   formValidAction(event: any) {
-    console.log('form valid', event);
+
     this.viewState.userVariables = event
     console.log('view state', this.viewState);
   }
@@ -94,7 +94,7 @@ export class PromptUniqueBycategoryViewComponent {
     }
     // build secret prompt with user variables
     const newPrompt: string = this.buildPrompt(prompt, this.user_variables);
-    console.log('new prompt', newPrompt);
+
     // ask the question
     this.viewState.loadingIaResponse = true;
     this.iaService.ask(newPrompt).subscribe(

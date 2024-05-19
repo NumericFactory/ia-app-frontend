@@ -98,7 +98,7 @@ export class StepAdminViewComponent {
 
     dialogRef.closed.subscribe((result: any) => {
       if (!result) return;
-      console.log(result);
+
       // create the Step
       this.adminService.createStep(result).subscribe();
     });
@@ -118,7 +118,7 @@ export class StepAdminViewComponent {
 
     dialogRef.closed.subscribe((result: any) => {
       if (!result) return;
-      console.log(result);
+
       // update the Step
       result.id = step.id;
       this.adminService.updateStep(result).subscribe();
@@ -127,7 +127,7 @@ export class StepAdminViewComponent {
 
   async openDialogCreatePrompt(ev: Event, step: StepModelAdmin) {
     ev.stopPropagation();
-    console.log(step);
+
     const dialogRef = this.dialog.open(CreatePromptsFormComponent, {
       disableClose: true,
       width: '100%',
@@ -139,13 +139,13 @@ export class StepAdminViewComponent {
     });
     dialogRef.closed.subscribe((result: any) => {
       if (!result) return;
-      console.log(result);
+
     });
   }
 
   async openDialogUpdatePrompt(ev: Event, step: StepModelAdmin) {
     ev.stopPropagation();
-    console.log(step);
+
     const dialogRef = this.dialog.open(UpdatePromptsFormComponent, {
       disableClose: true,
       width: '100%',
@@ -157,19 +157,19 @@ export class StepAdminViewComponent {
     });
     dialogRef.closed.subscribe((result: any) => {
       if (!result) return;
-      console.log(result);
+
     });
   }
 
   async deleteStepAction(ev: Event, step: StepModelAdmin) {
     ev.stopPropagation();
-    console.log(step);
+
     const isValid = await this.confirmDialogService.confirm(
       `Supprimer le step`,
       `Supprimer "${step.subtitle}" et toutes les données associées,
       y compris les prompts et les variables ?`
     );
-    console.log(isValid);
+
     if (!isValid) return;
     this.adminService.deleteStep(step.id).subscribe();
   }
@@ -186,7 +186,7 @@ export class StepAdminViewComponent {
     });
     dialogRef.closed.subscribe((result: any) => {
       if (!result) return;
-      console.log(result);
+
     });
   }
 
@@ -259,7 +259,7 @@ export class SelectCategoryComponent {
   ) { }
 
   ngOnInit() {
-    console.log(this.categories);
+
     this.adminService.categories$.subscribe((categories: CategoryModel[]) => {
       this.categoriesObj = categories;
       this.categories = categories.map((catObj: any) => catObj.title);
@@ -269,8 +269,8 @@ export class SelectCategoryComponent {
 
   selectValue(event: ListboxChangeEvent) {
     const category = this.categoriesObj.find((cat: CategoryModel) => cat.title === event.value);
-    console.log(this.data.id);
-    console.log(category);
+
+
     if (this.data.id && category?.id) {
       this.adminService.addCategoryToPrompt(this.data.id, category.id)
         .subscribe((res) => this.dialogRef.close(res));

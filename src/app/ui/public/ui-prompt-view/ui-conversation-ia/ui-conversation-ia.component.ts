@@ -33,18 +33,18 @@ export class UiConversationIaComponent {
   ) { }
 
   ngOnInit() {
-    console.log('UiConversationIaComponent', this.responseAI);
+
   }
 
   onSelect(event: Event) {
-    console.log('onSelect', event);
+
     if (event.target === null) return;
     const selection = event.target
-    console.log('selection', selection);
+
   }
 
   onReady() {
-    console.log('onReady');
+
   }
 
   copyToClipBoard(responseAIText: string) {
@@ -73,9 +73,9 @@ export class UiConversationIaComponent {
   public renderRectangles(event: any): void {
 
     console.group("Text Select Event");
-    console.log("Text:", event.text);
-    console.log("Viewport Rectangle:", event.viewportRectangle);
-    console.log("Host Rectangle:", event.hostRectangle);
+
+
+
     console.groupEnd();
 
     // If a new selection has been created, the viewport and host rectangles will

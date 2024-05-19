@@ -89,7 +89,7 @@ export class UserService implements UserGateway {
     const cleanPayload = { ...payloadAIResponse.prompt };
     return this.http.post(`${this.apiUrl}${endpoint}`, cleanPayload).pipe(
       tap((response: any) => {
-        console.log(response);
+
         const user = this.userSubject.getValue();
         if (user && response.data) {
           if (!user.prompts) {

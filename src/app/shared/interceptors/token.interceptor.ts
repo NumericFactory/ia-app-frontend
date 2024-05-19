@@ -63,7 +63,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   // if (this.isUrlNeedsUserToken(req))
   if (true) {
     const token = authService.getToken();
-    // console.log(token)
+    // 
     if (token !== null)
       cloneRequest = addBearerToken(req, token)
   }

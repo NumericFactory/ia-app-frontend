@@ -24,7 +24,7 @@ export class UpdateStepFormComponent {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
+
     this.updateStepForm = this.formBuilder.group({
       title: [this.data.title],
       subtitle: [this.data.subtitle],
@@ -41,7 +41,7 @@ export class UpdateStepFormComponent {
   }
 
   onEditorInit(ev: any) {
-    console.log('Editor is ready', ev);
+
     // ev.editor.setContents(this.data.desc);
     // ev.editor.root.innerHTML = this.data.desc;
     ev.editor.clipboard.dangerouslyPasteHTML(0, this.data.desc);

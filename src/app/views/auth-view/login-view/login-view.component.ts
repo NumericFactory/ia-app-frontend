@@ -14,7 +14,7 @@ export class LoginViewComponent {
   constructor(private authService: AuthGateway) { }
 
   loginAction(credentials: loginUserPayload) {
-    console.log(credentials);
+
     this.authService.login(credentials).subscribe();
   }
 

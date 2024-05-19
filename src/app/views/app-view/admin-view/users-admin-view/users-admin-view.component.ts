@@ -321,7 +321,7 @@ export class DialogManageUserSettings {
     });
     // set the form value
     this.adminService.getUserParametersFields().subscribe((fields) => {
-      console.log('fields', fields);
+
       this.settingsForm = this.formBuilder.group({
         settings: this.formBuilder
           .array(fields.map((field: any) => this.formBuilder.group(field))),

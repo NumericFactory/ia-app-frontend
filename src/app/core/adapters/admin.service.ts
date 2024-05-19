@@ -83,7 +83,7 @@ export class AdminService implements AdminGateway {
         }))
         .subscribe(
           (response) => {
-            console.log('roles set', response);
+
             this.alert.show('Rôles mis à jour', 'success');
           }
         )
@@ -268,7 +268,7 @@ export class AdminService implements AdminGateway {
     // let prompts: PromptModelAdmin[] = [];
     // const step = stepsTestDataAdmin.find(step => step.id === stepId)
     // if (step) { prompts = step.prompts }
-    // console.log('prompts', prompts)
+    // 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(prompts);
@@ -329,7 +329,6 @@ export class AdminService implements AdminGateway {
     const endpoint = '/admin/users/parameters';
     return this.http.put(`${this.apiUrl}${endpoint}`, settings).pipe(
       tap((response: any) => {
-        console.log('response', response)
         this.alert.show('Paramètres utilisateur ajoutés', 'success');
       })
     )
@@ -340,7 +339,7 @@ export class AdminService implements AdminGateway {
     const endpoint = '/admin/users/parameters';
     return this.http.delete(`${this.apiUrl}${endpoint}/${id}`).pipe(
       tap((response: any) => {
-        console.log('response', response)
+
         this.alert.show('Paramètre utilisateur supprimé', 'success');
       })
     )
@@ -363,7 +362,7 @@ export class AdminService implements AdminGateway {
     const endpoint = '/admin/categories';
     return this.http.post(`${this.apiUrl}${endpoint}`, newCategory).pipe(
       tap((response: any) => {
-        console.log('response', response)
+
         // update the categories
         let categories = this.categoriesSubject.value;
         categories = [response.data, ...categories];
@@ -377,7 +376,7 @@ export class AdminService implements AdminGateway {
     const endpoint = '/admin/categories';
     return this.http.put(`${this.apiUrl}${endpoint}/${id}`, category).pipe(
       tap((response: any) => {
-        console.log('response', response)
+
         // update the categories
         let categories = this.categoriesSubject.value;
         let category = categories.find(c => c.id === id);
@@ -394,7 +393,7 @@ export class AdminService implements AdminGateway {
     const endpoint = '/admin/categories';
     return this.http.delete(`${this.apiUrl}${endpoint}/${id}`).pipe(
       tap((response: any) => {
-        console.log('response', response)
+
         // update the categories
         let categories = this.categoriesSubject.value;
         categories = categories.filter(c => c.id !== id);

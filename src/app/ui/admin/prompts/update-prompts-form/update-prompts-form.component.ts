@@ -57,7 +57,7 @@ export class UpdatePromptsFormComponent {
     // subscribe to steps observable
     this.adminService.steps$.subscribe((steps) => this.steps = steps);
 
-    // console.log('data', this.data);
+    // 
     // create PromptsForm
     this.promptsForm = this.formBuilder.group({
       prompts: this.formBuilder.array([]),
@@ -87,7 +87,7 @@ export class UpdatePromptsFormComponent {
       })
     ).subscribe(x => {
       if (x.value?.includes('@')) {
-        console.log('open dialog', this.data);
+
         const dialogRef = this.dialog.open(SelectVariableComponent, {
           width: '100%',
           minWidth: '320px',
@@ -101,7 +101,7 @@ export class UpdatePromptsFormComponent {
           }
         })
         dialogRef.closed.subscribe((result) => {
-          console.log('result', result);
+
           if (x.i !== null) {
             let text = this.formPrompts.controls[x.i].get('secretprompt')?.value;
             // get cursor position
@@ -167,7 +167,7 @@ export class UpdatePromptsFormComponent {
   }
 
   onSubmit() {
-    console.log('submit', this.promptsForm.value);
+
     if (this.promptsForm.invalid) return;
     this.adminService.updatePrompts(this.promptsForm.value, this.data.id)
       .subscribe(() => this.dialogRef.close());
@@ -275,7 +275,7 @@ export class SelectVariableComponent {
   ) { }
 
   ngOnInit() {
-    console.log('stepsFlat', this.steps);
+
   }
 
   selectValue(event: ListboxChangeEvent) {

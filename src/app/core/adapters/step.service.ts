@@ -80,7 +80,7 @@ export class StepService implements StepGateway {
     const endpoint = `/categories/${categoryId}/prompts`
     return this.http.get<PromptModel[]>(`${this.apiUrl}${endpoint}`).pipe(
       tap((response: any) => {
-        console.log('prompts', response)
+
         this.promptsSubject.next(response);
       })
     )
@@ -90,7 +90,7 @@ export class StepService implements StepGateway {
     const endpoint = `/prompts/${promptId}`;
     return this.http.get<PromptModel>(`${this.apiUrl}${endpoint}`).pipe(
       tap((response: any) => {
-        console.log('prompt', response)
+
         //this.promptsSubject.next([response]);
       })
     )

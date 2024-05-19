@@ -33,7 +33,7 @@ export class CreateStepFormComponent {
 
 
   onSubmit() {
-    console.log('submit', this.createStepForm.value);
+
     this.dialogRef.close(this.createStepForm.value);
   }
 

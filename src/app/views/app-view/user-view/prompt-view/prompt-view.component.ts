@@ -182,8 +182,8 @@ export class PromptViewComponent {
     title: string = 'Relancer une nouvelle conversation avec l\'IA',
     message: string = 'Modifiez vos données et relancer. Attention vous perdrez les réponses déjà obtenues.',
     modalTextbutton: string = 'Relancer') {
-    console.log('this.step', this.step)
-    console.log('user', user)
+
+
     const dialogRef = this.dialog.open(UserVariablesDialog, {
       width: '850px',
       minWidth: '320px',
@@ -196,7 +196,7 @@ export class PromptViewComponent {
     dialogRef.closed.subscribe((result: any) => {
       if (!result) return;
       let payload = result;
-      console.log('payload', payload)
+
       //this.isVariablesFormCompleted = true;
     })
   }

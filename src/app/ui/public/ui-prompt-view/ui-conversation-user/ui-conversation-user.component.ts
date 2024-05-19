@@ -34,7 +34,7 @@ export class UiConversationUserComponent {
 
   // emit event to refresh prompt (parent prompt-view.component.ts)
   refreshPromptAction(prompt: PromptModel) {
-    console.log('UiConversationUserComponent', this.refreshBtn);
+
     this.refreshPromptEvent.emit(prompt);
     //this.renderer.setAttribute(this.refreshBtn.nativeElement, 'disabled', 'true');
   }
