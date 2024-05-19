@@ -9,7 +9,7 @@
             <div class="card-body px-3">
                 <!-- <h5>Statistiques</h5> -->
                 <p>Qu'avez-vous accompli ?</p>
-                <ui-stat-circle [value]="(user$ | async)?.prompts?.length!" [max]="150" [label]="'Prompts faits'" />
+                <ui-stat-circle [value]="(user$ | async)?.prompts?.length!" [max]="150" [label]="'Total'" />
             </div>
         </div>
     </div>
