@@ -35,6 +35,7 @@ export class StatCircleComponent {
       user?.prompts?.forEach(prompt => {
         const category: any = categories.find(category => category.id === prompt.category_id);
         if (!category) return;
+        category.count_done_prompts = 0; // rest value before counting
         category.count_done_prompts = category.count_done_prompts ? category.count_done_prompts + 1 : 1;
         // this.categoriesWithDoneCount = [category, ...this.categoriesWithDoneCount];
       });
