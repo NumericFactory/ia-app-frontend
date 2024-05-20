@@ -72,7 +72,7 @@
                     <tbody>
                         @for(prompt of user.prompts; track prompt) {
                         <tr>
-                            <td>{{prompt.created_at | date:'dd/MM/yyyy hh:mm'}}</td>
+                            <td>{{prompt.createdAt | date:'dd/MM/yyyy hh:mm'}}</td>
                             <td>{{prompt.title}}</td>
                             <td><button class="btn">Voir</button></td>
                         </tr>
