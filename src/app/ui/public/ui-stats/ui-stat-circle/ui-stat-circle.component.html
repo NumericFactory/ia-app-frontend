@@ -1,4 +1,4 @@
-<div class="row px-3">
+<div class="row px-3 align-items-end">
     <div class="col-12 col-xl-6">
         <div style="background:transparent;" class="row align-items-center">
 
@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <p-knob valueTemplate="{value}/53" [size]="115" [(ngModel)]="value" [readonly]="true"
-                        valueColor="MediumTurquoise" rangeColor="LightGray" />
+                        valueColor="goldenrod" rangeColor="LightGray" />
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <p-knob [size]="65" [(ngModel)]="category.count_done_prompts" [max]="category.count_prompts"
-                        [readonly]="true" valueColor="goldenrod" rangeColor="LightGray" />
+                        [readonly]="true" valueColor="#afacea" rangeColor="LightGray" />
                 </div>
             </div>
             }
@@ -31,6 +31,29 @@
 
     </div>
     <div class="col-12 col-xl-6">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="fs-4">Templates</h3>
+                <ui-stat-task></ui-stat-task>
+            </div>
+            <div class="col-6">
+                @if(user$ | async; as user) {
+                <h3 class="fs-4">Hello {{(user$ | async)?.firstname}}</h3>
+                <div class="stat">
+                    <div class="stat-figure text-secondary">
+                        <div class="avatar online">
+                            <div class="w-16 rounded-full">
+                                <img style="background: aquamarine"
+                                    [src]="'https://api.dicebear.com/8.x/adventurer/svg?seed='+user.firstname" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-title" style="text-wrap:wrap">Modifiez vos paramètres si besoin</div>
+                    <div class="stat-desc text-secondary">Voir vos paramètres</div>
+                </div>
 
+                }
+            </div>
+        </div>
     </div>
 </div>

@@ -5,11 +5,12 @@ import { UserGateway } from '../../../../core/ports/user.gateway';
 import { AsyncPipe } from '@angular/common';
 import { StepGateway } from '../../../../core/ports/step.gateway';
 import { combineLatest } from 'rxjs';
+import { UiStatTaskComponent } from '../ui-stat-task/ui-stat-task.component';
 
 @Component({
   selector: 'ui-stat-circle',
   standalone: true,
-  imports: [KnobModule, FormsModule, AsyncPipe],
+  imports: [KnobModule, FormsModule, AsyncPipe, UiStatTaskComponent],
   templateUrl: './ui-stat-circle.component.html',
   styleUrl: './ui-stat-circle.component.scss'
 })
