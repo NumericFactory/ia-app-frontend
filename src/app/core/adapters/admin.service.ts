@@ -46,9 +46,9 @@ export class AdminService implements AdminGateway {
   }
 
   // get user by id
-  public fetchUserById(id: string): Observable<UserModel> {
+  public fetchUserById(id: number, queryString?: any): Observable<UserModel> {
     const endpoint = `/admin/users/${id}`;
-    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+    return this.http.get(`${this.apiUrl}${endpoint}?${queryString}`).pipe(
       map((response: any) => response as UserModel)
     )
   }

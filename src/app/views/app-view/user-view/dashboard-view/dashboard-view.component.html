@@ -8,7 +8,7 @@
         border-radius: 11px;" class="card">
             <div class="card-body px-3">
                 <!-- <h5>Statistiques</h5> -->
-                <p>Qu'avez-vous accompli ?</p>
+                <h2 class="fs-6">Qu'avez-vous accompli ?</h2>
                 <ui-stat-circle [value]="(user$ | async)?.prompts?.length!" [max]="150" [label]="'Total'" />
             </div>
         </div>

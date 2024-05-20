@@ -2,11 +2,15 @@
     text-align: center;
     background-color: transparent;
     padding: 0;
+    border-bottom: none;
 }
 
 .card-title {
-    color: #b5b5b5;
-    margin: 0;
+    color: #a6a6a6;
+    margin: -6px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .82rem;
 }
 
 .card-body {

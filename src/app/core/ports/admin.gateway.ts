@@ -30,7 +30,7 @@ export abstract class AdminGateway {
 
     // get user or null
     abstract fetchUsers(): Observable<UserModel[]>;
-    abstract fetchUserById(id: string): Observable<UserModel>;
+    abstract fetchUserById(id: number, queryString?: string): Observable<UserModel>;
 
     // roles management methods
     abstract fetchRoles(): Observable<Role[] | number[]>;

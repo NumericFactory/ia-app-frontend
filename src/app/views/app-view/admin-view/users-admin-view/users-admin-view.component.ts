@@ -66,6 +66,11 @@ export class UsersAdminViewComponent {
 
   } // end ngOnInit
 
+  getUser(userId: number) {
+    this.adminService.fetchUserById(userId, 'with=variables,prompts').subscribe();
+  }
+
+
   // update the role of the user
   openRoleDialog(user: UserModel): void {
     const dialogRef = this.dialog.open(RoleDialog, {
@@ -327,6 +332,10 @@ export class DialogManageUserSettings {
           .array(fields.map((field: any) => this.formBuilder.group(field))),
       });
     });
+  }
+
+  getUser(userId: number) {
+    this.adminService.fetchUserById(userId).subscribe();
   }
 
   // Permet de créer un QuestionForm à la volée
