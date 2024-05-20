@@ -7,11 +7,12 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-user-detail-view',
   standalone: true,
-  imports: [JsonPipe, ProgressBarModule, MatTabsModule, ScrollingModule, DatePipe, CdkAccordionModule],
+  imports: [JsonPipe, ProgressBarModule, MatTabsModule, ScrollingModule, DatePipe, CdkAccordionModule, MarkdownModule],
   templateUrl: './user-detail-view.component.html',
   styleUrl: './user-detail-view.component.scss'
 })

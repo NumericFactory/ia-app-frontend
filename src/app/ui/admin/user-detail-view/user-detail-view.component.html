@@ -17,10 +17,11 @@
 </div>
 }
 
+@if(user && !isLoading) {
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
     <mat-tab label="Variables">
 
-        @if(userVariablesByStep && !isLoading){
+        @if(userVariablesByStep){
         <!-- <div style="overflow-y: scroll;
             height: calc(100% - 483px);
             overflow-x: hidden;"> -->
@@ -61,24 +62,37 @@
         <div class="row">
             <div class="col-md-12">
                 @if(user.prompts && !isLoading){
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th style="width:15%">Date</th>
-                            <th style="width:75%">Prompt</th>
-                            <th style="width:10%">Réponse</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for(prompt of user.prompts; track prompt) {
-                        <tr>
-                            <td>{{prompt.createdAt | date:'dd/MM/yyyy hh:mm'}}</td>
-                            <td>{{prompt.title}}</td>
-                            <td><button class="btn">Voir</button></td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                <cdk-accordion class="example-accordion">
+                    @for (prompt of user.prompts; track prompt; let index = $index) {
+                    <!-- Accordion Item -->
+                    <cdk-accordion-item #accordionItem="cdkAccordionItem" class="example-accordion-item" role="button"
+                        tabindex="0" [attr.id]="'accordion-header-' + index"
+                        [attr.aria-expanded]="accordionItem.expanded" [attr.aria-controls]="'accordion-body-' + index">
+                        <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+                            <span class="date">{{ prompt.created_at | date:'dd/MM/yyyy hh:mm' }}</span>
+                            <span class="title">{{ prompt.title }}</span>
+                            <span class="example-accordion-item-description">
+
+                                Voir
+                                @if(accordionItem.expanded) {
+                                <i class="bi bi-chevron-down"></i>
+                                }
+                                @else {
+                                <i class="bi bi-chevron-up"></i>
+                                }
+                            </span>
+                        </div>
+                        <!-- response AI-->
+                        <div class="example-accordion-item-body" role="region"
+                            [style.display]="accordionItem.expanded ? '' : 'none'" [attr.id]="'accordion-body-' + index"
+                            [attr.aria-labelledby]="'accordion-header-' + index">
+                            <markdown [data]="prompt.value"></markdown>
+
+                        </div>
+                    </cdk-accordion-item>
+                    }
+                </cdk-accordion>
+
                 }
             </div>
         </div>
@@ -89,3 +103,4 @@
 
     </mat-tab>
 </mat-tab-group>
+}
