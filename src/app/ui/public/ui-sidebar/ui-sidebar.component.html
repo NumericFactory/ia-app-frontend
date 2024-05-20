@@ -22,7 +22,7 @@
     <div class="mb-auto" style="background-color: transparent; margin-top: 8px;">
         <h2>
             <!-- <i class="bi bi-card-list"></i> -->
-            <span>Historique prompts</span>
+            <span>Historique</span>
         </h2>
         @if(user$ | async; as user) {
         @for(step of userPromptsHistory; track step.id) {
