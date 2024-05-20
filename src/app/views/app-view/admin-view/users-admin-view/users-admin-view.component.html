@@ -32,7 +32,7 @@
     </thead>
     <tbody>
         @for(user of printUsers; track user.id) {
-        <tr (click)="getUser(user.id)">
+        <tr (click)="openDialogUserDetail($event, user.id)">
             <th>{{user.id}}</th>
             <td style="font-size:85%">{{user.createdAt | date:'dd/MM/yy'}}</td>
             <td>{{user.lastname}} {{user.firstname}}</td>

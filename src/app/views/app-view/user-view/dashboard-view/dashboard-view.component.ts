@@ -27,7 +27,6 @@ export class DashboardViewComponent {
   constructor(
     private stepService: StepGateway,
     private userService: UserGateway,
-    private dialog: Dialog,
     private bottomSheet: MatBottomSheet
   ) { }
 

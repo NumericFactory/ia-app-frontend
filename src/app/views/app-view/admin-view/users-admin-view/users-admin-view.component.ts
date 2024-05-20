@@ -7,6 +7,8 @@ import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialo
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog.service";
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { UserDetailViewComponent } from '../../../../ui/admin/user-detail-view/user-detail-view.component';
 
 @Component({
   selector: 'app-users-admin-view',
@@ -37,7 +39,8 @@ export class UsersAdminViewComponent {
   // inject the admin service
   constructor(
     private adminService: AdminGateway,
-    private dialog: Dialog
+    private dialog: Dialog,
+    private bottomSheet: MatBottomSheet
   ) { }
 
   ngOnInit() {
@@ -65,10 +68,6 @@ export class UsersAdminViewComponent {
     });
 
   } // end ngOnInit
-
-  getUser(userId: number) {
-    this.adminService.fetchUserById(userId, 'with=variables,prompts').subscribe();
-  }
 
 
   // update the role of the user
@@ -124,6 +123,22 @@ export class UsersAdminViewComponent {
       if (!result) return;
       // update the user role
       //this.adminService.setRoles(user.id, justSelectedRoles);
+    });
+  }
+
+
+  openDialogUserDetail(event: Event, userId: number): void {
+    this.bottomSheet.open(UserDetailViewComponent, {
+
+      //disableClose: true,
+      //width: '100%',
+      //minWidth: '320px',
+      //maxWidth: '750px',
+      //height: '95%',
+      //closeOnNavigation: true,
+      panelClass: 'bottomsheet-admin-user-view',
+      data: { userId },
+
     });
   }
 

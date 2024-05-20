@@ -389,6 +389,22 @@ a {
     margin: 0 auto;
 }
 
+.bottomsheet-admin-user-view .mat-bottom-sheet-container {
+    min-width: 64vw !important;
+    max-width: 864px !important;
+    margin-top: 80px;
+    min-height: 92vh;
+    overflow-y: hidden;
+    border-radius: 11px 11px 0 0;
+    margin: 0 auto;
+}
+
+.bottomsheet-admin-user-view .mat-mdc-tab-body-content {
+    height: calc(100vh - 225px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 html,
 body {
     height: 100%;
