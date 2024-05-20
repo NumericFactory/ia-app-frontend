@@ -1,0 +1,91 @@
+<p-progressBar [style.opacity]="isLoading?1:0" mode="indeterminate"
+    [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
+
+@if(!isLoading) {
+<div class="row header">
+    <div class="col-md-12">
+        <h3 class="fs-5">{{user.firstname}} {{user.lastname}}</h3>
+        <i (click)="closeDialog()" class="bi bi-x-lg close-dialog-btn"></i>
+        <p class="text-secondary info-text m-0">
+            <i class="bi bi-envelope text-primary"></i> {{user.email}} /
+            @if(user.phone) {
+            <i class="bi bi-telephone text-primary"></i> {{user.phone}} /
+            <i class="bi bi-patch-check-fill"></i>
+            }
+        </p>
+    </div>
+</div>
+}
+
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+    <mat-tab label="Variables">
+
+        @if(userVariablesByStep && !isLoading){
+        <!-- <div style="overflow-y: scroll;
+            height: calc(100% - 483px);
+            overflow-x: hidden;"> -->
+        <div>
+            @for(step of userVariablesByStep; track step) {
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th style="width: 80%;">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(variable of step.variables; track variable) {
+                            <tr>
+                                <td>{{variable.key}}</td>
+                                <td>{{variable.value}}</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            }
+        </div>
+        }
+        @else {
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-secondary">Pas encore de données sur cet utilisateur</p>
+            </div>
+        </div>
+        }
+    </mat-tab>
+    <mat-tab label="Réponses IA">
+        <div class="row">
+            <div class="col-md-12">
+                @if(user.prompts && !isLoading){
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:15%">Date</th>
+                            <th style="width:75%">Prompt</th>
+                            <th style="width:10%">Réponse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(prompt of user.prompts; track prompt) {
+                        <tr>
+                            <td>{{prompt.created_at | date:'dd/MM/yyyy hh:mm'}}</td>
+                            <td>{{prompt.title}}</td>
+                            <td><button class="btn">Voir</button></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                }
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Paramètres">
+
+
+    </mat-tab>
+</mat-tab-group>
