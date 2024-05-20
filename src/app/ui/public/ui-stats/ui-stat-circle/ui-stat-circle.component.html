@@ -33,13 +33,13 @@
     <div class="col-12 col-xl-6">
         <div class="row">
             <div class="col-6">
-                <h3 class="fs-4 text-center">Templates</h3>
+                <h3 class="fs-5 text-center">Templates</h3>
                 <ui-stat-task></ui-stat-task>
             </div>
             <div class="col-6">
                 @if(user$ | async; as user) {
-                <h3 class="fs-4 text-center">Hello {{(user$ | async)?.firstname}}</h3>
-                <div class="stat">
+                <h3 class="fs-5 text-center">Hello {{(user$ | async)?.firstname}}</h3>
+                <div style="background: #eaeaea;border: 0;" class="stat">
                     <div class="stat-figure text-secondary">
                         <div class="avatar online">
                             <div class="w-16 rounded-full">
