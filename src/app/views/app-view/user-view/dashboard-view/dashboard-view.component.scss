@@ -14,13 +14,13 @@
 }
 
 .categories-list .card-body {
-    // background: #4a21cc;
     background: #2c2b40;
     color: #bfbcff;
     border-radius: 5px 5px 0 0;
     border: 0;
-    font-weight: 700;
-    padding: 7px;
+    font-weight: 600;
+    padding: 5px 3px;
+    text-transform: capitalize;
 }
 
 .categories-list .card-footer {
