@@ -34,3 +34,20 @@ form select.form-control,
 form textarea.form-control {
     padding: 0.325rem 0.65rem;
 }
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+    border: none;
+}
+
+.example-custom-placeholder {
+    background: #f8f9faaa;
+    border: dotted 3px lightblue;
+    min-height: 100px;
+    width: 100%;
+    display: block;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
