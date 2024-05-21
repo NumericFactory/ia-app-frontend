@@ -25,8 +25,8 @@
             <span>Historique</span>
         </h2>
         @if(user$ | async; as user) {
-        @for(step of userPromptsHistory; track step.id) {
         <p-accordion [activeIndex]="0">
+            @for(step of userPromptsHistory; track step.id) {
             <p-accordionTab [header]="step.step_title">
                 <ul class="nav nav-pills flex-column mb-auto" style="padding: 0; list-style: none;">
                     @for(prompt of step.prompts; track prompt.id) {
@@ -43,8 +43,8 @@
                     }
                 </ul>
             </p-accordionTab>
+            }
         </p-accordion>
-        }
         }
 
 

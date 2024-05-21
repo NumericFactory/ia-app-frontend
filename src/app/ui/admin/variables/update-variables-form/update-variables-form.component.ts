@@ -1,17 +1,19 @@
 import { DialogRef, DIALOG_DATA } from "@angular/cdk/dialog";
 import { JsonPipe, NgFor, NgIf } from "@angular/common";
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, SimpleChanges } from "@angular/core";
 import { ReactiveFormsModule, FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { AdminGateway } from "../../../../core/ports/admin.gateway";
 import { FormUISchema } from "../../../../core/models/step.model";
 import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog.service";
+import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { noop } from "rxjs";
 
 @Component({
   selector: 'ui-update-variables-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf, DragDropModule, CdkDragHandle, CdkDragPlaceholder],
   template: `
   <h3 class="fs-5">Mettre à jour les questions</h3>
   <button (click)="closeDialog()" class="btn"><i class="bi bi-x-lg close-dialog-btn"></i></button>
@@ -23,14 +25,33 @@ import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog
   <hr>
 
   <form [formGroup]="questionsForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="questions" *ngFor="let item of formData.controls; let i = index; let c = count">
+
+    <div id="list-parent-iterator"  cdkDropList
+        [cdkDropListData]="questions['controls']"
+        (cdkDropListDropped)="drop($event)">
+
+    <div id="list-sub-parent-iterator"
+          cdkDrag
+          [cdkDragLockAxis]="'y'"
+          [cdkDragData]="item"
+          formArrayName="questions" *ngFor="let item of formData.controls; let i = index; let c = count">
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
       <div class="line" [formGroupName]="i">
        <!-- <span>{{i+1}}</span> -->
         <div class="row mb-4">
 
+
           <div class="py-3 col-1 d-flex flex-column align-items-baseline justify-content-between">
             <!-- required -->
-            <div><input class="form-check-input ms-2" type="checkbox" formControlName="required"></div>
+            <div class="d-flex">
+              <input class="form-check-input ms-2" type="checkbox" formControlName="required">
+              <div class="example-handle ms-2" cdkDragHandle>
+                <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+              </div>
+            </div>
             <!-- remove item -->
             <button type="button" class="btn btn-link fs-3 p-0 m-0 text-secondary" (click)="removeQuestionItem(i)" title="Supprimer la ligne">
               <i class="bi bi-x"></i>
@@ -74,6 +95,7 @@ import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog
         </div><!-- end row -->
       </div> <!-- end line -->
   </div> <!-- end formArrayName -->
+  </div> <!-- end parent -->
 
   <!-- BOUTON AJOUTER UNE QUESTION-->
   <div class="form-group d-flex justify-content-center">
@@ -94,6 +116,28 @@ import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog
     border-radius: 8px;
     padding: 8px 16px 16px;
   }
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .example-box:last-child {
+    border: none;
+  }
+  .example-custom-placeholder {
+    background: #f8f9faaa;
+    border: dotted 3px lightblue;
+    min-height: 100px;
+    width: 100%;
+    display: block;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  .list-sub-parent-iterator  {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
 
   p.info-text {
     font-size: 0.925rem;
@@ -135,6 +179,32 @@ export class UpdateVariablesFormComponent {
     @Inject(DIALOG_DATA) public data: any,
 
   ) { }
+
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   this.questions
+  //     ? this.questions.setControl('questions', this.questions)
+  //     : noop();
+  // }
+
+  drop(event: CdkDragDrop<any>) {
+    const dir = event.currentIndex > event.previousIndex ? 1 : -1;
+    const from = event.previousIndex;
+    const to = event.currentIndex;
+    const temp = this.questions.at(from);
+    for (let i = from; i * dir < to * dir; i = i + dir) {
+      const current = this.questions.at(i + dir);
+      this.questions.setControl(i, current);
+    }
+    this.questions.setControl(to, temp);
+
+    this.questionsForm.value.questions.forEach((question: any, index: number) => {
+      question.order = index + 1;
+    });
+
+    console.log(this.questionsForm.value.questions);
+
+  }
+
 
   ngOnInit() {
     // create the questionsForm
@@ -194,6 +264,7 @@ export class UpdateVariablesFormComponent {
     this.adminService.updateVariables(this.questionsForm.value, this.data.id)
       .subscribe(() => this.dialogRef.close());
   }
+
 
   closeDialog() {
     this.dialogRef.close();
