@@ -27,6 +27,11 @@
 // Custom
 @import "assets/_snackbar.scss";
 
+.hello {
+    color: red;
+
+}
+
 // 3. Include any default variable overrides here
 $theme-colors: (
     "primary": $indigo,
