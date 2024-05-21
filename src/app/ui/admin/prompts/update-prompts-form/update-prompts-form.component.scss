@@ -39,3 +39,20 @@ p span.badge {
     margin-left: 0.3rem;
     margin-bottom: 0.3rem;
 }
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+    border: none;
+}
+
+.example-custom-placeholder {
+    background: #f8f9faaa;
+    border: dotted 3px lightblue;
+    min-height: 100px;
+    width: 100%;
+    display: block;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

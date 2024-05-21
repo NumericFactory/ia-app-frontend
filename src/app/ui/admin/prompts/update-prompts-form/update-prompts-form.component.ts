@@ -12,7 +12,7 @@ import { UserGateway } from '../../../../core/ports/user.gateway';
 import { MatDialogModule } from '@angular/material/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SetCursorPositionDirective } from '../../../../shared/directives/set-cursor-position.directive';
-
+import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -21,6 +21,7 @@ import { SetCursorPositionDirective } from '../../../../shared/directives/set-cu
   imports: [
     ReactiveFormsModule, FormsModule,
     DropdownModule, ListboxModule, MatDialogModule, InputTextareaModule, SetCursorPositionDirective,
+    DragDropModule, CdkDragHandle, CdkDragPlaceholder,
     AsyncPipe, NgFor, NgIf
   ],
   templateUrl: './update-prompts-form.component.html',
@@ -52,6 +53,24 @@ export class UpdatePromptsFormComponent {
   ) {
   }
 
+  drop(event: CdkDragDrop<any>) {
+    const dir = event.currentIndex > event.previousIndex ? 1 : -1;
+    const from = event.previousIndex;
+    const to = event.currentIndex;
+    const temp = this.prompts.at(from);
+    for (let i = from; i * dir < to * dir; i = i + dir) {
+      const current = this.prompts.at(i + dir);
+      this.prompts.setControl(i, current);
+    }
+    this.prompts.setControl(to, temp);
+
+    this.promptsForm.value.prompts.forEach((question: any, index: number) => {
+      question.order = index + 1;
+    });
+
+    console.log(this.promptsForm.value.prompts);
+
+  }
 
   ngOnInit() {
     // subscribe to steps observable

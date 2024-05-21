@@ -23,37 +23,51 @@
 
 <form (ngSubmit)="onSubmit()" [formGroup]="promptsForm">
     <mat-dialog-content class="mat-typography">
-        <div formArrayName="prompts" *ngFor="let item of formPrompts.controls; let i = index; let c = count">
 
-            <!-- LIGNE D'UN PROMPT-->
-            <div class="line row mb-4" [formGroupName]="i">
-                <div class="py-3 col-1 d-flex flex-column align-items-baseline justify-content-between">
-                    <button type="button" class="btn btn-link fs-3 p-0 m-0 text-secondary" (click)="removePromptItem(i)"
-                        title="Supprimer la le prompt">
-                        <i class="bi bi-x"></i>
-                    </button>
-                </div>
-                <div class="col-11">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="title">Titre*</label>
-                                <input type="text" class="form-control" id="title" formControlName="title">
-                            </div>
+        <div id="list-parent-iterator" cdkDropList [cdkDropListData]="prompts['controls']"
+            (cdkDropListDropped)="drop($event)">
+
+            <div id="list-sub-parent-iterator" cdkDrag [cdkDragLockAxis]="'y'" [cdkDragData]="item"
+                formArrayName="prompts" *ngFor="let item of formPrompts.controls; let i = index; let c = count">
+                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                <!-- LIGNE D'UN PROMPT-->
+                <div class="line row align-items-start mb-4" [formGroupName]="i">
+                    <div class="py-2 col-1 d-flex align-items-center justify-content-center">
+                        <button type="button" class="btn btn-link fs-3 p-0 m-0 text-secondary"
+                            (click)="removePromptItem(i)" title="Supprimer la le prompt">
+                            <i class="bi bi-x"></i>
+                        </button>
+                        <div class="example-handle" cdkDragHandle>
+                            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                                </path>
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                            </svg>
                         </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="secretPrompt">Prompt secret*</label>
-                                <textarea appSetCursorPosition [cursorPosition]="cursorPositions[i]" pInputTextarea
-                                    [autoResize]="true" class="form-control" id="secretPrompt"
-                                    formControlName="secretprompt"></textarea>
+                    </div>
+                    <div class="col-11">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="title">Titre*</label>
+                                    <input type="text" class="form-control" id="title" formControlName="title">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="secretPrompt">Prompt secret*</label>
+                                    <textarea appSetCursorPosition [cursorPosition]="cursorPositions[i]" pInputTextarea
+                                        [autoResize]="true" class="form-control" id="secretPrompt"
+                                        formControlName="secretprompt"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> <!-- End formGroupName="i" -->
+                </div> <!-- End formGroupName="i" -->
 
-        </div> <!-- End formArrayName="questions" -->
+            </div> <!-- End formArrayName="questions" -->
+        </div> <!-- End cdkDropList -->
 
         <!-- BOUTON D'AJOUT LIGNE -->
         <div class="form-group d-flex justify-content-center">

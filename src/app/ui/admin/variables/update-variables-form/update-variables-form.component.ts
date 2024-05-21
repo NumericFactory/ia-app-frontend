@@ -1,14 +1,13 @@
 import { DialogRef, DIALOG_DATA } from "@angular/cdk/dialog";
 import { JsonPipe, NgFor, NgIf } from "@angular/common";
-import { Component, Inject, SimpleChanges } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { ReactiveFormsModule, FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { AdminGateway } from "../../../../core/ports/admin.gateway";
 import { FormUISchema } from "../../../../core/models/step.model";
 import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog.service";
-import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { noop } from "rxjs";
+import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'ui-update-variables-form',
