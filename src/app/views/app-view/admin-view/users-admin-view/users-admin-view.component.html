@@ -41,18 +41,19 @@
             <td>
                 <div class="d-inline-flex">
                     @if(!user.roles.length) {
-                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">guest</span>
+                    <span (click)="openRoleDialog($event,user)" class="badge badge-sm text-bg-secondary">guest</span>
                     }
                     @else {
                     @for(role of user.roles; track role) {
                     @if(role===Role.user) {
-                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">user</span>
+                    <span (click)="openRoleDialog($event,user)" class="badge badge-sm text-bg-secondary">user</span>
                     }
                     @if(role===Role.admin) {
-                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">admin</span>
+                    <span (click)="openRoleDialog($event,user)" class="badge badge-sm text-bg-secondary">admin</span>
                     }
                     @if(role===Role.powerAdmin) {
-                    <span (click)="openRoleDialog(user)" class="badge badge-sm text-bg-secondary">powerAdmin</span>
+                    <span (click)="openRoleDialog($event,user)"
+                        class="badge badge-sm text-bg-secondary">powerAdmin</span>
                     }
                     }
                     }

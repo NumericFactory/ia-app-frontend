@@ -6,11 +6,12 @@ import { AsyncPipe } from '@angular/common';
 import { StepGateway } from '../../../../core/ports/step.gateway';
 import { combineLatest } from 'rxjs';
 import { UiStatTaskComponent } from '../ui-stat-task/ui-stat-task.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'ui-stat-circle',
   standalone: true,
-  imports: [KnobModule, FormsModule, AsyncPipe, UiStatTaskComponent],
+  imports: [KnobModule, FormsModule, AsyncPipe, UiStatTaskComponent, RouterLink],
   templateUrl: './ui-stat-circle.component.html',
   styleUrl: './ui-stat-circle.component.scss'
 })

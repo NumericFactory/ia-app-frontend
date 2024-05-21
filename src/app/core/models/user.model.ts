@@ -17,6 +17,7 @@ export type UserHistoryModel = UserHistoryItemModel[]
 
 export interface userSettings {
     id?: number
+    label: string
     key: string
     value?: string
 }

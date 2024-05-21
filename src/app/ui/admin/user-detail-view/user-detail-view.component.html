@@ -22,9 +22,6 @@
     <mat-tab label="Variables">
 
         @if(userVariablesByStep){
-        <!-- <div style="overflow-y: scroll;
-            height: calc(100% - 483px);
-            overflow-x: hidden;"> -->
         <div>
             @for(step of userVariablesByStep; track step) {
             <div class="row">
@@ -72,7 +69,6 @@
                             <span class="date">{{ prompt.created_at | date:'dd/MM/yyyy hh:mm' }}</span>
                             <span class="title">{{ prompt.title }}</span>
                             <span class="example-accordion-item-description">
-
                                 Voir
                                 @if(accordionItem.expanded) {
                                 <i class="bi bi-chevron-down"></i>
@@ -98,9 +94,38 @@
         </div>
     </mat-tab>
 
+    <!-- 3 - USER SETTINGS TAB -->
     <mat-tab label="Paramètres">
-
-
+        @if(user.settings){
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th style="width: 80%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(setting of user.settings; track setting) {
+                        <tr>
+                            <td>{{setting.label}}</td>
+                            <td>{{setting.value}}</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        }
+        @else {
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-secondary">Pas encore de données sur cet utilisateur</p>
+            </div>
+        </div>
+        }
     </mat-tab>
+
 </mat-tab-group>
 }

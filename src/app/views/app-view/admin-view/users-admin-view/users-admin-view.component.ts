@@ -71,7 +71,8 @@ export class UsersAdminViewComponent {
 
 
   // update the role of the user
-  openRoleDialog(user: UserModel): void {
+  openRoleDialog(event: Event, user: UserModel): void {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(RoleDialog, {
       width: 'auto',
       minWidth: '350px',
