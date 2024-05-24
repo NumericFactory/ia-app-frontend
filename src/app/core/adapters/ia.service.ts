@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { tap } from 'rxjs';
+import { IAGateway } from '../ports/ia.gateway';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IaService {
+export class IaService implements IAGateway {
 
   // inject HttpClient
   private http = inject(HttpClient)
@@ -22,4 +23,16 @@ export class IaService {
         })
       );
   }
+
+  getIaProviders() {
+    const endpoint = '/admin/iaproviders';
+    return this.http.get(`${this.apiUrl}${endpoint}`);
+  }
+
+  getIaModels() {
+    const endpoint = '/admin/iamodels';
+    return this.http.get(`${this.apiUrl}${endpoint}`);
+  }
+
+
 }

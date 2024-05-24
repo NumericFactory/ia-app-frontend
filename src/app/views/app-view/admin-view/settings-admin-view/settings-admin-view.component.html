@@ -10,6 +10,9 @@
     </div>
 </div>
 
+@if(providers$ | async; as providers) {
+
+<!-- <pre>{{providers | json}}</pre> -->
 <table class="table table-sm table-hover">
     <thead class="table-light">
         <tr>
@@ -18,18 +21,41 @@
             <th>API key</th>
             <th>API secret key</th>
             <th>Modèle</th>
+            <th>Actif</th>
             <th style="width: 60px;text-align:center">Actions</th>
         </tr>
     </thead>
 
     <tbody>
         <tr *ngFor="let provider of providers">
+            <!-- <pre>{{provider | json}}</pre> -->
             <td>{{provider.id}}</td>
             <td>{{provider.name}}</td>
-            <td>{{provider.api_key}}</td>
-            <td>{{provider.api_secret_key}}</td>
-            <td>{{provider.model}}</td>
+            <td>SK****</td>
+            <td>SK****</td>
+            <td>
+                @if(provider.name.toLowerCase().includes('openai')) {
+                <select class="form-control" [formControl]="selectOpenaiModelControl">
+                    <option *ngFor="let model of provider.iamodels" [value]="model.id">
+                        {{model.name}}
+                    </option>
+                </select>
+                }
+                @if(provider.name.toLowerCase().includes('claude')) {
+                <select class="form-control" [formControl]="selectClaudeModelControl">
+                    <option *ngFor="let model of provider.iamodels" [value]="model.id">
+                        {{model.name}}
+                    </option>
+                </select>
+                }
+            </td>
+            <td>
+                <input type="checkbox" [checked]="provider.active" />
+            </td>
             <td style="text-align:center">
                 <button class="btn btn-sm btn-secondary"><i class="bi bi-trash"></i></button>
             </td>
         </tr>
+    </tbody>
+</table>
+}
