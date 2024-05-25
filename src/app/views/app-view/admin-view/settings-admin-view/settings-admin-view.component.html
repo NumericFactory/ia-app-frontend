@@ -59,7 +59,7 @@
 </table>
 
 <!-- choice provider-->
-<h2>Choisir un provider IA</h2>
+<h3 class="fs-6 my-2">Choisir un provider IA</h3>
 <mat-radio-group [formControl]="radioChooseProviderControl" aria-label="Select an option">
     <mat-radio-button *ngFor="let provider of providers" [value]="provider.id">{{provider.name}}</mat-radio-button>
 </mat-radio-group>
