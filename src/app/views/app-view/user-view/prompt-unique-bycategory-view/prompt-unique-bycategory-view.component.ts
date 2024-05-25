@@ -99,6 +99,11 @@ export class PromptUniqueBycategoryViewComponent {
     this.viewState.loadingIaResponse = true;
     this.iaService.ask(newPrompt).subscribe(
       (response: any) => {
+        if (!response.data.content || response.data.content.length === 0) {
+          this.alertService.show('Erreur lors de la réponse de l\'IA', 'error', 3000, 'right');
+          this.viewState.loadingIaResponse = false;
+          return;
+        }
         this.ia_response = response.data.content[0]; // .text and .createdAt
         this.viewState.loadingIaResponse = false;
         // save the ia response
@@ -115,6 +120,7 @@ export class PromptUniqueBycategoryViewComponent {
         ).subscribe();
       }
     );
+
 
 
   }

@@ -23,6 +23,7 @@ export class SettingsAdminViewComponent {
 
   selectOpenaiModelControl = new FormControl();
   selectClaudeModelControl = new FormControl();
+  radioChooseProviderControl = new FormControl();
 
   constructor(private iaService: IAGateway) { }
 
@@ -37,10 +38,36 @@ export class SettingsAdminViewComponent {
           this.selectClaudeModelControl.setValue(provider.iamodelId);
         }
       }
+
+      // get the IA provider active
+      this.iaService.getActiveProvider().subscribe((activeProvider) => {
+        console.log('ACTIVE PROVIDER', activeProvider);
+        this.radioChooseProviderControl.setValue(activeProvider.data.provider.id, { emitEvent: false });
+      });
+
+      // choose the provider active
+      this.radioChooseProviderControl.valueChanges.subscribe((provider) => {
+        console.log(provider);
+        this.iaService.updateIaProviderActive(provider).subscribe();
+      });
     });
-    // this.selectClaudeModelControl.setValue(4);
-    // this.selectOpenaiModelControl.setValue(1);
   }
+
+  newModelSelected(provider: any) {
+    if (provider.name.toLowerCase().includes('openai')) {
+      console.log(provider.id, Number(this.selectOpenaiModelControl.value));
+      this.iaService.updateIaProviderModel(provider.id, Number(this.selectOpenaiModelControl.value)).subscribe();
+    }
+    if (provider.name.toLowerCase().includes('claude')) {
+      console.log(provider.id, Number(this.selectClaudeModelControl.value));
+      this.iaService.updateIaProviderModel(provider.id, Number(this.selectClaudeModelControl.value)).subscribe();
+    }
+  }
+
+
+
+
+
 
 
 
