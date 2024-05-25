@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, NgFor } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { IAGateway } from '../../../../core/ports/ia.gateway';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -7,7 +7,7 @@ import { MatRadioModule } from '@angular/material/radio';
 @Component({
   selector: 'app-settings-admin-view',
   standalone: true,
-  imports: [NgFor, AsyncPipe, ReactiveFormsModule, MatRadioModule],
+  imports: [NgFor, AsyncPipe, DatePipe, ReactiveFormsModule, MatRadioModule],
   templateUrl: './settings-admin-view.component.html',
   styleUrl: './settings-admin-view.component.scss'
 })

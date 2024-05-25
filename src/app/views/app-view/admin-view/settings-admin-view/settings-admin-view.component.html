@@ -37,7 +37,7 @@
                 <select (change)="newModelSelected(provider)" class="form-control"
                     [formControl]="selectOpenaiModelControl">
                     <option *ngFor="let model of provider.iamodels" [value]="model.id">
-                        {{model.name}}
+                        {{model.name}} - {{model.release | date:'dd/MM/yyyy'}}
                     </option>
                 </select>
                 }
