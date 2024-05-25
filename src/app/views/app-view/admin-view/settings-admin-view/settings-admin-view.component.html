@@ -49,6 +49,14 @@
                     </option>
                 </select>
                 }
+                @if(provider.name.toLowerCase().includes('gemini')) {
+                <select (change)="newModelSelected(provider)" class="form-control"
+                    [formControl]="selectGeminiModelControl">
+                    <option *ngFor="let model of provider.iamodels" [value]="model.id">
+                        {{model.name}}
+                    </option>
+                </select>
+                }
             </td>
 
             <td style="text-align:center">

@@ -1,14 +1,15 @@
 import { Component, ElementRef, EventEmitter, Input, Output, Renderer2, SimpleChanges, ViewChild, booleanAttribute } from '@angular/core';
 import { PromptModel } from '../../../../core/models/step.model';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { UserModel } from '../../../../core/models/user.model';
 import { TooltipModule } from 'primeng/tooltip';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 @Component({
   selector: 'ui-conversation-user',
   standalone: true,
-  imports: [ProgressBarModule, DatePipe, TooltipModule],
+  imports: [ProgressBarModule, DatePipe, TooltipModule, AsyncPipe],
   templateUrl: './ui-conversation-user.component.html',
   styleUrl: './ui-conversation-user.component.scss'
 })
@@ -28,7 +29,9 @@ export class UiConversationUserComponent {
 
   @Output() refreshPromptEvent = new EventEmitter<PromptModel>();
 
-  constructor(private renderer: Renderer2) {
+  loader$ = this.loaderService.isLoading$;
+
+  constructor(private loaderService: LoaderService) {
 
   }
 

@@ -15,7 +15,8 @@
         <div style="transform:translateY(-7px)" class="d-flex align-items-center">
             <span>{{ prompt.title}}</span>
         </div>
-        <p-progressBar [style.opacity]="isLoadingResponse?1:0" mode="indeterminate"
+
+        <p-progressBar [style.opacity]="isLoadingResponse && (loader$ | async)?1:0" mode="indeterminate"
             [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
     </div>
 

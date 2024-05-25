@@ -1,9 +1,9 @@
 <!-- loading skeleton-->
-@if(isLoadingResponse) {
+@if(isLoadingResponse && (loader$ | async)) {
 <ui-conversation-loader-skeleton></ui-conversation-loader-skeleton>
 }
 
-@if(responseAI && responseAI?.text?.length && !isLoadingResponse) {
+@if(responseAI && responseAI?.text?.length && !isLoadingResponse && !(loader$ | async)) {
 <div style="position: relative; overflow-y: auto;"
     class="prompt-result-view animate__animated animate__fadeIn iaresponse">
     <div class="prompt-result-view__title d-flex align-items-center">

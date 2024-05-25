@@ -7,7 +7,7 @@ import { MatRadioModule } from '@angular/material/radio';
 @Component({
   selector: 'app-settings-admin-view',
   standalone: true,
-  imports: [NgFor, AsyncPipe, DatePipe, ReactiveFormsModule, MatRadioModule],
+  imports: [NgFor, JsonPipe, AsyncPipe, DatePipe, ReactiveFormsModule, MatRadioModule],
   templateUrl: './settings-admin-view.component.html',
   styleUrl: './settings-admin-view.component.scss'
 })
@@ -23,7 +23,9 @@ export class SettingsAdminViewComponent {
 
   selectOpenaiModelControl = new FormControl();
   selectClaudeModelControl = new FormControl();
+  selectGeminiModelControl = new FormControl();
   radioChooseProviderControl = new FormControl();
+
 
   constructor(private iaService: IAGateway) { }
 
@@ -36,7 +38,11 @@ export class SettingsAdminViewComponent {
         } else if (provider.name.toLowerCase().includes('claude')) {
           console.log(provider); // provider.iamodeId = 4
           this.selectClaudeModelControl.setValue(provider.iamodelId);
+        } else if (provider.name.toLowerCase().includes('gemini')) {
+          console.log(provider); // provider.iamodeId = 4
+          this.selectGeminiModelControl.setValue(provider.iamodelId);
         }
+
       }
 
       // get the IA provider active
@@ -62,6 +68,11 @@ export class SettingsAdminViewComponent {
       console.log(provider.id, Number(this.selectClaudeModelControl.value));
       this.iaService.updateIaProviderModel(provider.id, Number(this.selectClaudeModelControl.value)).subscribe();
     }
+    if (provider.name.toLowerCase().includes('gemini')) {
+      console.log(provider.id, Number(this.selectGeminiModelControl.value));
+      this.iaService.updateIaProviderModel(provider.id, Number(this.selectGeminiModelControl.value)).subscribe();
+    }
+
   }
 
 

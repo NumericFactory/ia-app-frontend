@@ -1,9 +1,10 @@
 import { Component, Inject, Input, booleanAttribute } from '@angular/core';
 import { UiConversationLoaderSkeletonComponent } from '../ui-loader-skeleton/ui-conversation-loader-skeleton.component';
-import { DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { AlertService } from '../../../../shared/services/alert.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { WINDOW } from '../../../../shared/services/window';
+import { LoaderService } from '../../../../shared/services/loader.service';
 
 interface SelectionRectangle {
   left: number;
@@ -15,7 +16,7 @@ interface SelectionRectangle {
 @Component({
   selector: 'ui-conversation-ia',
   standalone: true,
-  imports: [UiConversationLoaderSkeletonComponent, DatePipe, MarkdownModule],
+  imports: [UiConversationLoaderSkeletonComponent, DatePipe, AsyncPipe, MarkdownModule],
   templateUrl: './ui-conversation-ia.component.html',
   styleUrl: './ui-conversation-ia.component.scss'
 })
@@ -27,8 +28,11 @@ export class UiConversationIaComponent {
   public hostRectangle!: SelectionRectangle | null;
   private selectedText!: string;
 
+  loader$ = this.loaderService.isLoading$;
+
   constructor(
     private alertService: AlertService,
+    private loaderService: LoaderService,
     @Inject(WINDOW) private window: Window
   ) { }
 

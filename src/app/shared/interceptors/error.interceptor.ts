@@ -3,6 +3,7 @@ import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AlertService } from '../services/alert.service';
+import { LoaderService } from '../services/loader.service';
 //import { environment } from '../../../environments/environment';
 
 type APIErrorResponse = {
@@ -13,6 +14,7 @@ type APIErrorResponse = {
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   const alert = inject(AlertService);
+  const loader = inject(LoaderService);
   const _route = inject(Router);
 
   return next(req).pipe(

@@ -88,6 +88,7 @@ export class PromptUniqueBycategoryViewComponent {
   }
 
   selectPrompt(prompt: PromptModel) {
+    const oldPromptResponse = this.ia_response;
     if (this.user_variables.length === 0 || this.viewState.userVariables === false) {
       this.alertService.show('Veuillez remplir le formulaire', 'error', 3000, 'right');
       return;
@@ -98,26 +99,36 @@ export class PromptUniqueBycategoryViewComponent {
     // ask the question
     this.viewState.loadingIaResponse = true;
     this.iaService.ask(newPrompt).subscribe(
-      (response: any) => {
-        if (!response.data.content || response.data.content.length === 0) {
-          this.alertService.show('Erreur lors de la réponse de l\'IA', 'error', 3000, 'right');
+      {
+        next: (response: any) => {
+          // check if the response is empty
+          if (!response.data?.content || response.data?.content?.length === 0) {
+            this.alertService.show('Erreur lors de la réponse de l\'IA', 'error', 3000, 'right');
+            this.viewState.loadingIaResponse = false;
+            this.ia_response = oldPromptResponse;
+            return;
+          }
+          // set the response
+          this.ia_response = response.data.content[0]; // .text and .createdAt
           this.viewState.loadingIaResponse = false;
-          return;
+          // save the ia response
+          const payloadAIResponse = {
+            ia_response: response.data.content[0].text,
+            ia_model: response.data.model,
+            tokens_count_input: response.data.usage.input_tokens,
+            tokens_count_output: response.data.usage.output_tokens
+          };
+          this.userService.postUserPromptAIResponse(
+            this.stepId,
+            prompt.id,
+            { prompt: { ...payloadAIResponse } }
+          ).subscribe();
+        },
+        // handle error
+        error: (error) => {
+          this.viewState.loadingIaResponse = false;
+          this.ia_response = oldPromptResponse;
         }
-        this.ia_response = response.data.content[0]; // .text and .createdAt
-        this.viewState.loadingIaResponse = false;
-        // save the ia response
-        const payloadAIResponse = {
-          ia_response: response.data.content[0].text,
-          ia_model: response.data.model,
-          tokens_count_input: response.data.usage.input_tokens,
-          tokens_count_output: response.data.usage.output_tokens
-        };
-        this.userService.postUserPromptAIResponse(
-          this.stepId,
-          prompt.id,
-          { prompt: { ...payloadAIResponse } }
-        ).subscribe();
       }
     );
 
