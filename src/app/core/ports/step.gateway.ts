@@ -8,6 +8,7 @@ export abstract class StepGateway {
     abstract steps$: Observable<StepModel[]>;
     abstract prompts$: Observable<PromptModel[]>;
     abstract categories$: Observable<CategoryModel[]>;
+    abstract totalPromptsCount$: Observable<number>;
 
 
     // abstract methods
@@ -22,5 +23,6 @@ export abstract class StepGateway {
 
     abstract getPromptsByCategory(categoryId: number): Observable<PromptModel[]>;
     abstract getPrompt(promptId: number): Observable<PromptModel | null>;
+    abstract getPromptsTotalCount(): Observable<number>
 
 }

@@ -4,13 +4,16 @@
 
     <div class="col-12 col-xl-12 col-xxl-10">
         <div style="border: 0;
-        background: #f3f3f3;
+        background: #f8f9f9;
         border-radius: 11px;" class="card">
             <div class="card-body px-3">
                 <!-- <h5>Statistiques</h5> -->
                 <h2 class="fs-6 mb-0">Qu'avez-vous accompli ?</h2>
                 <p class="opacity-50 m-0">Vos statistiques de prompts réalisés</p>
-                <ui-stat-circle [value]="(user$ | async)?.prompts?.length!" [max]="150" [label]="'Total'" />
+                <ui-stat-circle [visibleStepPromptsTotalCount]="visibleStepPromptsTotalCount"
+                    [completedStepPromptsTotalCount]="completedStepPromptsTotalCount"
+                    [value]="(user$ | async)?.prompts?.length!" [max]="(countTotalPrompts$ | async)??0"
+                    [label]="'Total'" />
             </div>
         </div>
     </div>

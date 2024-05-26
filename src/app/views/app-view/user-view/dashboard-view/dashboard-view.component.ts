@@ -4,7 +4,7 @@ import { AsyncPipe, LowerCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UiStepCardComponent } from '../../../../ui/public/ui-step-card/ui-step-card.component';
 import { CategoryModel } from '../../../../core/models/category.model';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -24,6 +24,13 @@ export class DashboardViewComponent {
   categories$: Observable<CategoryModel[]> = this.stepService.categories$;
   user$ = this.userService.user$;
 
+  // count the total number of prompts in the system
+  countTotalPrompts$ = this.stepService.totalPromptsCount$;
+  // count the number of prompts that have been completed for each step in the user's history
+  completedStepPromptsTotalCount = 0;
+  // count the number of all prompts each visible step
+  visibleStepPromptsTotalCount = 0;
+
   constructor(
     private stepService: StepGateway,
     private userService: UserGateway,
@@ -34,6 +41,27 @@ export class DashboardViewComponent {
 
     this.stepService.getSteps().subscribe();
     this.stepService.fetchCategories().subscribe();
+    this.stepService.getPromptsTotalCount().subscribe();
+
+    combineLatest([this.user$, this.steps$]).subscribe(([user, steps]) => {
+      this.completedStepPromptsTotalCount = 0;
+      this.visibleStepPromptsTotalCount = 0;
+      // 1 count the number of prompts that have been completed for each step in the user's history
+      if (user?.history?.length) {
+        user?.history.forEach(((story: any) => {
+          if (story.is_visible) {
+            this.completedStepPromptsTotalCount += story.prompts.length;
+          }
+        })) // end of forEach
+      }
+      // 2 count the number of all prompts each visible step
+      steps.forEach((step) => {
+        if (step.isVisible) {
+          console.log('step', step);  // step object
+          this.visibleStepPromptsTotalCount += step.prompts.length;
+        }
+      });
+    });
 
   }
 

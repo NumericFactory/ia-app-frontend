@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'ui-stat-task',
@@ -8,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrl: './ui-stat-task.component.scss'
 })
 export class UiStatTaskComponent {
+
+  @Input() completedStepPromptsTotalCount: number = 0;
+  @Input() visibleStepPromptsTotalCount: number = 0;
+
+  getPercatageProgression(): number {
+    return Math.round(this.completedStepPromptsTotalCount / this.visibleStepPromptsTotalCount * 100);
+  }
 
 }

@@ -7,7 +7,9 @@
             </div>
         </div>
     </div>
-    <div class="stat-value">86%</div>
+    <div class="stat-value">{{ getPercatageProgression()}}%</div>
     <div class="stat-title">Prompts réalisés</div>
-    <div class="stat-desc text-secondary">31 prompts restants</div>
+    <div class="stat-desc text-secondary">
+        {{visibleStepPromptsTotalCount - completedStepPromptsTotalCount}} prompts restants
+    </div>
 </div>

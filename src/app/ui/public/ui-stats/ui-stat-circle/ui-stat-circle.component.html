@@ -8,8 +8,8 @@
                     <p class="card-title">Total</p>
                 </div>
                 <div class="card-body">
-                    <p-knob valueTemplate="{value}/53" [size]="115" [(ngModel)]="value" [readonly]="true"
-                        valueColor="goldenrod" rangeColor="LightGray" />
+                    <p-knob valueTemplate="{value}/{{max}}" [size]="115" [max]="max" [(ngModel)]="value"
+                        [strokeWidth]="5" [readonly]="true" valueColor="goldenrod" rangeColor="LightGray" />
                 </div>
             </div>
 
@@ -34,7 +34,8 @@
         <div class="row">
             <div class="col-6">
                 <h3 class="fs-5 text-center">Templates</h3>
-                <ui-stat-task></ui-stat-task>
+                <ui-stat-task [visibleStepPromptsTotalCount]="visibleStepPromptsTotalCount"
+                    [completedStepPromptsTotalCount]="completedStepPromptsTotalCount"></ui-stat-task>
             </div>
             <div class="col-6">
                 @if(user$ | async; as user) {

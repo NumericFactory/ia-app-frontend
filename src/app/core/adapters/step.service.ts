@@ -25,6 +25,10 @@ export class StepService implements StepGateway {
   private categoriesSubject = new BehaviorSubject<CategoryModel[]>([]);
   public categories$ = this.categoriesSubject.asObservable();
 
+  private totalPromptsCount = new BehaviorSubject<number>(0);
+  public totalPromptsCount$: Observable<number> = this.totalPromptsCount.asObservable();
+
+
   constructor() { }
 
   public getSteps(): Observable<StepModel[]> {
@@ -95,6 +99,15 @@ export class StepService implements StepGateway {
       })
     )
   }
+
+  getPromptsTotalCount(): Observable<number> {
+    const endpoint = `/prompts/totalcount`;
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      tap((response: any) => this.totalPromptsCount.next(response.data.prompts_total_count)
+      )
+    );
+  }
+
 
 
 }
