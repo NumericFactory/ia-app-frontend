@@ -18,7 +18,7 @@ export class UiHeaderPromptViewComponent {
   route = inject(ActivatedRoute)
 
   goBack() {
-    this.router.navigate(['../../'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }

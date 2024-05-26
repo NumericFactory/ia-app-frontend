@@ -127,27 +127,36 @@ export class PromptViewComponent {
     const newPrompt: string = this.buildPrompt(prompt, this.userService.getUserFromSubject()?.variables);
     // ask the question
     this.loadingGeneral = true;
-    this.iaService.ask(newPrompt!).subscribe(response => {
-      this.loadingGeneral = false;
-      // updtate conversationSate with IA response
-      this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.content[0].text;
-      this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
-      // save the IA response in the database
-      const payloadAIResponse = {
-        ia_response: response.data.content[0].text,
-        ia_model: response.data.model,
-        tokens_count_input: response.data.usage.input_tokens,
-        tokens_count_output: response.data.usage.output_tokens
-      };
-      // save the IA response in the database
-      this.userService.postUserPromptAIResponse(this.step.id, prompt.id, { prompt: { ...payloadAIResponse } }).subscribe(
-        (response: any) => {
-          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.createdAt = response.data.created_at;
-          this.setStateOfPrompts();
+    this.iaService.ask(newPrompt!).subscribe(
+      {
+        next: (response: any) => {
+          this.loadingGeneral = false;
+          // updtate conversationSate with IA response
+          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.content[0].text;
+          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
+          // save the IA response in the database
+          const payloadAIResponse = {
+            ia_response: response.data.content[0].text,
+            ia_model: response.data.model,
+            tokens_count_input: response.data.usage.input_tokens,
+            tokens_count_output: response.data.usage.output_tokens
+          };
+          // save the IA response in the database
+          this.userService.postUserPromptAIResponse(this.step.id, prompt.id, { prompt: { ...payloadAIResponse } })
+            .subscribe(
+              (response: any) => {
+                this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.createdAt = response.data.created_at;
+                this.setStateOfPrompts();
 
+              });
+        },
+        // handle error
+        error: (error) => {
+          this.loadingGeneral = false;
+          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
         }
-      );
-    });
+      }
+    );
   }
 
 
