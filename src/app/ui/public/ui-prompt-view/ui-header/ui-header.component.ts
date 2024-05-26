@@ -13,6 +13,7 @@ export class UiHeaderPromptViewComponent {
 
   @Input() step: StepModel | undefined;
   @Input() promptsToDisplay: PromptModel[] = [];
+  @Input() countPromptsChecked: number = 0;
 
   router = inject(Router)
   route = inject(ActivatedRoute)

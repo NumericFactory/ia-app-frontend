@@ -49,6 +49,7 @@ export class PromptViewComponent {
   step!: StepModel;
   promptsList: PromptModel[] = []
   selectedPrompt: PromptModel | undefined;
+  countPromptsChecked: number = 0;
 
   currentPromptIdFragment!: string; // ex: #prompt9
 
@@ -108,6 +109,11 @@ export class PromptViewComponent {
             item.checked = item.iaResponse.text.trim() === '' ? false : true;
             item.nextItem = false;
           });
+          this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+            if (item.checked) {
+              this.countPromptsChecked++
+            }
+          });
           if (!this.conversationHasIAResponse()) {
             this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
           }
@@ -157,6 +163,7 @@ export class PromptViewComponent {
                 this.setStateOfPrompts();
 
               });
+          this.countPromptsChecked++;
         },
         // handle error
         error: (error) => {

@@ -20,7 +20,7 @@
         border-radius: 8px;" class="card">
             <div class="card-body">
                 <h2 class="fs-4">{{step.subtitle}}</h2>
-                <p class="fs-6">0/ {{step.prompts.length}} prompts</p>
+                <p class="fs-6">{{countPromptsChecked}}/ {{step.prompts.length}} prompts</p>
                 <hr style="opacity: .1">
                 <p [innerHTML]="step.desc"></p>
             </div>
