@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
-import { AsyncPipe, DatePipe, JsonPipe, CommonModule, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe, CommonModule, NgIf } from '@angular/common';
 import { Role, UserModel } from '../../../../core/models/user.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
@@ -215,7 +215,7 @@ export class RoleDialog {
   imports: [
     ReactiveFormsModule, MatCheckboxModule,
     DragDropModule, CdkDragHandle, CdkDragPlaceholder,
-    JsonPipe, NgFor, NgIf,
+    JsonPipe, NgIf,
     MatButtonModule, CommonModule,
 
   ],
@@ -236,9 +236,10 @@ export class RoleDialog {
   <div id="list-parent-iterator" cdkDropList [cdkDropListData]="questions['controls']"
             (cdkDropListDropped)="drop($event)">
 
-    <div id="list-sub-parent-iterator" 
-    cdkDrag [cdkDragLockAxis]="'y'" [cdkDragData]="item" 
-    formArrayName="settings" *ngFor="let item of formData.controls; let i = index; let c = count">
+    <!-- ITERATE OVER THE QUESTIONS -->
+    @for(item of formData.controls; track item; let i = $index, c=$count) {
+    <div id="list-sub-parent-iterator" cdkDrag [cdkDragLockAxis]="'y'" [cdkDragData]="item" 
+    formArrayName="settings">
 
       <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
       <!-- LIGNE DE QUESTION -->
@@ -300,6 +301,7 @@ export class RoleDialog {
         </div><!-- end row -->
       </div> <!-- end line -->
   </div> <!-- end formArrayName -->
+}
 
   </div> <!-- end cdkDropList -->
 
