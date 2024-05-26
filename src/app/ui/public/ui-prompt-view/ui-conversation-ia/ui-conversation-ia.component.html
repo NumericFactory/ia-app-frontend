@@ -3,7 +3,7 @@
 <ui-conversation-loader-skeleton></ui-conversation-loader-skeleton>
 }
 
-@if(responseAI && responseAI?.text?.length && !isLoadingResponse && !(loader$ | async)) {
+@if(responseAI && responseAI?.text?.length && !isLoadingResponse) {
 <div style="position: relative; overflow-y: auto;"
     class="prompt-result-view animate__animated animate__fadeIn iaresponse">
     <div class="prompt-result-view__title d-flex align-items-center">
