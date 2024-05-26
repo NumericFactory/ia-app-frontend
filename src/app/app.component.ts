@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './ui/public/navbar/navbar.component';
 import { AuthGateway } from './core/ports/auth.gateway';
 
@@ -15,6 +15,8 @@ export class AppComponent {
   authService = inject(AuthGateway)
   router = inject(Router)
 
+  user$ = this.authService.user$;
+
   ngOnInit() {
     /**
      * LoadUser and redirect user based on their role
@@ -29,11 +31,19 @@ export class AppComponent {
         if (!isAuth) this.router.navigate(['/auth/login'])
         else {
           user?.roles.find(role => role > 1)
-            ? this.router.navigate(['/admin'])
+            ? this.router.navigate(['/dashboard'])
             : this.router.navigate(['/dashboard'])
         }
       })
     })();
+
+    // open settings Popup if user has not set their settings
+    this.user$.subscribe(user => {
+      if ((user && !user.settings) || !user?.settings?.length) {
+        // open settings popup
+        console.log('open settings popup')
+      }
+    });
 
 
     // remove # from url

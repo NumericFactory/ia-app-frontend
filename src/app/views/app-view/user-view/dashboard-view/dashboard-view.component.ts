@@ -57,7 +57,7 @@ export class DashboardViewComponent {
       // 2 count the number of all prompts each visible step
       steps.forEach((step) => {
         if (step.isVisible) {
-          console.log('step', step);  // step object
+          // console.log('step', step);  // step object
           this.visibleStepPromptsTotalCount += step.prompts.length;
         }
       });
