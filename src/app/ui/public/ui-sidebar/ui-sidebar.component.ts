@@ -18,6 +18,7 @@ export class UiSidebarComponent {
   authUser$ = this.authService.user$;
   user$ = this.userService.user$;
   userPromptsHistory: any[] = [];
+  userPromptsHistoryInvisible: any[] = [];
   // get iconStarElement #starIcon
   @ViewChild('iconStar') iconStar!: ElementRef<HTMLElement>;
 
@@ -37,7 +38,8 @@ export class UiSidebarComponent {
 
     this.user$.subscribe((user) => {
       if (user && user.history) {
-        this.userPromptsHistory = user.history;
+        this.userPromptsHistory = user.history.filter((history: any) => history.is_visible == 1);
+        this.userPromptsHistoryInvisible = user.history.filter((history: any) => history.is_visible == 0);
       }
     });
   }

@@ -71,44 +71,52 @@ export class PromptViewComponent {
   ) { }
 
   ngOnInit(): void {
+    // get user data from database
     this.user = this.userService.getUserFromSubject() || {} as UserModel;
-
-    // get step id from url
-    this.stepId = this.route.snapshot.params['stepid'];
 
     // get step and user prompts data from database
     // and set this.step, this.promptsList, and this.conversationSate.items
-    const stepAndUserPromptsAiResponses$ = combineLatest([
-      this.stepService.getStepById(this.stepId),
-      this.userService.fetchUserPrompts()
-    ]);
-    stepAndUserPromptsAiResponses$.subscribe(([step, promptsAiResponses]) => {
-      if (step) {
-        this.step = step
-        this.promptsList = step.prompts;
-        // set conversationSate.items with user question and IA response
-        this.conversationSate.items = this.promptsList.map((prompt) => {
-          return {
-            promptId: prompt.id,
-            userQuestion: prompt,
-            iaResponse: {
-              createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
-              text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
-            },
-            checked: false,
-            nextItem: false
+
+
+    this.route.paramMap.subscribe((params: any) => {
+      // get step id from url
+      this.stepId = params.params['stepid'];
+      // get step and user prompts data from database
+      // and set this.step, this.promptsList, and this.conversationSate.items
+      const stepAndUserPromptsAiResponses$ = combineLatest([
+        this.stepService.getStepById(this.stepId),
+        this.userService.fetchUserPrompts()
+      ]);
+      stepAndUserPromptsAiResponses$.subscribe(([step, promptsAiResponses]) => {
+        if (step) {
+          this.step = step
+          this.promptsList = step.prompts;
+          // set conversationSate.items with user question and IA response
+          this.conversationSate.items = this.promptsList.map((prompt) => {
+            return {
+              promptId: prompt.id,
+              userQuestion: prompt,
+              iaResponse: {
+                createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
+                text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
+              },
+              checked: false,
+              nextItem: false
+            }
+          });
+          this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+            item.checked = item.iaResponse.text.trim() === '' ? false : true;
+            item.nextItem = false;
+          });
+          if (!this.conversationHasIAResponse()) {
+            this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
           }
-        });
-        this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
-          item.checked = item.iaResponse.text.trim() === '' ? false : true;
-          item.nextItem = false;
-        });
-        if (!this.conversationHasIAResponse()) {
-          this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
+          this.setStateOfPrompts();
         }
-        this.setStateOfPrompts();
-      }
-    })
+      });
+
+    });
+
     // get current url fragement for routing
     this.route.fragment.subscribe((fragment: string | null) => {
       if (fragment)

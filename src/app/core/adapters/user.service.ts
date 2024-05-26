@@ -115,10 +115,10 @@ export class UserService implements UserGateway {
     const endpoint = `/me/prompts-history`;
     return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
       map((response: any) => response.data),
-      tap((userPrompts: any) => {
+      tap((steps: any) => {
         const user = this.userSubject.getValue()
-        if (user && userPrompts) {
-          user.history = userPrompts;
+        if (user && steps) {
+          user.history = steps;
           this.userSubject.next(user)
         }
       })
