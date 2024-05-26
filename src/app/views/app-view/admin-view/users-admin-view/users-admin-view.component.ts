@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog.service";
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UserDetailViewComponent } from '../../../../ui/admin/user-detail-view/user-detail-view.component';
+import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-users-admin-view',
@@ -211,7 +212,13 @@ export class RoleDialog {
 @Component({
   selector: 'ui-create-settings-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, CommonModule, NgFor, NgIf],
+  imports: [
+    ReactiveFormsModule, MatCheckboxModule,
+    DragDropModule, CdkDragHandle, CdkDragPlaceholder,
+    JsonPipe, NgFor, NgIf,
+    MatButtonModule, CommonModule,
+
+  ],
   template: `
   <h3 class="fs-5">Settings utilisateur</h3>
   <i (click)="closeDialog()" class="bi bi-x-lg close-dialog-btn"></i>
@@ -224,17 +231,36 @@ export class RoleDialog {
   <hr>
 
   <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="settings" *ngFor="let item of formData.controls; let i = index; let c = count">
+
+  <!-- DRAG AND DROP -->
+  <div id="list-parent-iterator" cdkDropList [cdkDropListData]="questions['controls']"
+            (cdkDropListDropped)="drop($event)">
+
+    <div id="list-sub-parent-iterator" 
+    cdkDrag [cdkDragLockAxis]="'y'" [cdkDragData]="item" 
+    formArrayName="settings" *ngFor="let item of formData.controls; let i = index; let c = count">
+
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+      <!-- LIGNE DE QUESTION -->
       <div class="line" [formGroupName]="i">
        <!-- <span>{{i+1}}</span> -->
         <div class="row mb-4">
-          <div class="py-3 col-1 d-flex flex-column align-items-baseline justify-content-between">
+          <div class="py-3 col-1 d-flex align-items-center justify-content-between">
             <!-- required -->
             <div><input class="form-check-input ms-2" type="checkbox" formControlName="required"></div>
             <!-- remove item -->
             <button type="button" class="btn btn-link fs-3 p-0 m-0 text-secondary" (click)="removeQuestionItem(i)" title="Supprimer la ligne">
               <i class="bi bi-x"></i>
             </button>
+            <!-- handle drag and drop reorder -->
+            <div class="example-handle" cdkDragHandle>
+              <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                      d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                  </path>
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+              </svg>
+            </div>
           </div>
 
           <div class="col-11">
@@ -274,6 +300,8 @@ export class RoleDialog {
         </div><!-- end row -->
       </div> <!-- end line -->
   </div> <!-- end formArrayName -->
+
+  </div> <!-- end cdkDropList -->
 
   <!-- BOUTON AJOUTER UNE QUESTION-->
   <div class="form-group d-flex justify-content-center">
@@ -319,6 +347,20 @@ export class RoleDialog {
   form input.form-control, form select.form-control, form textarea.form-control {
     padding: 0.325rem 0.65rem;
   }
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  .example-box:last-child {
+      border: none;
+  }
+  .example-custom-placeholder {
+      background: #f8f9faaa;
+      border: dotted 3px lightblue;
+      min-height: 100px;
+      width: 100%;
+      display: block;
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
   `]
 })
 export class DialogManageUserSettings {
@@ -334,6 +376,29 @@ export class DialogManageUserSettings {
     private confirmDialog: ConfirmDialogService
   ) { }
 
+  drop(event: CdkDragDrop<any>) {
+    const dir = event.currentIndex > event.previousIndex ? 1 : -1;
+    const from = event.previousIndex;
+    const to = event.currentIndex;
+    const temp = this.questions.at(from);
+    for (let i = from; i * dir < to * dir; i = i + dir) {
+      const current = this.questions.at(i + dir);
+      this.questions.setControl(i, current);
+    }
+    this.questions.setControl(to, temp);
+
+    this.settingsForm.value.settings.forEach((question: any, index: number) => {
+      question.order = index + 1;
+    });
+
+    console.log(this.settingsForm.value.settings);
+  }
+
+  // Permet de récupérer formPrompts dans la vue qui est une instance de FormArray
+  get formSettings() {
+    return <FormArray>this.settingsForm.get('settings');
+  }
+
   ngOnInit() {
 
     // build the form
@@ -342,11 +407,10 @@ export class DialogManageUserSettings {
     });
     // set the form value
     this.adminService.getUserParametersFields().subscribe((fields) => {
-
       this.settingsForm = this.formBuilder.group({
-        settings: this.formBuilder
-          .array(fields.map((field: any) => this.formBuilder.group(field))),
+        settings: this.formBuilder.array(fields.map((field: any) => this.formBuilder.group(field))),
       });
+      this.questions = this.settingsForm.get('settings') as FormArray;
     });
   }
 
@@ -399,6 +463,7 @@ export class DialogManageUserSettings {
   }
 
   onSubmit() {
+    console.log(this.settingsForm.value);
     if (this.settingsForm.invalid) return;
     this.adminService.createOrUpdateUserSettings(this.settingsForm.value)
       .subscribe(() => this.dialogRef.close());
