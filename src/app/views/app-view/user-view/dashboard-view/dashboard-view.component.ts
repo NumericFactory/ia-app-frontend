@@ -10,6 +10,9 @@ import { Dialog } from '@angular/cdk/dialog';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UiCategoryPromptsListComponent } from '../../../../ui/public/ui-category-prompts-list/ui-category-prompts-list.component';
 import { StatCircleComponent } from '../../../../ui/public/ui-stats/ui-stat-circle/ui-stat-circle.component';
+import { UserSettingsFormComponent } from '../../../../ui/public/ui-user-settings-form/ui-user-settings-form.component';
+import { UserModel } from '../../../../core/models/user.model';
+import { AlertService } from '../../../../shared/services/alert.service';
 
 @Component({
   selector: 'app-dashboard-view',
@@ -23,6 +26,7 @@ export class DashboardViewComponent {
   steps$ = this.stepService.steps$;
   categories$: Observable<CategoryModel[]> = this.stepService.categories$;
   user$ = this.userService.user$;
+  userDataLoaded: boolean = false;
 
   // count the total number of prompts in the system
   countTotalPrompts$ = this.stepService.totalPromptsCount$;
@@ -34,10 +38,22 @@ export class DashboardViewComponent {
   constructor(
     private stepService: StepGateway,
     private userService: UserGateway,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private alert: AlertService
   ) { }
 
   ngOnInit(): void {
+
+    // on all user data loader, do what you want
+    this.user$.subscribe(user => {
+      if ((user && !user.settings) || !user?.settings?.length) {
+        if (this.userDataLoaded === false) {
+          this.userDataLoaded = true;
+          // do what you want - user data is loaded
+          console.log('all user data loaded')
+        }
+      }
+    });
 
     this.stepService.getSteps().subscribe();
     this.stepService.fetchCategories().subscribe();
@@ -61,9 +77,11 @@ export class DashboardViewComponent {
           this.visibleStepPromptsTotalCount += step.prompts.length;
         }
       });
+      // this.openDialogUserSettings(user!)
     });
 
   }
+
 
   pluralize(count: number, word: string): string {
     return count <= 1 ? word : word + 's';
@@ -79,23 +97,7 @@ export class DashboardViewComponent {
       closeOnNavigation: true,
       panelClass: 'bottomsheet-user-var',
       data: category,
-
     });
   }
-
-  // openDialogPromptsByCategory(event: Event, category: CategoryModel): void {
-  //   // open dialog with prompts for category
-  //   if (category?.id) {
-  //     this.dialog.open(UiCategoryPromptsListComponent, {
-  //       //disableClose: true,
-  //       width: 'auto',
-  //       minWidth: '750px',
-  //       maxWidth: '100%',
-  //       maxHeight: '85%',
-  //       panelClass: 'dialog-user-var',
-  //       data: category
-  //     });
-  //   }
-  // }
 
 }

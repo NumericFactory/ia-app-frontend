@@ -15,16 +15,9 @@ import { JsonPipe } from '@angular/common';
 })
 export class SettingsViewComponent {
 
-  userSettingsFields!: FormUserSettingSchema[];
-  user: UserModel | null = this.auth.getUserFromSubject();
-
   constructor(private auth: AuthGateway, private adminService: AdminGateway) { }
 
   ngOnInit(): void {
-    // get user settings fields
-    this.adminService.getUserParametersFields().subscribe((fields) => {
-      this.userSettingsFields = fields;
-    });
 
   }
 

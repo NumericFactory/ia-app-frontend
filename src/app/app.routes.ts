@@ -15,10 +15,13 @@ import { StepAdminViewComponent } from './views/app-view/admin-view/step-admin-v
 import { SettingsAdminViewComponent } from './views/app-view/admin-view/settings-admin-view/settings-admin-view.component';
 import { SettingsViewComponent } from './views/app-view/user-view/settings-view/settings-view.component';
 import { PromptUniqueBycategoryViewComponent } from './views/app-view/user-view/prompt-unique-bycategory-view/prompt-unique-bycategory-view.component';
+import { OnboardingViewComponent } from './views/app-view/onboarding-view/onboarding-view.component';
+import { onboardingPassedGuard } from './shared/guards/onboarding-passed.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     // Auth Routes
+    { path: 'onboarding', component: OnboardingViewComponent },
     {
         path: 'auth',
         component: AuthViewComponent,
@@ -32,7 +35,7 @@ export const routes: Routes = [
     // user Routes
     {
         path: 'user',
-        canActivate: [authGuard],
+        canActivate: [authGuard, onboardingPassedGuard],
         component: UserViewComponent,
         children: [
             { path: '', redirectTo: 'settings', pathMatch: 'full' },
@@ -43,7 +46,7 @@ export const routes: Routes = [
     // Dashboard USER Routes
     {
         path: 'dashboard',
-        canActivate: [authGuard, roleGuard],
+        canActivate: [authGuard, roleGuard, onboardingPassedGuard],
         component: UserViewComponent,
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },

@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './ui/public/navbar/navbar.component';
 import { AuthGateway } from './core/ports/auth.gateway';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AdminGateway } from './core/ports/admin.gateway';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +14,14 @@ import { AuthGateway } from './core/ports/auth.gateway';
 })
 export class AppComponent {
 
+  bottomSheet = inject(MatBottomSheet);
+
   authService = inject(AuthGateway)
+  adminService = inject(AdminGateway)
   router = inject(Router)
 
   user$ = this.authService.user$;
+  userDataLoaded: boolean = false;
 
   ngOnInit() {
     /**
@@ -37,13 +43,7 @@ export class AppComponent {
       })
     })();
 
-    // open settings Popup if user has not set their settings
-    this.user$.subscribe(user => {
-      if ((user && !user.settings) || !user?.settings?.length) {
-        // open settings popup
-        console.log('open settings popup')
-      }
-    });
+
 
 
     // remove # from url
@@ -55,7 +55,6 @@ export class AppComponent {
     //   }
     // });
   }
-
 
 
 }

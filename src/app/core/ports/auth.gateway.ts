@@ -40,6 +40,7 @@ export abstract class AuthGateway {
     // helper methods
     abstract isAuthenticated(): boolean;
     abstract hasRole(role: number): boolean;
+    abstract userPassedTheFirstOnboarding(): boolean;
 
     // token management methods
     abstract getToken(): string | null;

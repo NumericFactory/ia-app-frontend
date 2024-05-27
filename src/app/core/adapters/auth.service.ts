@@ -7,11 +7,15 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertService } from '../../shared/services/alert.service';
 import { UserGateway } from '../ports/user.gateway';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { UserSettingsFormComponent } from '../../ui/public/ui-user-settings-form/ui-user-settings-form.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements AuthGateway {
+
+  private bottomSheet = inject(MatBottomSheet);
 
   // inject HttpClient
   private http = inject(HttpClient)
@@ -95,6 +99,14 @@ export class AuthService implements AuthGateway {
   // helper hasRole
   public hasRole(role: number): boolean {
     return this.userSubject.value?.roles.includes(role) || false;
+  }
+
+  // helper userPassedTheFirstOnboarding
+  public userPassedTheFirstOnboarding(): boolean {
+    const passed = Boolean(this.userSubject.value?.settings
+      && (this.userSubject.value?.settings?.length > 0));
+    console.log('passed', passed)
+    return passed;
   }
 
   /**

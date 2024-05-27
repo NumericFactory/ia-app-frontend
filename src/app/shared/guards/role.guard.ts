@@ -26,7 +26,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
 
   // alert if the user has not the role
   if (!hasTheRightRole) {
-    alert.show('Vous n\'avez pas les droits pour accéder cette section', 'error');
+    //alert.show('Vous n\'avez pas les droits pour accéder cette section', 'error');
   }
 
   return hasTheRightRole;

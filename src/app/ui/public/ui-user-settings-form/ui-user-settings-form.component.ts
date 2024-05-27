@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -11,6 +11,10 @@ import { DynamicFormQuestionComponent } from '../../../shared/services/question/
 import { QuestionControlService } from '../../../shared/services/question/question-control.service';
 import { QuestionBase } from '../../../shared/services/question/question.model';
 import { FormUserSettingSchema } from '../../../core/models/user-settings.model';
+import { AdminGateway } from '../../../core/ports/admin.gateway';
+import { MAT_DIALOG_DATA, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { Router } from '@angular/router';
 
 /**
  * UserVariablesDialog Component
@@ -21,7 +25,8 @@ import { FormUserSettingSchema } from '../../../core/models/user-settings.model'
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule, MatCheckboxModule, JsonPipe,
-    MatButtonModule, DynamicFormQuestionComponent
+    MatButtonModule, DynamicFormQuestionComponent,
+    MatDialogTitle, MatDialogContent
   ],
   templateUrl: './ui-user-settings-form.component.html',
   styleUrl: './ui-user-settings-form.component.scss'
@@ -29,43 +34,58 @@ import { FormUserSettingSchema } from '../../../core/models/user-settings.model'
 
 export class UserSettingsFormComponent {
 
-  @Input() userSettingsFields!: FormUserSettingSchema[];
-  @Input() user!: UserModel | null
+  userSettingsFields!: FormUserSettingSchema[];
+  user: UserModel | null = this.auth.getUserFromSubject();
 
   userSettingsForm!: FormGroup;
 
   formIsSubmit: boolean = false;
   questions: QuestionBase<string>[] = [];
 
+  // modalTitle: string = this.data.title ?? null;
+
   constructor(
     public qcs: QuestionControlService,
+    private adminService: AdminGateway,
+    private auth: UserGateway,
     private userService: UserGateway,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router
+    // @Inject(DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
-    console.log('userSettingsFields', this.userSettingsFields)
-    this.userSettingsFields.forEach((variable: FormUISchema) => {
-      let question = new QuestionBase<string>({
-        variable_id: variable.id,
-        key: variable.key,
-        label: variable.label,
-        controlType: variable.controltype,
-        type: variable.type,
-        required: variable.required,
-        order: variable.order,
-        //options: [{ key: 'user', value: 'User' }],
-        information: variable.information
+
+    // get user settings fields
+    this.adminService.getUserParametersFields().subscribe((fields) => {
+      this.userSettingsFields = fields;
+
+      // create form questions
+      this.userSettingsFields?.forEach((variable: FormUISchema) => {
+        let question = new QuestionBase<string>({
+          variable_id: variable.id,
+          key: variable.key,
+          label: variable.label,
+          controlType: variable.controltype,
+          type: variable.type,
+          required: variable.required,
+          order: variable.order,
+          //options: [{ key: 'user', value: 'User' }],
+          information: variable.information
+        });
+        this.questions.push(question);
       });
-      this.questions.push(question);
+
+      // create userSettingsForm
+      this.userSettingsForm = this.qcs.toFormGroup(
+        this.questions as QuestionBase<string>[]
+      );
+
+      // fill form with user variables
+      this.logKeyValuePairs(this.userSettingsForm);
     });
 
-    // create userSettingsForm
-    this.userSettingsForm = this.qcs.toFormGroup(
-      this.questions as QuestionBase<string>[]
-    );
-    // fill form with user variables
-    this.logKeyValuePairs(this.userSettingsForm);
+
   }
 
   //Submit form
@@ -76,7 +96,9 @@ export class UserSettingsFormComponent {
       for (const [key, value] of Object.entries(this.userSettingsForm.value)) {
         payload[key] = { value }
       }
-      this.userService.postUserSettings(payload).subscribe();
+      this.userService.postUserSettings(payload).subscribe(
+        () => this.router.navigate(['/dashboard']),
+      );
     }
     else {
       this.alertService.show('Veuillez renseigner tous les champs requis', 'error');
