@@ -1,13 +1,17 @@
 import { AsyncPipe, DatePipe, JsonPipe, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { IAGateway } from '../../../../core/ports/ia.gateway';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AdminGateway } from '../../../../core/ports/admin.gateway';
+
+import { AuthGateway } from '../../../../core/ports/auth.gateway';
 
 @Component({
   selector: 'app-settings-admin-view',
   standalone: true,
-  imports: [NgFor, JsonPipe, AsyncPipe, DatePipe, ReactiveFormsModule, MatRadioModule],
+  imports: [NgFor, JsonPipe, AsyncPipe, DatePipe, ReactiveFormsModule, MatRadioModule, MatSlideToggleModule, FormsModule],
   templateUrl: './settings-admin-view.component.html',
   styleUrl: './settings-admin-view.component.scss'
 })
@@ -26,10 +30,29 @@ export class SettingsAdminViewComponent {
   selectGeminiModelControl = new FormControl();
   radioChooseProviderControl = new FormControl();
 
+  IsSignupPageVisible: boolean = true;
 
-  constructor(private iaService: IAGateway) { }
+
+  constructor(
+    private iaService: IAGateway,
+    private adminService: AdminGateway,
+    private authService: AuthGateway) { }
 
   ngOnInit() {
+
+    // get the visibility of the signup page
+    this.authService.fetchSignupPageVisibility().subscribe(
+      {
+        next: (response) => {
+          console.log('response fetch', response);
+          response === true
+            ? this.IsSignupPageVisible = true
+            : this.IsSignupPageVisible = false
+        }
+      }
+    );
+
+
     this.providers$.subscribe((providers) => {
       for (let provider of providers) {
         if (provider.name.toLowerCase().includes('openai')) {
@@ -57,6 +80,22 @@ export class SettingsAdminViewComponent {
         this.iaService.updateIaProviderActive(provider).subscribe();
       });
     });
+  }
+
+
+  changeSignupVisibilityAction() {
+    this.IsSignupPageVisible = !this.IsSignupPageVisible;
+    this.adminService.setSignupPageVisibility(this.IsSignupPageVisible).subscribe(
+      {
+        next: (response) => {
+          console.log('response', response);
+          // response == true
+          //   ? this.IsSignupPageVisible = true
+          //   : this.IsSignupPageVisible = false;
+        },
+        error: (error) => { this.IsSignupPageVisible = this.IsSignupPageVisible; }
+      }
+    );
   }
 
   newModelSelected(provider: any) {

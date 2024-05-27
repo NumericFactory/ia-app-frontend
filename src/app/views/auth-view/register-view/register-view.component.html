@@ -1,3 +1,4 @@
+@if(isPageVisible) {
 <h2>Inscription</h2>
 
 <div class="alert alert-warning text-center">
@@ -6,3 +7,11 @@
     </p>
 </div>
 <ui-register-form (registerFormSubmittedEvent)="registerAction($event)"></ui-register-form>
+}
+@else {
+<div class="alert alert-warning text-center">
+    <p class="text-sm text-yellow-700">
+        La page d'inscription est temporairement indisponible
+    </p>
+</div>
+}

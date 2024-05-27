@@ -47,4 +47,6 @@ export abstract class AuthGateway {
     abstract storeToken(token: string): void;
     abstract removeToken(): void;
     abstract addBearerToken(request: HttpRequest<any>, token: string): HttpRequest<any>
+
+    abstract fetchSignupPageVisibility(): Observable<boolean>;
 }

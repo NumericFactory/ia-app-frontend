@@ -449,5 +449,18 @@ export class AdminService implements AdminGateway {
     )
   }
 
+  setSignupPageVisibility(isVisible: boolean): Observable<any> {
+    const endpoint = '/admin/signup-page-visibility';
+    return this.http.put(`${this.apiUrl}${endpoint}`, { isVisible }).pipe(
+      tap((response: any) => {
+        console.log('response', response.data.isActive);
+        Boolean(response.data.isActive) === true
+          ? this.alert.show('Page de signup visible', 'success')
+          : this.alert.show('Page de signup invisible', 'success');
+      }),
+      map((response: any) => Boolean(response.data.isActive))
+    )
+  }
+
 
 }

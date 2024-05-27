@@ -74,3 +74,12 @@
 
 
 }
+
+<hr>
+<h3 class="fs-6 my-2">Visibilité de la page d'inscription</h3>
+
+<mat-slide-toggle (change)="changeSignupVisibilityAction()" [checked]="IsSignupPageVisible"></mat-slide-toggle>
+
+<p>Ajouter un MagicLink d'accès à la page d'inscription</p>
+<input type="text" (keyup)="0" #magiclinkinput placeholder="ex: invitation" class="form-control">
+<p>Magic Link : https://virtuoze.ai/auth/register?magic={{magiclinkinput.value}}</p>

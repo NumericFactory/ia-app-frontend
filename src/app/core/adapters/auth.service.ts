@@ -152,6 +152,14 @@ export class AuthService implements AuthGateway {
       )
   }
 
+
+  fetchSignupPageVisibility(): Observable<boolean> {
+    const endpoint = '/signup-page-visibility';
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      map((response: any) => Boolean(response.data.isActive))
+    )
+  }
+
   getUserFromSubject(): UserModel | null {
     return this.userSubject.value;
   }

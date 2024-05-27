@@ -11,10 +11,22 @@ import { RegisterFormComponent } from '../../../ui/public/forms/register-form/re
 })
 export class RegisterViewComponent {
 
+  isPageVisible!: boolean;
+
   constructor(private authService: AuthGateway) { }
 
-  registerAction(user: registerUserPayload) {
 
+  ngOnInit() {
+    // ask backend if page is visible
+    this.authService.fetchSignupPageVisibility()
+      .subscribe((isVisible) => {
+        console.log('page is visible:', isVisible)
+        this.isPageVisible = isVisible
+      });
+
+  }
+
+  registerAction(user: registerUserPayload) {
     this.authService.register(user).subscribe();
   }
 
