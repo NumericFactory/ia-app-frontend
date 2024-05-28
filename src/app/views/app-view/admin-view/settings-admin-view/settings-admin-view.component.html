@@ -80,6 +80,14 @@
 
 <mat-slide-toggle (change)="changeSignupVisibilityAction()" [checked]="IsSignupPageVisible"></mat-slide-toggle>
 
-<p>Ajouter un MagicLink d'accès à la page d'inscription</p>
-<input type="text" (keyup)="0" #magiclinkinput placeholder="ex: invitation" class="form-control">
-<p>Magic Link : https://virtuoze.ai/auth/register?magic={{magiclinkinput.value}}</p>
+<p class="fs-6 my-2">Ajouter un ou des emails d'invitation</p>
+<form (submit)="setEmailsInvitInDBAction()" [formGroup]="addEmailsInvitationForm">
+    <textarea formControlName="emails" placeholder="ex: fred@gg.com;bill@ms.fr" class="form-control"></textarea>
+    <button class="btn btn-primary my-2">Envoyer</button>
+</form>
+
+<ul class="list-group">
+    @for(user of invitedSignupUsers; track user.id) {
+    <li class="list-group-item">{{user.email}}</li>
+    }
+</ul>

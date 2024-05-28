@@ -65,5 +65,7 @@ export abstract class AdminGateway {
     abstract removeCategoryFromPrompt(promptId: number): Observable<any>;
 
     abstract setSignupPageVisibility(isVisible: boolean): Observable<any>;
+    abstract inviteSignupUsers(emails: string[]): Observable<any>;
+    abstract fetchInvitedSignupUsers(): Observable<any>;
 
 }

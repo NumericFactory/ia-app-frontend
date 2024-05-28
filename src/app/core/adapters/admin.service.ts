@@ -462,5 +462,22 @@ export class AdminService implements AdminGateway {
     )
   }
 
+  inviteSignupUsers(emails: string[]): Observable<any> {
+    const endpoint = '/admin/invitation-users-signup';
+    return this.http.post(`${this.apiUrl}${endpoint}`, { emails }).pipe(
+      tap((response: any) => {
+        this.alert.show('Invitations envoyées', 'success');
+      }),
+      map((response: any) => response.data)
+    )
+  }
+
+  fetchInvitedSignupUsers(): Observable<any> {
+    const endpoint = '/admin/invitation-users-signup';
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      map((response: any) => response.data)
+    )
+  }
+
 
 }

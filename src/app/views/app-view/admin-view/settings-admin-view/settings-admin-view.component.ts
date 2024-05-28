@@ -1,7 +1,7 @@
 import { AsyncPipe, DatePipe, JsonPipe, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { IAGateway } from '../../../../core/ports/ia.gateway';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
@@ -32,13 +32,32 @@ export class SettingsAdminViewComponent {
 
   IsSignupPageVisible: boolean = true;
 
+  // form invitation emails
+  addEmailsInvitationForm!: FormGroup;
+  invitedSignupUsers: any[] = [];
+
 
   constructor(
     private iaService: IAGateway,
     private adminService: AdminGateway,
-    private authService: AuthGateway) { }
+    private authService: AuthGateway,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
+
+    // fetch invited users emails from db
+    this.adminService.fetchInvitedSignupUsers().subscribe(
+      (response) => {
+        console.log(response);
+        this.invitedSignupUsers = response
+      }
+    );
+
+    // form 
+    this.addEmailsInvitationForm = this.formBuilder.group({
+      emails: ['', Validators.required]
+    });
 
     // get the visibility of the signup page
     this.authService.fetchSignupPageVisibility().subscribe(
@@ -80,15 +99,26 @@ export class SettingsAdminViewComponent {
         this.iaService.updateIaProviderActive(provider).subscribe();
       });
     });
-  }
+  } // end ngOnInit
 
+
+
+  setEmailsInvitInDBAction() {
+    let emails = this.addEmailsInvitationForm.value.emails.trim().replaceAll(' ', '').split('\n');
+    emails = emails.map((email: string) => { return { email: email.trim() } })
+    this.adminService.inviteSignupUsers(emails).subscribe((response) => {
+      this.invitedSignupUsers = response;
+      this.addEmailsInvitationForm.reset();
+    }
+    );
+  }
 
   changeSignupVisibilityAction() {
     this.IsSignupPageVisible = !this.IsSignupPageVisible;
     this.adminService.setSignupPageVisibility(this.IsSignupPageVisible).subscribe(
       {
         next: (response) => {
-          console.log('response', response);
+          //console.log('response', response);
           // response == true
           //   ? this.IsSignupPageVisible = true
           //   : this.IsSignupPageVisible = false;
@@ -113,12 +143,6 @@ export class SettingsAdminViewComponent {
     }
 
   }
-
-
-
-
-
-
 
 
 }
