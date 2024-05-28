@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './ui/public/navbar/navbar.component';
 import { AuthGateway } from './core/ports/auth.gateway';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -19,22 +19,37 @@ export class AppComponent {
   authService = inject(AuthGateway)
   adminService = inject(AdminGateway)
   router = inject(Router)
+  route = inject(ActivatedRoute)
 
   user$ = this.authService.user$;
   userDataLoaded: boolean = false;
+  currentUrl = '';
 
   ngOnInit() {
     /**
      * LoadUser and redirect user based on their role
      * If user is not authenticated, redirect to login page
      * If user is authenticated, redirect to dashboard or admin page based on their role
-     */
+    */
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        console.log('event', event.url)
+        this.currentUrl = event.url;
+      }
+    });
+
     (async () => {
       //load user 
       const user = await this.authService.getUser()
       // redirect user
+
+
       this.authService.isAuth$.subscribe((isAuth) => {
-        if (!isAuth) this.router.navigate(['/auth/login'])
+        console.log('CURRENT', this.currentUrl)
+        if (!isAuth && !this.currentUrl.includes('/auth/register')) this.router.navigate(['/auth/login'])
+        else if (!isAuth && this.currentUrl.includes('/auth/register')) {
+          // this.router.navigate(['/auth/register'])
+        }
         else {
           user?.roles.find(role => role > 1)
             ? this.router.navigate(['/dashboard'])

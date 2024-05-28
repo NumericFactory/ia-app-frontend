@@ -21,7 +21,7 @@ import { provideMarkdown } from 'ngx-markdown';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes,
-      withHashLocation()
+      // withHashLocation()
     ),
     provideHttpClient(
       withInterceptors([

@@ -160,6 +160,13 @@ export class AuthService implements AuthGateway {
     )
   }
 
+  checkInvitedSignupUser(emailInQueryString: string): Observable<any> {
+    const endpoint = `/check-invitation-email-exists?email=${emailInQueryString}`;
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      map((response: any) => response.data)
+    )
+  }
+
   getUserFromSubject(): UserModel | null {
     return this.userSubject.value;
   }

@@ -49,4 +49,5 @@ export abstract class AuthGateway {
     abstract addBearerToken(request: HttpRequest<any>, token: string): HttpRequest<any>
 
     abstract fetchSignupPageVisibility(): Observable<boolean>;
+    abstract checkInvitedSignupUser(emailInQueryString: string): Observable<any>;
 }
