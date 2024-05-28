@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthGateway, registerUserPayload } from '../../../core/ports/auth.gateway';
 import { RegisterFormComponent } from '../../../ui/public/forms/register-form/register-form.component';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register-view',
@@ -18,8 +18,8 @@ export class RegisterViewComponent {
   constructor(private authService: AuthGateway, private route: ActivatedRoute) { }
 
 
-  ngOnInit() {
 
+  ngOnInit() {
     this.route.queryParams.subscribe((params: any) => {
       if (params?.email) {
         const emailInQueryString = params.email

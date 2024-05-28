@@ -25,7 +25,11 @@
     <!-- phone -->
     <div class="form-group">
         <label for="phone">Mobile</label>
-        <input type="text" class="form-control" id="phone" formControlName="phone">
+        <!-- select country phone code -->
+        <div class="d-flex">
+            <ui-phone-code-countries-select (phoneCodeEvent)="setCountryCode($event)"></ui-phone-code-countries-select>
+            <input type="tel" class="form-control ms-2" id="phone" formControlName="phone">
+        </div>
         <p *ngIf="registerForm.controls['phone'].errors && isFormSubmitted" class="error">
             Requis
         </p>

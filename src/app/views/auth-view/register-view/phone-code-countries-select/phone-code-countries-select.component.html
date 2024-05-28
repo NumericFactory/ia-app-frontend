@@ -1,0 +1,29 @@
+<div class="card flex justify-content-center">
+    <p-dropdown (onChange)="selectCountry()" [options]="countries" [(ngModel)]="selectedCountry" optionLabel="text"
+        [filter]="true" filterBy="text" [showClear]="true" placeholder="Pays" styleClass="w-20rem">
+        <ng-template pTemplate="filter" let-options="options">
+            <div class="flex gap-1">
+                <div class="p-inputgroup" (click)="$event.stopPropagation()">
+                    <span class="p-inputgroup-addon"><i class="bi bi-search"></i></span>
+                    <input type="text" pInputText placeholder="Rechercher..." [(ngModel)]="filterValue"
+                        (keyup)="customFilterFunction($event, options)" />
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="selectedItem" let-selectedOption>
+            <div class="flex align-items-center gap-2">
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                    [class]="'flag flag-'+ (selectedCountry).country?.toLowerCase()"
+                    style="width: 18px; margin-right: 3px;" />
+                <span>{{ printSelectedCountry() }}</span>
+            </div>
+        </ng-template>
+        <ng-template let-country pTemplate="item">
+            <div class="flex align-items-center flex-row gap-2">
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                    [class]="'flag flag-' + country.country.toLowerCase()" style="width: 18px" />
+                <span>{{ country.text }}</span>
+            </div>
+        </ng-template>
+    </p-dropdown>
+</div>

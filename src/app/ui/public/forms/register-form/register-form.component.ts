@@ -3,13 +3,14 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AlertService } from '../../../../shared/services/alert.service';
-
+import { PhoneCodeCountriesSelectComponent } from '../../../../views/auth-view/register-view/phone-code-countries-select/phone-code-countries-select.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @Component({
   selector: 'ui-register-form',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgIf],
+  imports: [ReactiveFormsModule, InputNumberModule, RouterLink, NgIf, PhoneCodeCountriesSelectComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.scss'
 })
@@ -18,6 +19,7 @@ export class RegisterFormComponent {
   registerForm!: FormGroup;
   confirmpassword: FormControl = new FormControl('', [Validators.required]);
   isFormSubmitted = false;
+  countryCodePhone: string = '';
   @Output() registerFormSubmittedEvent = new EventEmitter();
 
   constructor(private alertService: AlertService) {
@@ -34,15 +36,27 @@ export class RegisterFormComponent {
     });
   }
 
+  setCountryCode(countryCode: string) {
+    console.log('countryCode', countryCode);
+    this.countryCodePhone = countryCode;
+    // this.registerForm.get('phone')?.setValue($event);
+  }
+
   onSubmitRegisterForm() {
     this.isFormSubmitted = true;
     if (this.registerForm.valid) {
-      this.registerFormSubmittedEvent.emit(this.registerForm.value);
+      const value = {
+        ...this.registerForm.value,
+        phone: this.countryCodePhone + this.registerForm.get('phone')?.value.trim().replaceAll(' ', '')
+      };
+      this.registerFormSubmittedEvent.emit(value);
     }
     else {
       this.alertService.show('Corrigez vos erreurs', 'error');
     }
   }
+
+
 
   // verifyPassword() {
   //   if (this.registerForm.get('password')?.value !== this.confirmpassword.value) {
