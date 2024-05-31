@@ -54,6 +54,7 @@ body {
     font-family: "Karla", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
+    color: #000324;
 }
 
 ui-sidebar {
@@ -68,6 +69,11 @@ h4,
 h5,
 h6 {
     font-family: 'Inter', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+
+}
+
+.content-subtitle {
+    color: #7477a8
 }
 
 h1 {
@@ -77,6 +83,7 @@ h1 {
 h2 {
     font-size: 1.5rem;
 }
+
 
 ol,
 ul {
@@ -161,7 +168,7 @@ ul.p-dropdown-items {
 .p-accordion .p-accordion-header .p-accordion-header-link {
     padding: 0.725rem 0.125rem 0.725rem 0.825rem;
     border: 0 none;
-    color: #a5a5a5 !important;
+    color: #fff !important;
     background: transparent;
     border-radius: 6px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;

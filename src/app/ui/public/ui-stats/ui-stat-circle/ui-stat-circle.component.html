@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <p-knob valueTemplate="{value}/{{max}}" [size]="115" [max]="max" [(ngModel)]="value"
-                        [strokeWidth]="5" [readonly]="true" valueColor="goldenrod" rangeColor="LightGray" />
+                        [strokeWidth]="5" [readonly]="true" valueColor="#ff7f50" rangeColor="LightGray" />
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <p-knob [size]="65" [(ngModel)]="category.count_done_prompts" [max]="category.count_prompts"
-                        [readonly]="true" valueColor="#afacea" rangeColor="LightGray" />
+                        [readonly]="true" valueColor="#000324" rangeColor="#7477A8" />
                 </div>
             </div>
             }
@@ -33,13 +33,13 @@
     <div class="col-12 col-xl-6">
         <div class="row">
             <div class="col-6">
-                <h3 class="fs-5 text-center">Templates</h3>
+                <h3 class="fs-5 text-center">Séries</h3>
                 <ui-stat-task [visibleStepPromptsTotalCount]="visibleStepPromptsTotalCount"
                     [completedStepPromptsTotalCount]="completedStepPromptsTotalCount"></ui-stat-task>
             </div>
             <div class="col-6">
                 @if(user$ | async; as user) {
-                <h3 class="fs-5 text-center">Hello {{(user$ | async)?.firstname}}</h3>
+                <h3 class="fs-5 text-center opacity-50">Hello {{(user$ | async)?.firstname}}</h3>
                 <div style="background: #eaeaea;border: 0;" class="stat">
                     <div class="stat-figure text-secondary">
                         <div class="avatar online">
@@ -51,7 +51,8 @@
                     </div>
                     <div class="stat-title" style="text-wrap:wrap">Modifiez vos paramètres si besoin</div>
                     <div class="stat-desc text-secondary">
-                        <a style="text-decoration: underline;" [routerLink]="['/user/settings']">Voir vos paramètres</a>
+                        <a style="text-decoration: underline; color:#ff7f50 " [routerLink]="['/user/settings']">Voir vos
+                            paramètres</a>
                     </div>
                 </div>
 

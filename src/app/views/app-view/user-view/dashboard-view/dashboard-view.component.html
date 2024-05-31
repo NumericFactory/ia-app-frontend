@@ -8,8 +8,8 @@
         border-radius: 11px;" class="card">
             <div class="card-body px-3">
                 <!-- <h5>Statistiques</h5> -->
-                <h2 class="fs-6 mb-0">Qu'avez-vous accompli ?</h2>
-                <p class="opacity-50 m-0">Vos statistiques de prompts réalisés</p>
+                <h2 class="fs-5 mb-0">Qu'avez-vous accompli ?</h2>
+                <p class="content-subtitle m-0">Vos statistiques de prompts réalisés</p>
                 <ui-stat-circle [visibleStepPromptsTotalCount]="visibleStepPromptsTotalCount"
                     [completedStepPromptsTotalCount]="completedStepPromptsTotalCount"
                     [value]="(user$ | async)?.prompts?.length!" [max]="(countTotalPrompts$ | async)??0"
