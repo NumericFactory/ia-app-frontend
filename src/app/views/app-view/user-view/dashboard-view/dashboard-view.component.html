@@ -23,10 +23,11 @@
 <div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
     <div class="col-12 col-xl-12 col-xxl-10">
-        <h2 class="fs-5 mb-3">Templates</h2>
+        <h2 class="fs-4 mb-0">Series.</h2>
+        <h3 class="fs-6 mb-3 subtitle">Prompts step-by-step</h3>
         <div class="row g-3">
             @for(step of steps; track step.id) {
-            <div class="col-12 col-md-6 col-xl-4 col-xxl-3 steps-list">
+            <div class="col-12 col-md-6 col-xl-4 steps-list">
                 <ui-step-card [step]="step" [userHistory]="user.history?user.history:[]"></ui-step-card>
             </div>
             }
@@ -43,16 +44,13 @@
 
     @if(categories$ | async; as categories) {
     <div class="col-12 col-xl-12 col-xxl-10">
-        <h2 class="fs-5 mb-3">Catégories</h2>
+        <h2 class="fs-4 mb-0">Catégories.</h2>
+        <h3 class="fs-6 mb-3 subtitle">Prompts par sujet</h3>
         <div class="row g-3">
             @for(category of categories; track category) {
-            <div class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 categories-list">
-                <div (click)="openDialogPromptsByCategory($event, category)" class="card">
-                    <div class="card-body">{{category.title | lowercase}}</div>
-                    <div class="card-footer">
-                        {{ category.count_prompts }} {{pluralize( category.count_prompts,'prompt') }}
-                    </div>
-                </div>
+            <div class="col-12 col-md-6 col-lg-4 col-xxl-3 categories-list">
+                <app-ui-category-card (click)="openDialogPromptsByCategory($event, category)" [title]="category.title"
+                    [promptcount]="category.count_prompts"></app-ui-category-card>
             </div>
             }
             @empty {

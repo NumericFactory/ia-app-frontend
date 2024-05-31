@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
 import { StepGateway } from '../../../../core/ports/step.gateway';
-import { AsyncPipe, LowerCasePipe } from '@angular/common';
+import { AsyncPipe, LowerCasePipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UiStepCardComponent } from '../../../../ui/public/ui-step-card/ui-step-card.component';
 import { CategoryModel } from '../../../../core/models/category.model';
 import { Observable, combineLatest } from 'rxjs';
 import { UserGateway } from '../../../../core/ports/user.gateway';
-import { Dialog } from '@angular/cdk/dialog';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UiCategoryPromptsListComponent } from '../../../../ui/public/ui-category-prompts-list/ui-category-prompts-list.component';
 import { StatCircleComponent } from '../../../../ui/public/ui-stats/ui-stat-circle/ui-stat-circle.component';
-import { UserSettingsFormComponent } from '../../../../ui/public/ui-user-settings-form/ui-user-settings-form.component';
-import { UserModel } from '../../../../core/models/user.model';
 import { AlertService } from '../../../../shared/services/alert.service';
+import { UiCategoryCardComponent } from '../../../../ui/public/ui-category-card/ui-category-card.component';
 
 @Component({
   selector: 'app-dashboard-view',
   standalone: true,
-  imports: [AsyncPipe, LowerCasePipe, RouterLink, UiStepCardComponent, MatBottomSheetModule, StatCircleComponent],
+  imports: [AsyncPipe, LowerCasePipe, UiCategoryCardComponent, RouterLink, UiStepCardComponent, MatBottomSheetModule, StatCircleComponent],
   templateUrl: './dashboard-view.component.html',
   styleUrl: './dashboard-view.component.scss'
 })
