@@ -362,8 +362,7 @@ export class AdminService implements AdminGateway {
     const endpoint = '/admin/categories';
     return this.http.post(`${this.apiUrl}${endpoint}`, newCategory).pipe(
       tap((response: any) => {
-
-        // update the categories
+        // create the category
         let categories = this.categoriesSubject.value;
         categories = [response.data, ...categories];
         this.categoriesSubject.next(categories);
@@ -376,8 +375,7 @@ export class AdminService implements AdminGateway {
     const endpoint = '/admin/categories';
     return this.http.put(`${this.apiUrl}${endpoint}/${id}`, category).pipe(
       tap((response: any) => {
-
-        // update the categories
+        // update the category
         let categories = this.categoriesSubject.value;
         let category = categories.find(c => c.id === id);
         if (category) {
