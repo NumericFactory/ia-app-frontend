@@ -23,8 +23,8 @@
 <div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
     <div class="col-12 col-xl-12 col-xxl-10">
-        <h2 class="fs-4 mb-0">Series.</h2>
-        <h3 class="fs-6 mb-3 subtitle">Prompts step-by-step</h3>
+        <h2 class="fs-4 mb-0">Stratégies de croissance</h2>
+        <h3 class="fs-6 mb-3 subtitle subtitle-bis">Fondamentaux étape-par-étape pour 10X</h3>
         <div class="row g-3">
             @for(step of steps; track step.id) {
             <div class="col-12 col-md-6 col-xl-4 steps-list">
@@ -44,11 +44,11 @@
 
     @if(categories$ | async; as categories) {
     <div class="col-12 col-xl-12 col-xxl-10">
-        <h2 class="fs-4 mb-0">Catégories.</h2>
-        <h3 class="fs-6 mb-3 subtitle">Prompts par sujet</h3>
+        <h2 class="fs-4 mb-0">Catalyseur de conversion</h2>
+        <h3 class="fs-6 mb-3 subtitle subtitle-ter">Action rapide par thématique business</h3>
         <div class="row g-3">
             @for(category of categories; track category) {
-            <div class="col-12 col-md-6 col-lg-4 col-xxl-3 categories-list">
+            <div class="col-6 col-md-6 col-lg-4 col-xxl-3 categories-list">
                 <app-ui-category-card (click)="openDialogPromptsByCategory($event, category)" [title]="category.title"
                     [promptcount]="category.count_prompts"></app-ui-category-card>
             </div>
