@@ -26,7 +26,8 @@ export class CreateCategoryFormComponent {
     this.newCategoryForm = this.fb.group({
       title: ['', Validators.required],
       slug: ['', Validators.required],
-      description: ''
+      description: '',
+      image_url: '',
     });
   }
 

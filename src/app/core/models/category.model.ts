@@ -3,6 +3,7 @@ export interface CategoryModel {
     title: string;
     slug: string;
     description: string;
+    imageUrl?: string;
     order: number;
     count_prompts: number | 0;
     count_done_prompts?: number | 0;

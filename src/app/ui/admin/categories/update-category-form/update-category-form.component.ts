@@ -32,6 +32,7 @@ export class UpdateCategoryFormComponent {
       title: [this.data.title, Validators.required],
       slug: [this.data.slug, Validators.required],
       description: this.data.description ? this.data.description : '',
+      imageUrl: this.data.imageUrl ? this.data.imageUrl : '',
     });
   }
 

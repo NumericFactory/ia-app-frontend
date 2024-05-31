@@ -360,6 +360,10 @@ form {
             border-color: rgb(99 102 241) !important;
             box-shadow: 0 0px 0px 1px rgb(99, 102, 241) !important
         }
+
+        &::placeholder {
+            color: #b0b0b0;
+        }
     }
 
     p.error {
