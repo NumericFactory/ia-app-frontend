@@ -1,6 +1,9 @@
 .navbar {
     padding: 2px 10px;
     background: #000324;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .nav-link,
@@ -10,7 +13,7 @@
     font-size: 1.1rem;
 
     img.brand-img {
-        width: 115px;
+        width: 143px;
         padding: 12px 0px;
     }
 }

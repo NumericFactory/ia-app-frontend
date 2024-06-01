@@ -2,7 +2,7 @@
 <!-- 1 HEADER-->
 <ui-header-prompt-view [countPromptsChecked]="countPromptsChecked" [step]="step" [promptsToDisplay]="promptsList" />
 
-<div class="row">
+<div class="row sticky">
     <!-- 2 CONVERSATION VIEW -->
     <div style="margin-top:-9px" *ngIf="step" class="col-12 col-xl-9">
         @for(conv of conversationSate.items; track conv.promptId) {

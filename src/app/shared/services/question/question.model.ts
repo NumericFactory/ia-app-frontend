@@ -15,7 +15,7 @@ export class QuestionBase<T> {
   required: boolean;
   information: string;
   order: number;
-  options: { key: string, value: string }[];
+  selectOptions: { key: string, value: string }[];
 
   constructor(options: {
     variable_id?: number;
@@ -38,7 +38,7 @@ export class QuestionBase<T> {
     this.required = !!options.required;
     this.information = options.information || '';
     this.order = options.order === undefined ? 1 : options.order;
-    this.options = options.options || [];
+    this.selectOptions = options.options || [];
   }
 }
 

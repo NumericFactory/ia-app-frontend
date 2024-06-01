@@ -1,5 +1,5 @@
 <ui-navbar title="Ai App"></ui-navbar>
-<div class="container-fluid">
+<div style="position:fixed; top:46px" class="container-fluid">
     <div class="row">
 
         <!-- sidebar-->
@@ -9,7 +9,7 @@
 
         <!-- content app-->
         @if( isMenuOpened$ | async; as isMenuOpened) {
-        <div class="col-12 col-md-8 col-lg-9 col-xxl-10">
+        <div style="overflow-y: scroll;height: calc(100vh - 46px);" class="col-12 col-md-8 col-lg-9 col-xxl-10">
             <div class="container-fluid py-3">
                 <router-outlet></router-outlet>
             </div>
