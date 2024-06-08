@@ -1,0 +1,6 @@
+<!-- UI select type -->
+<select #selectTypeBoxHtmlElement (change)="selectInputTypeAction(selectTypeBoxHtmlElement.value, index)">
+    <option *ngFor="let itemtypeText of selectInputTypeBox" [value]="itemtypeText.value">
+        {{itemtypeText.name}}
+    </option>
+</select>

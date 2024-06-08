@@ -58,6 +58,6 @@ export class DateTimeLocalTextboxQuestion extends QuestionBase<string> {
 export class SelectQuestion extends QuestionBase<string> {
   override controlType = 'select';
   override type = '';
-  override selectOptions: { key: string, value: string }[] = [];
+  override selectOptions: { name: string, value: string }[] = [];
 }
 

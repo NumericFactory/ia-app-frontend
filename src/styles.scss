@@ -335,6 +335,29 @@ markdown th {
 }
 
 // Then add additional custom code here
+input,
+select {
+    margin: 4px 0;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    appearance: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
 form {
     .form-group {
         margin-bottom: .75rem;
@@ -349,21 +372,32 @@ form {
         font-size: .9rem !important;
     }
 
-    input.form-control,
-    select.form-control,
-    textarea.form-control {
-        border-color: rgb(176, 176, 176) !important;
-        border-width: 1px;
+    input,
+    select,
+    textarea {
+        // border-color: rgb(176, 176, 176) !important;
         padding: .475rem .75rem;
+        // border-color: rgb(99 102 241) !important;
 
-        &:focus {
+        &:focus,
+        &:focus-visible {
             border-color: rgb(99 102 241) !important;
-            box-shadow: 0 0px 0px 1px rgb(99, 102, 241) !important
+            box-shadow: 0 0px 0px 1px rgb(99, 102, 241) !important;
+            outline: 0;
         }
 
         &::placeholder {
             color: #b0b0b0;
         }
+
+        &:disabled {
+            background-color: var(--bs-secondary-bg);
+            opacity: 1;
+        }
+    }
+
+    select {
+        padding: 0.425rem;
     }
 
     p.error {
@@ -373,6 +407,8 @@ form {
     }
 
 }
+
+
 
 a {
     color: rgb(79 70 229);
@@ -403,6 +439,8 @@ a {
     top: 50px;
     // min-height: 70vh;
     overflow-y: auto;
+    background: #f8f9fa;
+    border-radius: 6px;
 }
 
 .bottomsheet-user-var {

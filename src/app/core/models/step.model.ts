@@ -63,6 +63,7 @@ export interface FormUISchema {
     key: string
     label: string
     controltype: ControlType
+    selectOptions?: string
     type?: FieldType
     required: boolean
     information?: string

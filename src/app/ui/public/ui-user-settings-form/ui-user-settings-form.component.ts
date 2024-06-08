@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -12,8 +12,7 @@ import { QuestionControlService } from '../../../shared/services/question/questi
 import { QuestionBase } from '../../../shared/services/question/question.model';
 import { FormUserSettingSchema } from '../../../core/models/user-settings.model';
 import { AdminGateway } from '../../../core/ports/admin.gateway';
-import { MAT_DIALOG_DATA, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
-import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 /**
@@ -70,7 +69,9 @@ export class UserSettingsFormComponent {
           type: variable.type,
           required: variable.required,
           order: variable.order,
-          //options: [{ key: 'user', value: 'User' }],
+          selectOptions: variable.selectOptions?.split(',').map((option: string) => {
+            return { value: option.toLowerCase(), name: option.toUpperCase() };
+          }),
           information: variable.information
         });
         this.questions.push(question);

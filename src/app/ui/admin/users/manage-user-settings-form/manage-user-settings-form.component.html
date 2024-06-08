@@ -1,0 +1,106 @@
+<h3 class="fs-5">Settings utilisateur</h3>
+<i (click)="closeDialog()" class="bi bi-x-lg close-dialog-btn"></i>
+
+<!-- info text -->
+<p class="text-secondary info-text">
+    <i class="bi bi-info-circle-fill text-primary"></i>
+    valider pour sauvegarder les questions
+</p>
+
+<p-progressBar [style.opacity]="isLoadingData?1:0" mode="indeterminate"
+    [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
+
+<hr>
+
+
+
+@if(questions && !isLoadingData ) {
+
+<form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+
+    <!-- DRAG AND DROP -->
+    <div id="list-parent-iterator" cdkDropList [cdkDropListData]="questions['controls']"
+        (cdkDropListDropped)="drop($event)">
+
+        <!-- ITERATE OVER THE QUESTIONS -->
+        @for(item of formData.controls; track item; let i = $index, c=$count) {
+        <div id="list-sub-parent-iterator" cdkDrag [cdkDragLockAxis]="'y'" [cdkDragData]="item"
+            formArrayName="settings">
+
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <!-- LIGNE DE QUESTION -->
+            <div class="line" [formGroupName]="i">
+                <!-- <span>{{i+1}}</span> -->
+                <div class="row mb-4">
+                    <div class="py-3 col-1 d-flex align-items-center justify-content-between">
+                        <!-- required -->
+                        <div><input class="form-check-input ms-2" type="checkbox" formControlName="required"></div>
+                        <!-- remove item -->
+                        <button type="button" class="btn btn-link fs-3 p-0 m-0 text-secondary"
+                            (click)="removeQuestionItem(i)" title="Supprimer la ligne">
+                            <i class="bi bi-x"></i>
+                        </button>
+                        <!-- handle drag and drop reorder -->
+                        <div class="example-handle" cdkDragHandle>
+                            <ui-drag-drop-icon></ui-drag-drop-icon>
+                        </div>
+                    </div>
+
+                    <div class="col-11">
+                        <div class="row gx-2 gy-1">
+
+                            <!-- input key -->
+                            <div class="col-3"><input formControlName="key" placeholder="key">
+                            </div>
+                            <!-- input label -->
+                            <div class="col-4">
+                                <input formControlName="label" placeholder="label">
+                            </div>
+
+                            <!-- UI select type -->
+                            <div class="col-2">
+                                <!-- <pre>{{formData.at(i).get('controltype')?.value}}</pre> -->
+                                <ui-choice-input-type-selector
+                                    (selectedInputTypeEvent)="selectInputTypeAction($event, i)"
+                                    [type]="formData.at(i).get('type')?.value"
+                                    [controltype]="formData.at(i).get('controltype')?.value"
+                                    [index]="i"></ui-choice-input-type-selector>
+                            </div>
+
+                            <!-- [class.hide]="selectTypeBoxHtmlElement.value=='!select'" -->
+                            <div class="col-3" [class.hide]="selectTypeBoxHtmlElement?.value !=='select'">
+                                <!-- set select options values (comma separated) -->
+                                <input formControlName="selectOptions" type="text" placeholder="ex: option1, option2">
+                            </div>
+
+                            <!-- textarea information -->
+                            <div class="col-12">
+                                <textarea placeholder="informations" formControlName="information"></textarea>
+                            </div>
+
+                        </div><!-- end row -->
+                    </div><!-- end col -->
+
+                </div><!-- end row -->
+            </div> <!-- end line -->
+        </div> <!-- end formArrayName -->
+        }
+
+    </div> <!-- end cdkDropList -->
+
+    <!-- BOUTON AJOUTER UNE QUESTION-->
+    <div class="form-group d-flex justify-content-center">
+        <button class="btn btn-sm btn-secondary" type="button" (click)="addQuestionItem()">Ajouter une question</button>
+    </div>
+    <hr>
+    <!-- BOUTON VALIDER -->
+    <div class="d-flex justify-content-end">
+        <button mat-button type="button" (click)="dialogRef.close()">Annuler</button>
+        <button class="btn btn-primary" type="submit">Valider {{formData.controls.length}}</button>
+    </div>
+
+</form>
+}
+@else {
+<p>En attente des données...</p>
+}

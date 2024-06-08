@@ -52,7 +52,7 @@ export class AppComponent {
         }
         else {
           user?.roles.find(role => role > 1)
-            ? this.router.navigate(['/dashboard'])
+            ? this.router.navigate(['/admin/users'])
             : this.router.navigate(['/dashboard'])
         }
       })

@@ -1,0 +1,47 @@
+:host {
+    display: block;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 8px 16px 16px;
+}
+
+.hide {
+    opacity: .8;
+}
+
+p.info-text {
+    font-size: 0.925rem;
+
+    i {
+        font-size: 1rem;
+        margin-right: 5px;
+    }
+}
+
+.alert {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+}
+
+
+button+button {
+    margin-left: 8px;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+    border: none;
+}
+
+.example-custom-placeholder {
+    background: #f8f9faaa;
+    border: dotted 3px lightblue;
+    min-height: 100px;
+    width: 100%;
+    display: block;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

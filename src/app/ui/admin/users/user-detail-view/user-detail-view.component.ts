@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { AdminGateway } from '../../../core/ports/admin.gateway';
+import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { UserModel } from '../../../core/models/user.model';
+import { UserModel } from '../../../../core/models/user.model';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { MatTabsModule } from '@angular/material/tabs';

@@ -12,8 +12,9 @@ export class QuestionControlService {
         const group: any = {};
 
         questions.forEach(question => {
-            group[question.variable_id!] = question.required ? new FormControl(question.value || '', Validators.required)
-                : new FormControl(question.value || '');
+            group[question.variable_id!] = question.required
+                ? new FormControl(question.value || '', Validators.required) // avec validation.required
+                : new FormControl(question.value || '');                     // sans validation.required
             //group[question.key]['variable_id'] = question.variable_id;
         });
         return new FormGroup(group);

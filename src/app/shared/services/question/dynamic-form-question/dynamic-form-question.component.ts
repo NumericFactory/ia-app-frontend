@@ -17,10 +17,17 @@ export class DynamicFormQuestionComponent {
   @Input() question!: QuestionBase<string>;
   @Input() form!: FormGroup;
   @Input() isFormSubmitted: boolean = false;
+  selectOptions: { value: string, name: string }[] = [];
 
   ngOnInit() {
     console.log('question', this.question);
     console.log('form', this.form);
+    // if (this.question.controlType === 'select') {
+    //   this.selectOptions = this.question.selectOptions?.split(',').map((option: string) => {
+    //     return { value: option, name: option };
+    //   }) || [];
+    // }
+
   }
 
 
