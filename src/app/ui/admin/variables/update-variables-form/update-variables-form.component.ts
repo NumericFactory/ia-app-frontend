@@ -8,11 +8,19 @@ import { AdminGateway } from "../../../../core/ports/admin.gateway";
 import { FormUISchema } from "../../../../core/models/step.model";
 import { ConfirmDialogService } from "../../../../shared/services/confirm-dialog.service";
 import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '@angular/cdk/drag-drop';
+import { UiChoiceInputTypeSelectorComponent } from "../../../../shared/services/question/ui-choice-input-type-selector/ui-choice-input-type-selector.component";
+import { UiDragDropIconComponent } from "../../../items/item-drag-drop/ui-drag-drop-icon.component";
+type InputType = string | 'shorttext' | 'longtext' | 'select' | 'number' | 'date' | 'url' | 'color' | 'range' | 'time' | 'datetime-local';
+type selectTypeBoxHtmlElement = { name: string, value: InputType, icon: string } | null; //  { name: 'short text', value: 'text', icon: 'bi-paragraph' }
+
 
 @Component({
   selector: 'ui-update-variables-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule, NgFor, NgIf, DragDropModule, CdkDragHandle, CdkDragPlaceholder],
+  imports: [
+    ReactiveFormsModule, MatCheckboxModule, JsonPipe, MatButtonModule,
+    NgFor, NgIf, UiChoiceInputTypeSelectorComponent, UiDragDropIconComponent,
+    DragDropModule, CdkDragHandle, CdkDragPlaceholder],
   template: `
   <h3 class="fs-5">Mettre à jour les questions</h3>
   <button (click)="closeDialog()" class="btn"><i class="bi bi-x-lg close-dialog-btn"></i></button>
@@ -40,51 +48,44 @@ import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '
         <div class="row mb-4">
 
 
-          <div class="py-3 col-1 d-flex flex-column align-items-baseline justify-content-between">
-            <!-- required -->
-            <div class="d-flex">
-              <input class="form-check-input ms-2" type="checkbox" formControlName="required">
-              <div class="example-handle ms-2" cdkDragHandle>
-                <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-                  <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-              </div>
-            </div>
-            <!-- remove item -->
-            <button type="button" class="btn btn-link fs-3 p-0 m-0 text-secondary" (click)="removeQuestionItem(i)" title="Supprimer la ligne">
-              <i class="bi bi-x"></i>
-            </button>
-          </div>
+        <div class="py-3 col-1 d-flex align-items-center justify-content-between">
+                        <!-- required -->
+                        <div><input class="form-check-input ms-2" type="checkbox" formControlName="required"></div>
+                        <!-- remove item -->
+                        <button type="button" class="btn btn-link fs-3 p-0 m-0 text-secondary"
+                            (click)="removeQuestionItem(i)" title="Supprimer la ligne">
+                            <i class="bi bi-x"></i>
+                        </button>
+                        <!-- handle drag and drop reorder -->
+                        <div class="example-handle" cdkDragHandle>
+                            <ui-drag-drop-icon></ui-drag-drop-icon>
+                        </div>
+                    </div>
 
           <div class="col-11">
             <div class="row gx-2 gy-1">
 
               <!-- input key -->
               <div class="col-3"><input class="form-control" formControlName="key" placeholder="key"></div>
+              
               <!-- input label -->
-              <div class="col-3"><input class="form-control" formControlName="label" placeholder="label"></div>
-              <!-- select controle type -->
-              <div class="col-3">
-                <select class="form-control" formControlName="controltype">
-                  <option value="input">input</option>
-                  <option value="textarea">textarea</option>
-                  <option disabled value="select">select</option>
-                </select>
+              <div class="col-4"><input class="form-control" formControlName="label" placeholder="label"></div>
+              
+
+              <!-- UI select type -->
+              <div class="col-2">
+                <ui-choice-input-type-selector
+                  (selectedInputTypeEvent)="selectInputTypeAction($event, i)"
+                  [type]="formData.at(i).get('type')?.value"
+                  [controltype]="formData.at(i).get('controltype')?.value"
+                  [index]="i"></ui-choice-input-type-selector>
               </div>
-              <!-- select type -->
-              <div class="col-3">
-                <select class="form-control" formControlName="type">
-                  <option value="text">text</option>
-                  <option value="number">number</option>
-                  <option value="date">date</option>
-                  <option value="url">url</option>
-                  <option value="color">color</option>
-                  <option value="range">range</option>
-                  <option value="time">time</option>
-                  <option value="datetime-local">datetime-local</option>
-                </select>
+
+              <!-- select options - comma separated -->
+              <div class="col-3" [class.hide]="selectTypeBoxHtmlElement?.value !=='select'">
+                <input formControlName="selectOptions" type="text" placeholder="ex: option1, option2">
               </div>
+
               <!-- textarea information -->
               <div class="col-12"><textarea placeholder="informations" class="form-control" formControlName="information"></textarea></div>
             
@@ -117,6 +118,9 @@ import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '
   }
   .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  .hide {
+    opacity:.8
   }
 
   .example-box:last-child {
@@ -165,7 +169,8 @@ import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '
   `]
 })
 export class UpdateVariablesFormComponent {
-
+  isLoadingData = false;
+  selectTypeBoxHtmlElement!: selectTypeBoxHtmlElement; //  { name: 'short text', value: 'text', icon: 'bi-paragraph' }
 
   questionsForm !: FormGroup;
   questions!: FormArray;
@@ -179,11 +184,32 @@ export class UpdateVariablesFormComponent {
 
   ) { }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   this.questions
-  //     ? this.questions.setControl('questions', this.questions)
-  //     : noop();
-  // }
+
+
+  /**
+  * selectInputTypeAction
+  *  - set controltype: 'input' | 'select' | 'textarea'
+  *  - set type: InputType
+  * @param typeOfSelectField: selectTypeBoxHtmlElement
+  * @param index: number
+  */
+  selectInputTypeAction(typeOfSelectField: selectTypeBoxHtmlElement, index: number) {
+    this.selectTypeBoxHtmlElement = typeOfSelectField;
+    console.log('selectInputTypeAction:', typeOfSelectField, index);
+    this.formData.controls[index].patchValue({
+      controltype: 'input',           // 'input' | 'select' | 'textarea'
+      type: typeOfSelectField?.value, // 'text' | 'color' | 'date' | 'number' | ...
+      //selectOptions: null
+    });
+    this.formData.controls[index].get('selectOptions')?.disable();
+    if (typeOfSelectField?.value === 'select') {
+      this.formData.controls[index].patchValue({ controltype: 'select', type: null });
+      this.formData.controls[index].get('selectOptions')?.enable();
+    }
+    else if (typeOfSelectField?.value === 'longtext') {
+      this.formData.controls[index].patchValue({ controltype: 'textarea', type: null });
+    }
+  }
 
   drop(event: CdkDragDrop<any>) {
     const dir = event.currentIndex > event.previousIndex ? 1 : -1;
@@ -217,6 +243,12 @@ export class UpdateVariablesFormComponent {
     for (let variable of variables) {
       this.questions.push(this.createQuestionFormControl(variable));
     }
+    this.formData.controls.forEach((control: any, index: any) => {
+      control.get('selectOptions')?.disable();
+      if (control.get('controltype').value === 'select') {
+        control.get('selectOptions')?.enable();
+      }
+    });
   }
 
   // Permet de créer un QuestionForm à la volée
@@ -228,10 +260,10 @@ export class UpdateVariablesFormComponent {
       label: [variable?.label || '', Validators.required],
       controltype: variable?.controltype || 'input',
       type: variable?.type || 'text',
+      selectOptions: variable?.selectOptions || null,
       required: variable?.required || false,
       information: variable?.information || '',
       order: variable?.order || 1,
-      is_usersetting: false
     });
   }
 

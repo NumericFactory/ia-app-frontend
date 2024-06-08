@@ -59,7 +59,6 @@
 
                             <!-- UI select type -->
                             <div class="col-2">
-                                <!-- <pre>{{formData.at(i).get('controltype')?.value}}</pre> -->
                                 <ui-choice-input-type-selector
                                     (selectedInputTypeEvent)="selectInputTypeAction($event, i)"
                                     [type]="formData.at(i).get('type')?.value"
@@ -67,7 +66,7 @@
                                     [index]="i"></ui-choice-input-type-selector>
                             </div>
 
-                            <!-- [class.hide]="selectTypeBoxHtmlElement.value=='!select'" -->
+                            <!-- select options -->
                             <div class="col-3" [class.hide]="selectTypeBoxHtmlElement?.value !=='select'">
                                 <!-- set select options values (comma separated) -->
                                 <input formControlName="selectOptions" type="text" placeholder="ex: option1, option2">

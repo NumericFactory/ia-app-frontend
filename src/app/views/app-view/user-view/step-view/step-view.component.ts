@@ -181,16 +181,21 @@ export class UserVariablesDialog {
   ) { }
 
   ngOnInit() {
+
     this.stepVariables.forEach((variable: FormUISchema) => {
+      let selectOpt = variable.selectOptions?.trim().replaceAll(' ', '').split(',')?.map((option: string) => {
+        return { name: option.toUpperCase(), value: option.toLowerCase() }
+      }) || [];
+
       let question = new QuestionBase<string>({
         variable_id: variable.id,
         key: variable.key,
         label: variable.label,
         controlType: variable.controltype,
+        selectOptions: selectOpt,
         type: variable.type,
         required: variable.required,
         order: variable.order,
-        //options: [{ key: 'user', value: 'User' }],
         information: variable.information
       });
       this.questions.push(question);

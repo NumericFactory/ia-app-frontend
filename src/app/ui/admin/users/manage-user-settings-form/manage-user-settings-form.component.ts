@@ -25,11 +25,11 @@ type selectTypeBoxHtmlElement = { name: string, value: InputType, icon: string }
   styleUrl: './manage-user-settings-form.component.scss'
 })
 export class ManageUserSettingsFormComponent {
+  isLoadingData = false;
   settingsForm !: FormGroup;
+
   questions!: FormArray;
   selectTypeBoxHtmlElement!: selectTypeBoxHtmlElement; //  { name: 'short text', value: 'text', icon: 'bi-paragraph' }
-  selectTypeBoxControl = new FormControl('text'); // default value
-  isLoadingData = false;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -33,7 +33,6 @@ export class UiChoiceInputTypeSelectorComponent {
 
   ngAfterViewInit() {
 
-    console.log(this.selectTypeBoxHtmlElement);
     if (this.controltype === 'input') {
       this.selectTypeBoxHtmlElement.nativeElement.value = this.type;
     }

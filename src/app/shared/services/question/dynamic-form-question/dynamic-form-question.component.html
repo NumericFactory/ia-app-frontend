@@ -16,6 +16,7 @@
 
         <select class="form-control" [id]="question.key" *ngSwitchCase="'select'"
             [formControlName]="question.variable_id">
+            <option value="">-- Selectionner --</option>
             <option *ngFor="let opt of question.selectOptions" [value]="opt.value">
                 {{opt.name}}
             </option>
