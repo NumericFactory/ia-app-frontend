@@ -26,6 +26,7 @@ export abstract class AdminGateway {
     abstract users$: Observable<UserModel[]>;
     abstract steps$: Observable<StepModelAdmin[]>;
     abstract categories$: Observable<CategoryModel[]>;
+    abstract plans$: Observable<any[]>;
     //abstract prompts$: Observable<PromptModelAdmin[]>;
 
     // get user or null
@@ -63,6 +64,13 @@ export abstract class AdminGateway {
 
     abstract addCategoryToPrompt(promptId: number, categoryId: number): Observable<any>;
     abstract removeCategoryFromPrompt(promptId: number): Observable<any>;
+
+    abstract fetchPlans(): Observable<any[]>;
+    abstract createPlan(plan: Omit<any, 'id'>): Observable<any>;
+    abstract updatePlan(id: number, plan: any): Observable<any>;
+    abstract deletePlan(id: number): Observable<any>;
+
+    abstract addPlansToStep(stepId: number, planIds: number[]): Observable<any>;
 
     abstract setSignupPageVisibility(isVisible: boolean): Observable<any>;
     abstract inviteSignupUsers(emails: string[]): Observable<any>;

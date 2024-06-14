@@ -6,7 +6,6 @@ import { CreateCategoryFormComponent } from '../create-category-form/create-cate
 import { AsyncPipe } from '@angular/common';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { UpdateCategoryFormComponent } from '../update-category-form/update-category-form.component';
-import { CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-categories-list',

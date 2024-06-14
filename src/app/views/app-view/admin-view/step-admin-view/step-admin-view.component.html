@@ -20,6 +20,7 @@
             <!-- <th>Sous-titre</th> -->
             <th>Variables</th>
             <th style="width: 50%;">Prompts</th>
+            <th style="text-align: center">Plan</th>
             <th style="width: 60px;text-align:center">Actions</th>
         </tr>
     </thead>
@@ -75,6 +76,22 @@
                         }
                     </div>
                     }
+                    }
+                </div>
+            </td>
+            <td style="text-align: center;">
+                <!-- step > plan -->
+                <div class="d-inline-flex flex-column">
+                    @if(step.plans.length) {
+                    @for(plan of step.plans; track plan) {
+                    <span (click)="openDialogSelectPlan($event, step)"
+                        class="badge badge-sm text-bg-primary">{{plan.title}}</span>
+                    }
+                    }
+                    @else {
+                    <button (click)="openDialogSelectPlan($event, step)" class="btn btn-sm btn-light py-0">
+                        <i class="bi bi-plus"></i> Plan
+                    </button>
                     }
                 </div>
             </td>

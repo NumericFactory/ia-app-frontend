@@ -33,6 +33,10 @@ export class AdminService implements AdminGateway {
   private categoriesSubject = new BehaviorSubject<CategoryModel[]>([]);
   public categories$ = this.categoriesSubject.asObservable();
 
+  // store the plans
+  private plansSubject = new BehaviorSubject<any[]>([]);
+  public plans$ = this.plansSubject.asObservable();
+
   constructor(private alert: AlertService) { }
 
   // get all users
@@ -130,6 +134,7 @@ export class AdminService implements AdminGateway {
           desc: response.data.desc,
           variables: [],
           prompts: [],
+          plans: [],
           order: 0,
           isVisible: true,
           createdAt: response.data.createdAt
@@ -446,6 +451,68 @@ export class AdminService implements AdminGateway {
       })
     )
   }
+
+  fetchPlans(): Observable<any[]> {
+    const endpoint = '/admin/plans';
+    return this.http.get(`${this.apiUrl}${endpoint}`).pipe(
+      tap((response: any) => this.plansSubject.next(response))
+    )
+  }
+
+  createPlan(plan: Omit<any, 'id'>): Observable<any> {
+    const endpoint = '/admin/plans';
+    console.log('plan', plan);
+    return this.http.post(`${this.apiUrl}${endpoint}`, plan).pipe(
+      tap((response: any) => {
+        this.alert.show('Plan ajouté', 'success');
+        const plans = this.plansSubject.value;
+        this.plansSubject.next([...plans, response.data]);
+      })
+    )
+  }
+
+  updatePlan(id: number, plan: any): Observable<any> {
+    const endpoint = '/admin/plans';
+    return this.http.put(`${this.apiUrl}${endpoint}/${id}`, plan).pipe(
+      tap((response: any) => {
+        this.alert.show('Plan mis à jour', 'success');
+      })
+    )
+  }
+
+  deletePlan(id: number): Observable<any> {
+    const endpoint = '/admin/plans';
+    return this.http.delete(`${this.apiUrl}${endpoint}/${id}`).pipe(
+      tap((response: any) => {
+        this.alert.show('Plan supprimé', 'success');
+        const plans = this.plansSubject.value;
+        this.plansSubject.next(plans.filter(plan => plan.id !== id));
+      })
+    )
+  }
+
+  addPlansToStep(stepId: number, planIds: number[]): Observable<any> {
+    const endpoint = `/admin/steps/${stepId}/plans`;
+    return this.http.post(`${this.apiUrl}${endpoint}`, { plan_ids: planIds })
+      .pipe(
+        tap((apiResponse: any) => {
+          this.alert.show('Plan(s) associé(s) au step', 'success');
+          const steps = this.stepsSubject.value;
+          const step = steps.find(s => s.id === stepId);
+          const storedPlans = this.plansSubject.value;
+          const buildstepPlansArray = apiResponse.data.map((planId: number) => {
+            return storedPlans.find(plan => plan.id === planId)
+          });
+          if (step) {
+            // if step has plans, add the new plans to the existing ones
+            step.plans = buildstepPlansArray;
+            steps.map(s => s.id === stepId ? step : s);
+            this.stepsSubject.next(steps);
+          }
+        })
+      )
+  }
+
 
   setSignupPageVisibility(isVisible: boolean): Observable<any> {
     const endpoint = '/admin/signup-page-visibility';

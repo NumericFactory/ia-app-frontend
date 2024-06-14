@@ -1,0 +1,40 @@
+<div class="mb-4 d-flex justify-content-between">
+    <span class="title">
+        <h2>Plans</h2>
+    </span>
+    <div class="d-flex justify-content-end">
+        <button (click)="openDialogCreatePlan()" class="btn btn-sm btn-primary ms-2 btn-icon">
+            <i class="bi bi-plus"></i>
+            Ajouter un Plan
+        </button>
+    </div>
+</div>
+@if((plans$ | async); as plans) {
+
+<table class="table table-sm table-hover">
+    <thead class="table-light">
+        <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 40%">Titre</th>
+            <th>slug</th>
+            <th style="width: 15%" style="width: 60px;text-align:center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(plan of plans; track plan.id) {
+        <tr (click)="openDialogUpdatePlan($event, plan)">
+            <th>{{plan.id}}</th>
+            <td>{{plan.title}}</td>
+            <td>{{plan.slug}}</td>
+            <td class="text-center">
+                <button class="btn btn-sm btn-secondary" (click)="deletePlan($event, plan)">x</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+@else {
+<p class="text-center">Aucun plan</p>
+<p class="text-center"><strong>Clickez sur "Ajouter"</strong></p>
+}

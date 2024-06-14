@@ -23,6 +23,7 @@ export interface StepModel {
     createdAt: string
     order: number
     isVisible: boolean
+    plans: any[]
 }
 export interface StepUserVariableModel {
     id?: number
@@ -56,6 +57,7 @@ export interface StepModelAdmin {
     createdAt: string
     order: number
     isVisible: boolean
+    plans: any[]
 }
 export interface FormUISchema {
     id?: number,

@@ -17,6 +17,7 @@ import { SettingsViewComponent } from './views/app-view/user-view/settings-view/
 import { PromptUniqueBycategoryViewComponent } from './views/app-view/user-view/prompt-unique-bycategory-view/prompt-unique-bycategory-view.component';
 import { OnboardingViewComponent } from './views/app-view/onboarding-view/onboarding-view.component';
 import { onboardingPassedGuard } from './shared/guards/onboarding-passed.guard';
+import { PlansListComponent } from './ui/admin/plans/plans-list/plans-list.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -65,6 +66,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'manage-step', pathMatch: 'full' },
             { path: 'users', component: UsersAdminViewComponent },
             { path: 'manage-step', component: StepAdminViewComponent },
+            { path: 'plans', component: PlansListComponent },
             { path: 'settings', component: SettingsAdminViewComponent },
         ]
     }

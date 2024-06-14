@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
 import { EditorModule } from 'primeng/editor';
 import { DialogRef } from '@angular/cdk/dialog';
