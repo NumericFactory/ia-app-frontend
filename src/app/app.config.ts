@@ -17,6 +17,8 @@ import { UserService } from './core/adapters/user.service';
 import { IAGateway } from './core/ports/ia.gateway';
 import { IaService } from './core/adapters/ia.service';
 import { provideMarkdown } from 'ngx-markdown';
+import { PlanService } from './core/adapters/plan.service';
+import { PlanGateway } from './core/ports/plan.gateway';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     { provide: AuthGateway, useClass: AuthService },
     { provide: AdminGateway, useClass: AdminService },
     { provide: UserGateway, useClass: UserService },
+    { provide: PlanGateway, useClass: PlanService },
     // steps 
     { provide: StepGateway, useClass: StepService },
     // ia 

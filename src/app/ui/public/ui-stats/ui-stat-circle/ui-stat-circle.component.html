@@ -40,16 +40,16 @@
             <div class="col-6">
                 @if(user$ | async; as user) {
                 <h3 class="fs-5 text-center opacity-50">Hello {{(user$ | async)?.firstname}}</h3>
-                <div style="background: #eaeaea;border: 0;" class="stat">
+                <div style="background: #f8f9f9;border: 0;" class="stat">
                     <div class="stat-figure text-secondary">
                         <div class="avatar online">
                             <div class="w-16 rounded-full">
-                                <img style="background: aquamarine"
+                                <img style="background: #ff7f50"
                                     [src]="'https://api.dicebear.com/8.x/adventurer/svg?seed='+user.firstname" />
                             </div>
                         </div>
                     </div>
-                    <div class="stat-title" style="text-wrap:wrap">Modifiez vos paramètres si besoin</div>
+                    <div class="stat-title" style="text-wrap:wrap; color: #111">Modifiez vos paramètres si besoin</div>
                     <div class="stat-desc text-secondary">
                         <a style="text-decoration: underline; color:#ff7f50 " [routerLink]="['/user/settings']">Voir vos
                             paramètres</a>

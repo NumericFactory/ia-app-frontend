@@ -20,6 +20,33 @@
 </div>
 
 
+<!-- PLANS CARDS -->
+<div class="row mb-3 justify-content-center animate__animated animate__fadeIn">
+    <div class="col-12 col-xl-12 col-xxl-10">
+        <div class="row g-5">
+            @if(plans$ | async; as plans) {
+            @for(plan of plans; track plan.id) {
+            <!-- <pre>{{plan | json}}</pre> -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div style="border-radius: 7px;" class="card d-flex justify-content-center border-0">
+                    <img style="width: 100%; height: 100%; border-radius: 5px;" [src]="getPlanImage(plan)" alt="">
+                    <div class="card-body">
+                        <h2 class="fs-5 mb-0 text-center">{{plan.title}}</h2>
+                        <div [innerHTML]="plan.description" class="row g-3 text-center"></div>
+                    </div>
+
+                </div>
+            </div>
+            }
+            @empty {
+            <p>Si vous êtes admin,<br> ajoutez des plans</p>
+            }
+            }
+        </div>
+    </div>
+</div>
+
+
 <div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
     <div class="col-12 col-xl-12 col-xxl-10">

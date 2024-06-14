@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StepGateway } from '../../../../core/ports/step.gateway';
-import { AsyncPipe, LowerCasePipe, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, JsonPipe, LowerCasePipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UiStepCardComponent } from '../../../../ui/public/ui-step-card/ui-step-card.component';
 import { CategoryModel } from '../../../../core/models/category.model';
@@ -11,16 +11,23 @@ import { UiCategoryPromptsListComponent } from '../../../../ui/public/ui-categor
 import { StatCircleComponent } from '../../../../ui/public/ui-stats/ui-stat-circle/ui-stat-circle.component';
 import { AlertService } from '../../../../shared/services/alert.service';
 import { UiCategoryCardComponent } from '../../../../ui/public/ui-category-card/ui-category-card.component';
+import { PlanGateway } from '../../../../core/ports/plan.gateway';
+import { PlanModel } from '../../../../core/models/plan.model';
 
 @Component({
   selector: 'app-dashboard-view',
   standalone: true,
-  imports: [AsyncPipe, LowerCasePipe, UiCategoryCardComponent, RouterLink, UiStepCardComponent, MatBottomSheetModule, StatCircleComponent],
+  imports: [
+    AsyncPipe, LowerCasePipe, JsonPipe,
+    UiCategoryCardComponent, RouterLink,
+    UiStepCardComponent, MatBottomSheetModule, StatCircleComponent
+  ],
   templateUrl: './dashboard-view.component.html',
   styleUrl: './dashboard-view.component.scss'
 })
 export class DashboardViewComponent {
 
+  plans$: Observable<PlanModel[]> = this.planService.plan$;
   steps$ = this.stepService.steps$;
   categories$: Observable<CategoryModel[]> = this.stepService.categories$;
   user$ = this.userService.user$;
@@ -36,11 +43,21 @@ export class DashboardViewComponent {
   constructor(
     private stepService: StepGateway,
     private userService: UserGateway,
+    private planService: PlanGateway,
     private bottomSheet: MatBottomSheet,
     private alert: AlertService
   ) { }
 
+  getPlanImage(plan: PlanModel): string {
+    return plan.imageUrl || 'https://fakeimg.pl/650x300/?text=image&font=lobster';
+  }
+
   ngOnInit(): void {
+    // get plans
+    this.planService.getPlans().subscribe();
+    this.planService.plan$.subscribe(plans => {
+      console.log('plans', plans);
+    });
 
     // on all user data loader, do what you want
     this.user$.subscribe(user => {
