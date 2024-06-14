@@ -476,6 +476,9 @@ export class AdminService implements AdminGateway {
     return this.http.put(`${this.apiUrl}${endpoint}/${id}`, plan).pipe(
       tap((response: any) => {
         this.alert.show('Plan mis à jour', 'success');
+        const plans = this.plansSubject.value;
+        const updatedPlans = plans.map(p => p.id === id ? response.data : p);
+        this.plansSubject.next(updatedPlans);
       })
     )
   }

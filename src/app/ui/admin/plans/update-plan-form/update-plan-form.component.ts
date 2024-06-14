@@ -45,6 +45,13 @@ export class UpdatePlanFormComponent {
     this.dialogRef.close();
   }
 
+  onEditorInit(ev: any) {
+    // ev.editor.setContents(this.data.desc);
+    // ev.editor.root.innerHTML = this.data.desc;
+    ev.editor.clipboard.dangerouslyPasteHTML(0, this.data.description);
+    //this.updateStepForm.patchValue({ title: 'Hello', desc: this.data.desc });
+  }
+
   close() {
     this.dialogRef.close();
   }

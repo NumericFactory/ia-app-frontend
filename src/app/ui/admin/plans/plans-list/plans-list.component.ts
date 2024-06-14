@@ -58,6 +58,9 @@ export class PlansListComponent {
       panelClass: 'dialog-user-var',
       data: plan
     });
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.adminService.fetchPlans().subscribe();
+    });
   }
 
   async deletePlan(event: Event, plan: any) {
