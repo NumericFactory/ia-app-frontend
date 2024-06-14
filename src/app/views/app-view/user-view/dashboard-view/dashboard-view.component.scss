@@ -12,8 +12,18 @@
     letter-spacing: .5px;
 }
 
+.plan-card {
+    cursor: pointer;
+    transition-duration: .2s;
+    background: #f9f9f9;
+}
+
+.plan-card:hover {
+    background: #efebe7;
+}
+
 .subtitle-bis {
-    color: #7477a8
+    color: #6d6e7f
 }
 
 .subtitle-ter {
