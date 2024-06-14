@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../shared/services/alert.service';
 import { UserGateway } from '../ports/user.gateway';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { UserSettingsFormComponent } from '../../ui/public/ui-user-settings-form/ui-user-settings-form.component';
 
 @Injectable({
   providedIn: 'root'

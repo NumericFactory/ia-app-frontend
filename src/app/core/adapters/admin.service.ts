@@ -496,7 +496,8 @@ export class AdminService implements AdminGateway {
     return this.http.post(`${this.apiUrl}${endpoint}`, { plan_ids: planIds })
       .pipe(
         tap((apiResponse: any) => {
-          this.alert.show('Plan(s) associé(s) au step', 'success');
+          const message = planIds.length >= 1 ? 'Plans associés' : 'Plans dissociés';
+          this.alert.show(message);
           const steps = this.stepsSubject.value;
           const step = steps.find(s => s.id === stepId);
           const storedPlans = this.plansSubject.value;
