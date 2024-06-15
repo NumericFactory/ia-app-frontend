@@ -524,17 +524,17 @@ export class AdminService implements AdminGateway {
         tap((apiResponse: any) => {
           const message = planIds.length >= 1 ? 'Plans associés' : 'Plans dissociés';
           this.alert.show(message);
-          const steps = this.stepsSubject.value;
-          const step = steps.find(s => s.id === userId);
+          const users = this.usersSubject.value;
+          const user = users.find(s => s.id === userId);
           const storedPlans = this.plansSubject.value;
-          const buildstepPlansArray = apiResponse.data.map((planId: number) => {
+          const buildUserPlansArray = apiResponse.data.map((planId: number) => {
             return storedPlans.find(plan => plan.id === planId)
           });
-          if (step) {
+          if (user) {
             // if step has plans, add the new plans to the existing ones
-            step.plans = buildstepPlansArray;
-            steps.map(s => s.id === userId ? step : s);
-            this.stepsSubject.next(steps);
+            user.plans = buildUserPlansArray;
+            users.map(u => u.id === userId ? user : u);
+            this.usersSubject.next(users);
           }
         })
       )
