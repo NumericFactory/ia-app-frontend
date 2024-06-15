@@ -31,12 +31,23 @@
             <!-- <pre>{{plan | json}}</pre> -->
             @if(plan.isVisible) {
             <div class="col-12 col-md-6 col-lg-4">
-                <div style="border-radius: 7px;" class="card plan-card d-flex justify-content-center border-0">
+                <div style="border-radius: 7px; position: relative;"
+                    class="card plan-card d-flex justify-content-center border-0">
                     <img style="width: 100%; height: 100%; border-radius: 5px;" [src]="getPlanImage(plan)" alt="">
                     <div class="card-body">
                         <h2 class="fs-5 mb-0 text-center">{{plan.title}}</h2>
                         <div [innerHTML]="plan.description" class="row g-3 text-center"></div>
                     </div>
+                    @if(!isUserHasPlan(plan)) {
+                    <div style="background: rgba(25,50,75,0.6); position: absolute; top:0; left: 0; width: 100%; height: 100%; border-radius:7px"
+                        class="overlay-cadenas">
+                        <div class="d-flex justify-content-center align-items-center h-50">
+                            <!-- <img style="width:50%" src="/assets/images/cadenas.svg"> -->
+                            <i style="font-size: 5rem;color:bisque" class="bi bi-lock"></i>
+                        </div>
+                    </div>
+                    }
+
                 </div>
             </div>
             }

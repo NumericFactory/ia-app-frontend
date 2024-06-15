@@ -44,12 +44,18 @@ export class DashboardViewComponent {
     private stepService: StepGateway,
     private userService: UserGateway,
     private planService: PlanGateway,
-    private bottomSheet: MatBottomSheet,
-    private alert: AlertService
+    private bottomSheet: MatBottomSheet
   ) { }
+
 
   getPlanImage(plan: PlanModel): string {
     return plan.imageUrl || 'https://fakeimg.pl/650x300/?text=image&font=lobster';
+  }
+
+  isUserHasPlan(plan: PlanModel): boolean {
+    const user = this.userService.getUserFromSubject();
+    if (!user || !user.plans.length) return false;
+    return Boolean(user.plans.find(userPlan => userPlan.id === plan.id));
   }
 
   ngOnInit(): void {
@@ -65,7 +71,7 @@ export class DashboardViewComponent {
         if (this.userDataLoaded === false) {
           this.userDataLoaded = true;
           // do what you want - user data is loaded
-          console.log('all user data loaded')
+          console.log('all user data loaded', user);
         }
       }
     });
