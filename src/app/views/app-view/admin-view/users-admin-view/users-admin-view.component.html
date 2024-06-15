@@ -27,6 +27,7 @@
             <th style="width: 20%;">Email</th>
             <th>Mobile</th>
             <th>Roles</th>
+            <th style="text-align: center">Plan</th>
         </tr>
     </thead>
     <tbody>
@@ -57,6 +58,22 @@
                     }
                     }
                     <!-- {{roles.value | json}} -->
+                </div>
+            </td>
+            <td style="text-align: center;">
+                <!-- step > plan -->
+                <div class="d-inline-flex flex-column">
+                    @if(user.plans.length) {
+                    @for(plan of user.plans; track plan) {
+                    <span (click)="openDialogSelectPlan($event, user)"
+                        class="badge badge-sm text-bg-primary">{{plan.title}}</span>
+                    }
+                    }
+                    @else {
+                    <button (click)="openDialogSelectPlan($event, user)" class="btn btn-sm btn-light py-0">
+                        <i class="bi bi-plus"></i> Plan
+                    </button>
+                    }
                 </div>
             </td>
         </tr>

@@ -71,6 +71,7 @@ export abstract class AdminGateway {
     abstract deletePlan(id: number): Observable<any>;
 
     abstract addPlansToStep(stepId: number, planIds: number[]): Observable<any>;
+    abstract addPlansToUser(userId: number, planIds: number[]): Observable<any>;
 
     abstract setSignupPageVisibility(isVisible: boolean): Observable<any>;
     abstract inviteSignupUsers(emails: string[]): Observable<any>;

@@ -517,6 +517,29 @@ export class AdminService implements AdminGateway {
       )
   }
 
+  addPlansToUser(userId: number, planIds: number[]): Observable<any> {
+    const endpoint = `/admin/users/${userId}/plans`;
+    return this.http.post(`${this.apiUrl}${endpoint}`, { plan_ids: planIds })
+      .pipe(
+        tap((apiResponse: any) => {
+          const message = planIds.length >= 1 ? 'Plans associés' : 'Plans dissociés';
+          this.alert.show(message);
+          const steps = this.stepsSubject.value;
+          const step = steps.find(s => s.id === userId);
+          const storedPlans = this.plansSubject.value;
+          const buildstepPlansArray = apiResponse.data.map((planId: number) => {
+            return storedPlans.find(plan => plan.id === planId)
+          });
+          if (step) {
+            // if step has plans, add the new plans to the existing ones
+            step.plans = buildstepPlansArray;
+            steps.map(s => s.id === userId ? step : s);
+            this.stepsSubject.next(steps);
+          }
+        })
+      )
+  }
+
 
   setSignupPageVisibility(isVisible: boolean): Observable<any> {
     const endpoint = '/admin/signup-page-visibility';

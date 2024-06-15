@@ -32,6 +32,7 @@ export interface UserModel {
     roles: number[] | Role[]
     variables: any[],
     prompts?: any[],
+    plans: any[],
     settings: userSettings[],
     history?: UserHistoryModel
 }

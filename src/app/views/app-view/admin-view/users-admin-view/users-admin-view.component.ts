@@ -1,15 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { AdminGateway } from '../../../../core/ports/admin.gateway';
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe, NgFor } from '@angular/common';
 import { Role, UserModel } from '../../../../core/models/user.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UserDetailViewComponent } from '../../../../ui/admin/users/user-detail-view/user-detail-view.component';
 
 import { ManageUserSettingsFormComponent } from '../../../../ui/admin/users/manage-user-settings-form/manage-user-settings-form.component';
+import { LoaderService } from '../../../../shared/services/loader.service';
+import { ListboxChangeEvent } from 'primeng/listbox';
+import { of } from 'rxjs';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'app-users-admin-view',
@@ -41,8 +46,29 @@ export class UsersAdminViewComponent {
   constructor(
     private adminService: AdminGateway,
     private dialog: Dialog,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private loaderService: LoaderService
   ) { }
+
+  openDialogSelectPlan(event: Event, user: UserModel): void {
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(SelectPlansComponent, {
+      width: 'auto',
+      minWidth: '450px',
+      maxWidth: '100%',
+      maxHeight: '85%',
+      panelClass: 'dialog-user-var',
+      data: { ...user }
+    });
+    dialogRef.closed.subscribe((result: any) => {
+      if (!result) return;
+      this.loaderService.setLoader(true)
+      // update the Step.plans
+      this.adminService.addPlansToUser(user.id, result).subscribe(
+        data => this.loaderService.setLoader(false)
+      );
+    });
+  }
 
   ngOnInit() {
 
@@ -203,4 +229,107 @@ export class RoleDialog {
   }
 
 
+}
+
+/**************************************
+ * SelectPlansComponent to select plans
+ **************************************/
+@Component({
+  selector: 'select-plans-dialog',
+  standalone: true,
+  imports: [FormsModule, CheckboxModule, JsonPipe, NgFor, ProgressBarModule],
+
+  template: `
+  <div style="background: #fff" class="p-2">
+    <div class="mb-0 p-2 fs-6">
+      <h3>{{user.firstname}} {{user.lastname}}</h3>
+    </div>
+
+    <p-progressBar [style.opacity]="isLoading?1:0" mode="indeterminate"
+    [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
+      
+    @if(!isLoading) {
+    <div *ngFor="let plan of plans" class="field-checkbox">
+      <p-checkbox
+          [(ngModel)]="selectedPlans"
+          [label]="plan.title" 
+          name="group" 
+          [value]="plan.id" />
+    </div>
+    <div class="d-flex justify-content-end my-2">
+      <button (click)="dialogRef.close(selectedPlans)" class="btn btn-primary">Valider</button>
+      <!-- <pre>{{selectedPlans | json}}</pre> -->
+    </div>
+    }
+  </div>
+  `,
+  styles: [`
+  .p-listbox .p-listbox-list .p-listbox-item {
+    margin: 2px 0 !important;
+    padding: 0rem 0rem !important;
+    border: 0 none;
+    color: #334155;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+    border-radius: 4px;
+  }
+  .p-listbox .p-listbox-list {
+    margin: 0 !important; padding: 0 !important;
+    padding-left: 0 !important;
+  }
+  .p-listbox .p-listbox-list .p-listbox-item {
+    margin: 0;
+    padding: 0.55rem 1.25rem;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  ul {
+    padding-left: 0 !important;
+  }
+  .field-checkbox {
+    padding: 0.5rem 0.5rem;
+  }
+  `]
+})
+export class SelectPlansComponent {
+
+  user: UserModel = {} as UserModel;
+  plans: any[] = [];
+  selectedPlans: any[] = [];
+  selectedPlans$ = of(this.selectedPlans);
+
+  isLoading = true;
+
+  constructor(
+    public dialogRef: DialogRef<any[]>,
+    @Inject(DIALOG_DATA) public data: any,
+    public adminService: AdminGateway
+  ) { }
+
+  ngOnInit() {
+
+    this.selectedPlans$.subscribe((plans: any) => {
+      console.log('CHANGE', plans);
+    });
+
+    this.user = this.data;
+    this.adminService.plans$.subscribe((plans: any[]) => {
+      this.plans = plans
+      this.selectedPlans = this.user.plans?.map((plan: any) => plan.id)
+      this.isLoading = false
+      //.map((plan: any) => plan.title);
+    });
+
+    this.adminService.fetchPlans().subscribe();
+  }
+
+  selectValue(event: ListboxChangeEvent) {
+    const plan = this.plans.find((plan: string) => plan === event.value);
+    if (plan) {
+      this.dialogRef.close(plan);
+    }
+  }
+
+  isPlanBelongsToStep(planId: string) {
+    return this.user.plans?.find((plan: any) => plan.id === planId);
+  }
 }
