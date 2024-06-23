@@ -15,7 +15,7 @@ export abstract class StepGateway {
     abstract fetchCategories(): Observable<CategoryModel[]>;
     abstract setCategories(categories: CategoryModel[]): void;
 
-    abstract getSteps(): Observable<StepModel[]>;
+    abstract getSteps(plans?: string[]): Observable<StepModel[]>;
     abstract getStepById(id: number): Observable<StepModel | null>;
 
     abstract getPrompts(stepId: number): Observable<PromptModel[]>;

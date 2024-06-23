@@ -76,7 +76,7 @@ export class DashboardViewComponent {
       }
     });
 
-    this.stepService.getSteps().subscribe();
+    this.stepService.getSteps(['basic']).subscribe();
     this.stepService.fetchCategories().subscribe();
     this.stepService.getPromptsTotalCount().subscribe();
 

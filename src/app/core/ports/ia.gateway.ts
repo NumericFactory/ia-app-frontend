@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 
 export abstract class IAGateway {
-    abstract ask(question: string): Observable<any>;
+    abstract ask(question: string, stepId: number, promptId: number): Observable<any>;
     abstract getIaProviders(): Observable<any>;
     abstract getIaModels(): Observable<any>;
     abstract updateIaProviderModel(providerId: number, modelId: number): Observable<any>;

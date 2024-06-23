@@ -16,9 +16,9 @@ export class IaService implements IAGateway {
 
   constructor(private alertService: AlertService) { }
 
-  ask(question: string) {
+  ask(question: string, stepId?: number, promptId?: number) {
     const endpoint = '/ia/ask';
-    return this.http.post(`${this.apiUrl}${endpoint}`, { question })
+    return this.http.post(`${this.apiUrl}${endpoint}`, { question, stepId, promptId })
       .pipe(
         tap((response: any) => {
           // log response

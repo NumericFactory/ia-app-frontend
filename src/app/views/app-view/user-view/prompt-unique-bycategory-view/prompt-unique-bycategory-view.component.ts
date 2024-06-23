@@ -98,7 +98,7 @@ export class PromptUniqueBycategoryViewComponent {
 
     // ask the question
     this.viewState.loadingIaResponse = true;
-    this.iaService.ask(newPrompt).subscribe(
+    this.iaService.ask(newPrompt, prompt.stepId!, prompt.id).subscribe(
       {
         next: (response: any) => {
           // check if the response is empty

@@ -135,13 +135,14 @@ export class PromptViewComponent {
    * @param prompt 
    */
   selectPrompt(prompt: PromptModel): void {
+    console.log('selectPrompt', prompt);
     this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = true;
     this.selectedPrompt = prompt;
     // build secret prompt with user variables
     const newPrompt: string = this.buildPrompt(prompt, this.userService.getUserFromSubject()?.variables);
     // ask the question
     this.loadingGeneral = true;
-    this.iaService.ask(newPrompt!).subscribe(
+    this.iaService.ask(newPrompt!, prompt.stepId!, prompt.id).subscribe(
       {
         next: (response: any) => {
           this.loadingGeneral = false;
