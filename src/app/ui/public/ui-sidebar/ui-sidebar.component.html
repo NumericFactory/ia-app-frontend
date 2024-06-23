@@ -9,6 +9,7 @@
 
     <hr> -->
 
+
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
             <a routerLink="/dashboard" class="nav-link active" routerLinkActive="active">
@@ -18,6 +19,11 @@
         </li>
     </ul>
 
+    <h2>
+        <!-- <i class="bi bi-card-list"></i> -->
+        <span>Programmes</span>
+    </h2>
+
     <ul class="nav nav-pills programme flex-column">
 
         @for(plan of plans$ | async; track plan.id) {
@@ -25,7 +31,7 @@
         <li class="nav-item">
             <a [class.locked]="!isUserHasPlan(plan)" routerLink="/dashboard" class="nav-link active"
                 routerLinkActive="active" style="position:relative">
-                <i style="color: #fff; opacity: 1;" class="bi bi-mortarboard-fill"></i>
+                <i style="opacity: 1;" class="bi bi-mortarboard-fill"></i>
                 <span>{{plan.title}}</span>
                 @if(!isUserHasPlan(plan)) {
                 <i class="bi bi-lock-fill" style="font-size: 1.5rem;

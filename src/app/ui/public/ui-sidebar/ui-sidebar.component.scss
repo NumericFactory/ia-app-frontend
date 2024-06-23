@@ -19,17 +19,30 @@ li.nav-item {
 }
 
 ul.programme {
-    background: #111537;
+    background: #19213b;
 
     li.nav-item a {
-        background: #111537;
+        background: #fff;
 
         i {
             color: #ff7f50;
         }
 
         span {
-            color: #fff
+            color: #19213b
+        }
+
+        &:hover {
+            background: #19213b;
+            color: #fff;
+
+            i {
+                color: #ff7f50;
+            }
+
+            span {
+                color: #ff7f50;
+            }
         }
     }
 
