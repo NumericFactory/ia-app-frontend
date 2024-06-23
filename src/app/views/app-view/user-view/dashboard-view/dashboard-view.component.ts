@@ -9,7 +9,6 @@ import { UserGateway } from '../../../../core/ports/user.gateway';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UiCategoryPromptsListComponent } from '../../../../ui/public/ui-category-prompts-list/ui-category-prompts-list.component';
 import { StatCircleComponent } from '../../../../ui/public/ui-stats/ui-stat-circle/ui-stat-circle.component';
-import { AlertService } from '../../../../shared/services/alert.service';
 import { UiCategoryCardComponent } from '../../../../ui/public/ui-category-card/ui-category-card.component';
 import { PlanGateway } from '../../../../core/ports/plan.gateway';
 import { PlanModel } from '../../../../core/models/plan.model';

@@ -18,6 +18,31 @@
         </li>
     </ul>
 
+    <ul class="nav nav-pills programme flex-column">
+
+        @for(plan of plans$ | async; track plan.id) {
+        @if(plan.isVisible && !plan.isPlan) {
+        <li class="nav-item">
+            <a [class.locked]="!isUserHasPlan(plan)" routerLink="/dashboard" class="nav-link active"
+                routerLinkActive="active" style="position:relative">
+                <i style="color: #fff; opacity: 1;" class="bi bi-mortarboard-fill"></i>
+                <span>{{plan.title}}</span>
+                @if(!isUserHasPlan(plan)) {
+                <i class="bi bi-lock-fill" style="font-size: 1.5rem;
+                    color: #c6804f;
+                    opacity: 1;
+                    position: absolute;
+                    right: -7px;
+                    top: 1px;"></i>
+                }
+            </a>
+        </li>
+        }
+        }
+
+
+    </ul>
+
 
     <div class="mb-auto" style="background-color: transparent; margin-top: 8px;">
         <h2>

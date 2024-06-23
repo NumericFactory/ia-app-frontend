@@ -23,13 +23,13 @@
 <!-- PLANS CARDS -->
 <div class="row mt-4 mb-2 justify-content-center animate__animated animate__fadeIn">
     <div class="col-12 col-xl-12 col-xxl-10">
-        <h2 class="fs-5 mb-2">Accèdes à ton plan</h2>
+        <h2 class="fs-5 mb-2">Accède à ton programme</h2>
         <div class="row g-5">
 
             @if(plans$ | async; as plans) {
             @for(plan of plans; track plan.id) {
             <!-- <pre>{{plan | json}}</pre> -->
-            @if(plan.isVisible) {
+            @if(plan.isVisible && !plan.isPlan) {
             <div class="col-12 col-md-6 col-lg-4">
                 <div style="border-radius: 7px; position: relative;"
                     class="card plan-card d-flex justify-content-center border-0">
@@ -43,7 +43,7 @@
                         class="overlay-cadenas">
                         <div class="d-flex justify-content-center align-items-center h-50">
                             <!-- <img style="width:50%" src="/assets/images/cadenas.svg"> -->
-                            <i style="font-size: 5rem;color:bisque" class="bi bi-lock"></i>
+                            <i style="font-size: 5rem;color:bisque" class="bi bi-lock-fill"></i>
                         </div>
                     </div>
                     }
@@ -64,6 +64,7 @@
 <div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
     <div class="col-12 col-xl-12 col-xxl-10">
+        <h1 class="fs-4 mb-0">Plan Basic</h1>
         <h2 class="fs-5 mb-0">Stratégies de croissance</h2>
         <h3 class="fs-6 mb-2 subtitle subtitle-bis">Fondamentaux étape-par-étape pour 10X</h3>
         <div class="row g-4">

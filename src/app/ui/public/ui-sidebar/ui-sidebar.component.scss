@@ -3,9 +3,10 @@
     height: calc(100vh);
     border-right: 1px solid #dfdfdf;
     background-color: #19213B !important;
-    padding: 11px !important;
+    padding: 9px !important;
     overflow-y: auto;
 }
+
 
 .nav-pills.nav-link.active,
 .nav-pills .show>.nav-link {
@@ -13,9 +14,31 @@
     color: #bcc0e1;
 }
 
+li.nav-item {
+    margin-bottom: 5px;
+}
+
+ul.programme {
+    background: #111537;
+
+    li.nav-item a {
+        background: #111537;
+
+        i {
+            color: #ff7f50;
+        }
+
+        span {
+            color: #fff
+        }
+    }
+
+}
+
 .nav-item a span {
     color: #ff7f50;
 }
+
 
 ::-webkit-scrollbar {
     height: 1rem;
@@ -65,14 +88,17 @@ h2 {
     margin-left: 11px;
 }
 
+.locked {
+    opacity: .7;
+}
 
 .nav-link {
     padding: 6px 32px 6px 6px;
-    margin-left: 5px;
+    margin-left: 0px;
 
     i {
         opacity: 0;
-        margin-right: 22px;
+        margin-right: 14px;
         color: #4a21cc;
         margin-left: 6px;
     }

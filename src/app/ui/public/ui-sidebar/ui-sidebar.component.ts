@@ -5,6 +5,9 @@ import { UserGateway } from '../../../core/ports/user.gateway';
 import { RouterLink } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
 import { AppStateService } from '../../../shared/services/app-state.service';
+import { Observable } from 'rxjs';
+import { PlanModel } from '../../../core/models/plan.model';
+import { PlanGateway } from '../../../core/ports/plan.gateway';
 
 @Component({
   selector: 'ui-sidebar',
@@ -15,6 +18,7 @@ import { AppStateService } from '../../../shared/services/app-state.service';
 })
 export class UiSidebarComponent {
 
+  plans$: Observable<PlanModel[]> = this.planService.plan$;
   authUser$ = this.authService.user$;
   user$ = this.userService.user$;
   userPromptsHistory: any[] = [];
@@ -29,8 +33,15 @@ export class UiSidebarComponent {
     private authService: AuthGateway,
     private userService: UserGateway,
     private renderer: Renderer2,
-    private appState: AppStateService
+    private appState: AppStateService,
+    private planService: PlanGateway
   ) { }
+
+  isUserHasPlan(plan: PlanModel): boolean {
+    const user = this.userService.getUserFromSubject();
+    if (!user || !user.plans.length) return false;
+    return Boolean(user.plans.find(userPlan => userPlan.id === plan.id));
+  }
 
   ngOnInit() {
     this.userService.fetchUserPrompts().subscribe();
