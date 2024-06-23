@@ -15,18 +15,20 @@
 
 
     <div class="col-12 col-xl-10">
-        <div style="border: 0;
-        background: #edf7fa;
-        border-radius: 8px;" class="card">
+        <div style="border: 0;background: #fff;border-radius: 9px;" class="card">
             <div class="card-body">
                 <h2 class="fs-4">{{step.subtitle}}</h2>
-                <p class="fs-6">0/ {{step.prompts.length}} prompts</p>
+                <p class="fs-6 badge badge-success" style="background: #00a18f">
+                    {{step.prompts.length}} prompts
+                </p>
+                @if(step.desc) {
                 <hr style="opacity: .1">
                 <p [innerHTML]="step.desc"></p>
+                }
             </div>
             <!-- alert si user n'a pas renseigner ses variables -->
             @if(!isThisStepHasUserVariables(step)) {
-            <div style="margin: 7px;" class="alert alert-warning d-flex align-items-center">
+            <div style="margin:0;" class="alert alert-warning d-flex align-items-center">
                 <i style="font-size: 27px;" class="bi bi-exclamation-triangle-fill me-3"></i>
                 <span>
                     Pour continuer à l'étape suivante
@@ -40,10 +42,8 @@
 
             <!-- alert si user a renseigné ses variables -->
             @if(isThisStepHasUserVariables(step)) {
-            <div style="background: #daeaf0;
-            color: #00326e;
-            margin: 7px;
-            border-color: #edfaff;" class="alert d-flex justify-content-between align-items-center">
+            <div style="background: #daeaf0;color: #00326e;border-color: #edfaff;"
+                class="alert d-flex justify-content-between align-items-center">
                 <span class="d-flex align-items-center">
                     <i style="font-size: 33px;" class="bi bi-robot me-3"></i>
                     Continuez à l'étape suivante

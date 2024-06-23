@@ -20,9 +20,12 @@
             [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
     </div>
 
-    <div [style.background]="isChecked?'rgb(224 226 234)':'#e0f7f7'"
-        style="background: #e0e2ea; display: flex; align-items: center; justify-content: center; margin-top: 2px;margin-bottom: 4px;"
-        class="col-1">
+    <div [style.background]="isChecked?'rgb(224 226 234)':'#e0f7f7'" style="display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2px;
+        margin-bottom: 4px;
+        border-radius: 0 9px 9px 0;" class="col-1">
         @if(isChecked) {
         <button #refreshBtn (click)="refreshPromptAction(prompt)" pTooltip="demander à nouveau à l'IA"
             tooltipPosition="left" [disabled]="!isChecked || loadingGeneral" class="btn btn-sm btn-light refresh-ia">

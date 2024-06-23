@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IAGateway } from '../ports/ia.gateway';
 import { AlertService } from '../../shared/services/alert.service';
 
@@ -16,7 +16,14 @@ export class IaService implements IAGateway {
 
   constructor(private alertService: AlertService) { }
 
-  ask(question: string, stepId?: number, promptId?: number) {
+  /**
+   * ask()
+   * @param question : string
+   * @param stepId : number
+   * @param promptId : number // question
+   * @returns Observable<any>
+   */
+  ask(question: string, stepId?: number, promptId?: number): Observable<any> {
     const endpoint = '/ia/ask';
     return this.http.post(`${this.apiUrl}${endpoint}`, { question, stepId, promptId })
       .pipe(
@@ -27,22 +34,22 @@ export class IaService implements IAGateway {
       );
   }
 
-  getIaProviders() {
+  getIaProviders(): Observable<any> {
     const endpoint = '/admin/iaproviders';
     return this.http.get(`${this.apiUrl}${endpoint}`);
   }
 
-  getActiveProvider() {
+  getActiveProvider(): Observable<any> {
     const endpoint = '/admin/iaproviders/active';
     return this.http.get(`${this.apiUrl}${endpoint}`);
   }
 
-  getIaModels() {
+  getIaModels(): Observable<any> {
     const endpoint = '/admin/iamodels';
     return this.http.get(`${this.apiUrl}${endpoint}`);
   }
 
-  updateIaProviderModel(providerId: number, modelId: number) {
+  updateIaProviderModel(providerId: number, modelId: number): Observable<any> {
     const endpoint = `/admin/iaproviders/${providerId}/model`;
     return this.http.put(`${this.apiUrl}${endpoint}`, { modelId }).pipe(
       tap((response: any) => {
@@ -51,7 +58,7 @@ export class IaService implements IAGateway {
     )
   }
 
-  updateIaProviderActive(providerId: number) {
+  updateIaProviderActive(providerId: number): Observable<any> {
     const endpoint = `/admin/iaproviders/${providerId}/active`;
     return this.http.put(`${this.apiUrl}${endpoint}`, {}).pipe(
       tap((response: any) => {

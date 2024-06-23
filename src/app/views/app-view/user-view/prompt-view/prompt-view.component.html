@@ -37,7 +37,7 @@
 
                 }
                 <span>{{conv.userQuestion.title}}</span>
-                <p-progressBar [style.opacity]="conv.isLoadingResponse?0.5:0" mode="indeterminate"
+                <p-progressBar [style.opacity]="conv.isLoadingResponse&&loadingGeneral?0.5:0" mode="indeterminate"
                     [style]="{ height: '3px',color:'#2c2b40' }"></p-progressBar>
             </button>
             }
