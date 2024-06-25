@@ -22,14 +22,15 @@ ul.programme {
     background: #19213b;
 
     li.nav-item a {
-        background: #fff;
+        background: #19213b;
 
         i {
             color: #ff7f50;
         }
 
         span {
-            color: #19213b
+            color: #ebefff;
+            font-size: 1.01rem;
         }
 
         &:hover {
@@ -55,11 +56,11 @@ ul.programme {
 
 ::-webkit-scrollbar {
     height: 1rem;
-    width: .5rem
+    width: .3rem
 }
 
 ::-webkit-scrollbar:horizontal {
-    height: .5rem;
+    height: .3rem;
     width: 1rem
 }
 
@@ -70,7 +71,7 @@ ul.programme {
 
 ::-webkit-scrollbar-thumb {
     --tw-border-opacity: 1;
-    background-color: hsla(0, 0%, 30%, 0.8);
+    background-color: hsla(210, 16%, 47%, 0.8);
     border-color: rgba(255, 255, 255, var(--tw-border-opacity));
     border-radius: 9999px;
     border-width: 1px
@@ -92,12 +93,11 @@ ul.programme {
 
 h2 {
     position: relative;
-    border-bottom: 1px solid rgb(71 69 89 / 35%);
+    border-bottom: 1px solid rgb(108 105 134 / 35%);
     border-radius: 0;
-    padding: 6px 0px;
-    font-weight: 400;
-    color: #fff;
-    font-size: 1.1rem;
+    padding: 9px 0px;
+    color: rgb(108 105 134 / 35%);
+    font-size: 1.15rem;
     margin-left: 11px;
 }
 
@@ -108,6 +108,7 @@ h2 {
 .nav-link {
     padding: 6px 32px 6px 6px;
     margin-left: 0px;
+    border-radius: 7px;
 
     i {
         opacity: 0;
@@ -147,6 +148,6 @@ h2 {
     cursor: pointer;
 
     i {
-        opacity: 0.95;
+        opacity: 0;
     }
 }

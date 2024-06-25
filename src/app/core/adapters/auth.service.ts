@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthGateway, loginUserPayload, registerUserPayload, ResponseMessage } from '../ports/auth.gateway';
-import { Observable, BehaviorSubject, tap, lastValueFrom, map } from 'rxjs';
+import { Observable, BehaviorSubject, tap, lastValueFrom, map, merge, mergeMap } from 'rxjs';
 import { UserModel } from '../models/user.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpRequest } from '@angular/common/http';
@@ -23,7 +23,7 @@ export class AuthService implements AuthGateway {
   // Data store for user
   private userSubject = new BehaviorSubject<UserModel | null>(null);
   public user$: Observable<UserModel | null> = this.userSubject.asObservable();
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private isAuthenticatedSubject = new BehaviorSubject(true);
   public isAuth$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
   constructor(private router: Router, private alert: AlertService, private userService: UserGateway) { }
@@ -56,7 +56,7 @@ export class AuthService implements AuthGateway {
           this.isAuthenticatedSubject.next(true);
           this.storeToken(response.token.oat);
           // load user in store UserService
-          this.userService.setUserSubject(response.user);
+          this.fetchUser();
           this.alert.show('Vous êtes connecté(e)', 'success');
           this.router.navigate(['/dashboard']);
         })
@@ -137,18 +137,28 @@ export class AuthService implements AuthGateway {
    *        and store it in the userSubject
    * @returns Observable<UserModel | null>
    */
-  private fetchUser(): Observable<UserModel | null> {
-    return this.http.get<UserModel>(`${this.apiUrl}/me`)
-      .pipe(
-        tap((response: any) => {
-          if (response.data) {
-            this.userSubject.next(response.data as UserModel);
-            this.isAuthenticatedSubject.next(true);
-            this.alert.show(`Bienvenue ${response.data.firstname}`, 'success');
-          }
-        }),
-        map((response: any) => response.data as UserModel)
-      )
+  fetchUser(): any {
+    this.http.get<UserModel>(`${this.apiUrl}/me`)
+      // .pipe(
+      //   tap((response: any) => {
+      //     if (response.data) {
+      //       this.userSubject.next(response.data as UserModel);
+      //       this.isAuthenticatedSubject.next(true);
+      //       this.alert.show(`Bienvenue ${response.data.firstname}`, 'success');
+      //     }
+      //   }),
+      //   map((response: any) => response.data as UserModel)
+      // )
+      .subscribe((response: any) => {
+        if (response.data) {
+          // this.userSubject.next(response.data as UserModel);
+          // store user in userSubject in UserService
+          console.log('response.data', response.data)
+          this.userService.setUserSubject(response.data as UserModel);
+          this.isAuthenticatedSubject.next(true);
+          this.alert.show(`Bienvenue ${response.data.firstname}`, 'success');
+        }
+      })
   }
 
 

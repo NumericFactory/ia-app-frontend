@@ -24,7 +24,7 @@ export class UserViewComponent {
 
   ngOnInit() {
     // load user variables values into the store
-    this.userService.fetchUserVariables().subscribe();
+    //this.userService.fetchUserVariables().subscribe();
   }
 
 }

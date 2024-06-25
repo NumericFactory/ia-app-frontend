@@ -24,6 +24,7 @@ export abstract class AuthGateway {
     // observables for user and auth status
     abstract user$: Observable<UserModel | null>;
     abstract isAuth$: Observable<boolean>;
+    abstract fetchUser(): any;
 
     // get user or null
     abstract getUser(): Promise<UserModel | null>;

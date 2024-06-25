@@ -22,7 +22,7 @@
                 <h2 class="fs-4">{{step.subtitle}}</h2>
                 <p style="background: #40619f" class="fs-6 badge badge-success">{{step.prompts.length}} prompts</p>
                 @if(step.desc) {
-                <p [innerHTML]="step.desc"></p>
+                <div class="description" [innerHTML]="step.desc"></div>
                 }
             </div>
         </div>

@@ -14,17 +14,17 @@ import { PlanGateway } from '../../../../core/ports/plan.gateway';
 import { PlanModel } from '../../../../core/models/plan.model';
 
 @Component({
-  selector: 'app-dashboard-view',
+  selector: 'app-dashboard-programme-view',
   standalone: true,
   imports: [
     AsyncPipe, LowerCasePipe, JsonPipe,
     UiCategoryCardComponent, RouterLink,
     UiStepCardComponent, MatBottomSheetModule, StatCircleComponent
   ],
-  templateUrl: './dashboard-view.component.html',
-  styleUrl: './dashboard-view.component.scss'
+  templateUrl: './dashboard-programme-view.component.html',
+  styleUrl: './dashboard-programme-view.component.scss'
 })
-export class DashboardViewComponent {
+export class DashboardProgrammeViewComponent {
 
   plans$: Observable<PlanModel[]> = this.planService.plan$;
   steps$ = this.stepService.steps$;
@@ -64,9 +64,9 @@ export class DashboardViewComponent {
   ngOnInit(): void {
     // get plans
     this.planService.getPlans().subscribe();
-    // this.planService.plan$.subscribe(plans => {
-    //   console.log('plans', plans);
-    // });
+    this.planService.plan$.subscribe(plans => {
+      console.log('plans', plans);
+    });
 
     // on all user data loader, do what you want
     this.user$.subscribe(user => {
@@ -123,5 +123,6 @@ export class DashboardViewComponent {
       data: category,
     });
   }
+
 
 }

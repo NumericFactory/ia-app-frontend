@@ -9,7 +9,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { DIALOG_DATA, Dialog, DialogRef } from '@angular/cdk/dialog';
 import { UserModel } from '../../../../core/models/user.model';
-import { AuthGateway } from '../../../../core/ports/auth.gateway';
 import { QuestionBase } from '../../../../shared/services/question/question.model';
 import { QuestionControlService } from '../../../../shared/services/question/question-control.service';
 import { DynamicFormQuestionComponent } from '../../../../shared/services/question/dynamic-form-question/dynamic-form-question.component';
@@ -25,7 +24,7 @@ import { AlertService } from '../../../../shared/services/alert.service';
 })
 export class StepViewComponent {
 
-  user: UserModel | null = this.auth.getUserFromSubject();
+  user: UserModel | null = this.userService.getUserFromSubject();
   stepId!: number;
   step$!: Observable<StepModel | null>;
   step: StepModel | null = null;
@@ -37,7 +36,7 @@ export class StepViewComponent {
     private router: Router,
     private stepService: StepGateway,
     private dialog: Dialog,
-    private auth: AuthGateway,
+    private userService: UserGateway,
     private alertService: AlertService
   ) { }
 

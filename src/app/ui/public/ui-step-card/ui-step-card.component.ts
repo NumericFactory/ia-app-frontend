@@ -25,7 +25,9 @@ export class UiStepCardComponent {
   ngOnInit(): void {
     this.userHistory = this.userHistory || []
     // count the number of prompts that have been completed
-    this.completedStepPrompts = this.userHistory.find((story) => story.step_id === this.step.id)?.prompts.length || 0
+    this.completedStepPrompts = this.userHistory.find(
+      (story) => story.step_id === this.step.id
+    )?.prompts.length || 0;
     this.value = [
       {
         label: 'Prompt',

@@ -2,7 +2,7 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 import { UserGateway } from '../../../core/ports/user.gateway';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
 import { AppStateService } from '../../../shared/services/app-state.service';
 import { Observable } from 'rxjs';
@@ -12,7 +12,10 @@ import { PlanGateway } from '../../../core/ports/plan.gateway';
 @Component({
   selector: 'ui-sidebar',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, NgIf, JsonPipe, AccordionModule],
+  imports: [
+    AsyncPipe, RouterLink, NgIf, JsonPipe, AccordionModule,
+    RouterLink, RouterLinkActive, RouterLinkWithHref
+  ],
   templateUrl: './ui-sidebar.component.html',
   styleUrl: './ui-sidebar.component.scss'
 })
@@ -34,8 +37,13 @@ export class UiSidebarComponent {
     private userService: UserGateway,
     private renderer: Renderer2,
     private appState: AppStateService,
-    private planService: PlanGateway
+    private planService: PlanGateway,
+    private router: Router
   ) { }
+
+  navigateToProgrammePage(plan: PlanModel) {
+    this.router.navigate(['programme', plan.slug]);
+  }
 
   isUserHasPlan(plan: PlanModel): boolean {
     const user = this.userService.getUserFromSubject();
@@ -44,8 +52,8 @@ export class UiSidebarComponent {
   }
 
   ngOnInit() {
-    this.userService.fetchUserPrompts().subscribe();
-    this.userService.fetchUserPromptsHistoryByStep().subscribe();
+    //this.userService.fetchUserPrompts().subscribe();
+    //this.userService.fetchUserPromptsHistoryByStep().subscribe();
 
     this.user$.subscribe((user) => {
       if (user && user.history) {
@@ -57,13 +65,13 @@ export class UiSidebarComponent {
 
   starMouseOver(iconStar: HTMLElement) {
 
-    this.renderer.removeClass(iconStar, 'bi-star');
-    this.renderer.addClass(iconStar, 'bi-star-fill');
+    //this.renderer.removeClass(iconStar, 'bi-star');
+    //this.renderer.addClass(iconStar, 'bi-star-fill');
   }
   starMouseOut(iconStar: HTMLElement) {
 
-    this.renderer.removeClass(iconStar, 'bi-star-fill');
-    this.renderer.addClass(iconStar, 'bi-star');
+    //this.renderer.removeClass(iconStar, 'bi-star-fill');
+    //this.renderer.addClass(iconStar, 'bi-star');
   }
 
 }

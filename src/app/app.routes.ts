@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { NavigationStart, Router, Routes } from '@angular/router';
 import { LoginViewComponent } from './views/auth-view/login-view/login-view.component';
 import { RegisterViewComponent } from './views/auth-view/register-view/register-view.component';
 import { AdminViewComponent } from './views/app-view/admin-view/admin-view.component';
@@ -18,9 +18,12 @@ import { PromptUniqueBycategoryViewComponent } from './views/app-view/user-view/
 import { OnboardingViewComponent } from './views/app-view/onboarding-view/onboarding-view.component';
 import { onboardingPassedGuard } from './shared/guards/onboarding-passed.guard';
 import { PlansListComponent } from './ui/admin/plans/plans-list/plans-list.component';
+import { inject } from '@angular/core';
+import { AuthService } from './core/adapters/auth.service';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
+
     // Auth Routes
     { path: 'onboarding', component: OnboardingViewComponent },
     {
@@ -47,7 +50,11 @@ export const routes: Routes = [
     // Dashboard USER Routes
     {
         path: 'dashboard',
-        canActivate: [authGuard, roleGuard, onboardingPassedGuard],
+        canActivate: [
+            authGuard,
+            //roleGuard,
+            //onboardingPassedGuard
+        ],
         component: UserViewComponent,
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -57,6 +64,20 @@ export const routes: Routes = [
             { path: 'category/:categoryid/prompt/:promptid', component: PromptUniqueBycategoryViewComponent }
         ]
     },
+    // programmes USER Routes
+    {
+        path: 'programme/:title',
+        //canActivate: [authGuard, roleGuard, onboardingPassedGuard],
+        component: UserViewComponent,
+        children: [
+            { path: '', redirectTo: 'home', pathMatch: 'prefix' },
+            { path: 'home', component: DashboardViewComponent },
+            { path: 'step/:id', component: StepViewComponent },
+            { path: 'step/:stepid/prompt', component: PromptViewComponent },
+            { path: 'category/:categoryid/prompt/:promptid', component: PromptUniqueBycategoryViewComponent }
+        ]
+    },
+
     // Dashboard ADMIN Routes
     {
         path: 'admin',
@@ -69,7 +90,15 @@ export const routes: Routes = [
             { path: 'plans', component: PlansListComponent },
             { path: 'settings', component: SettingsAdminViewComponent },
         ]
-    }
+    },
+
+    {
+        path: '',
+        redirectTo: '/dashboard',
+        pathMatch: 'full'
+    },
+    { path: '**', redirectTo: '/dashboard' }
+
 ];
 
 const routerOptions = {

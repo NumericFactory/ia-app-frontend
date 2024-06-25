@@ -29,7 +29,7 @@
         @for(plan of plans$ | async; track plan.id) {
         @if(plan.isVisible && !plan.isPlan) {
         <li class="nav-item">
-            <a [class.locked]="!isUserHasPlan(plan)" routerLink="/dashboard" class="nav-link active"
+            <a [class.locked]="!isUserHasPlan(plan)" (click)="navigateToProgrammePage(plan)" class="nav-link"
                 routerLinkActive="active" style="position:relative">
                 <i style="opacity: 1;" class="bi bi-mortarboard-fill"></i>
                 <span>{{plan.title}}</span>
@@ -50,17 +50,15 @@
     </ul>
 
 
+    @if(user$ | async; as user) {
     <div class="mb-auto" style="background-color: transparent; margin-top: 8px;">
-        <h2>
-            <!-- <i class="bi bi-card-list"></i> -->
-            <span>Historique</span>
-        </h2>
-        @if(user$ | async; as user) {
+        @if(user.history && user.history.length > 0) {
+        <h2><span>Historique</span></h2>
         <p-accordion [activeIndex]="0">
-            @for(step of userPromptsHistory; track step.id) {
+            @for(step of user.history; track step.step_id) {
             <p-accordionTab [header]="step.step_title">
                 <ul class="nav nav-pills flex-column mb-auto" style="padding: 0; list-style: none;">
-                    @for(prompt of step.prompts; track prompt.id) {
+                    @for(prompt of step.prompts; track prompt.prompt_id) {
                     <li class="nav-item ps-1">
                         <!-- [routerLink]="['/dashboard/step/', prompt.step_id, 'prompt']" -->
                         <a [routerLink]="['/dashboard/step/',step.step_id, 'prompt']" style="position: relative;"
@@ -77,9 +75,8 @@
             }
         </p-accordion>
         }
-
-
     </div>
+    }
 
 
     <hr>

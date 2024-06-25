@@ -16,11 +16,12 @@ import { AppStateService } from '../../../shared/services/app-state.service';
 export class NavbarComponent {
 
   @Input() title!: string;
-  user$ = this.authService.user$;
+  user$ = this.userService.user$;
   isMenuOpen = true;
 
   constructor(
     private authService: AuthGateway,
+    private userService: UserGateway,
     private router: Router,
     private appState: AppStateService
 

@@ -4,8 +4,8 @@
 
     <div class="col-12 col-xl-12 col-xxl-10">
         <div style="border: 0;
-        background: #eff6f8;
-        border-radius: 11px;" class="card">
+            background: #eff6f8;
+            border-radius: 11px;" class="card">
             <div class="card-body px-3">
                 <!-- <h5>Statistiques</h5> -->
                 <h2 class="fs-5 mb-0">Qu'as-tu accompli ?</h2>
@@ -70,7 +70,7 @@
         <div class="row g-4">
             @for(step of steps; track step.id) {
             <div class="col-12 col-md-6 col-xl-4 steps-list">
-                <ui-step-card [step]="step" [userHistory]="user.history?user.history:[]"></ui-step-card>
+                <ui-step-card [step]="step" [userHistory]="user.history?user.history:[]" />
             </div>
             }
             @empty {

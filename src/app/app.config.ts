@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import { provideRouter, withHashLocation, withPreloading } from '@angular/router';
 import { routes } from './app.routes';
 import { AuthGateway } from './core/ports/auth.gateway';
 import { AuthService } from './core/adapters/auth.service';
