@@ -32,32 +32,32 @@ export class AppComponent {
      * If user is authenticated, redirect to dashboard or admin page based on their role
     */
     this.authService.fetchUser()
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        console.log('event', event.url)
-        this.currentUrl = event.url;
-      }
-    });
-
-    (async () => {
-      //load user 
-      //const user = await this.authService.getUser()
-      // redirect user
-
-
-      // this.authService.isAuth$.subscribe((isAuth) => {
-      //   console.log('CURRENT', this.currentUrl)
-      //   if (!isAuth && !this.currentUrl.includes('/auth/register')) this.router.navigate(['/auth/login'])
-      //   else if (!isAuth && this.currentUrl.includes('/auth/register')) {
-      //     // this.router.navigate(['/auth/register'])
+      // this.router.events.subscribe(event => {
+      //   if (event instanceof NavigationStart) {
+      //     console.log('event', event.url)
+      //     this.currentUrl = event.url;
       //   }
-      //   else {
-      //     user?.roles.find(role => role > 1)
-      //       ? this.router.navigate(['/dashboard']) // /admin
-      //       : this.router.navigate(['/dashboard'])
-      //   }
-      // })
-    })();
+      // });
+
+      (async () => {
+        //load user 
+        //const user = await this.authService.getUser()
+        // redirect user
+
+
+        // this.authService.isAuth$.subscribe((isAuth) => {
+        //   console.log('CURRENT', this.currentUrl)
+        //   if (!isAuth && !this.currentUrl.includes('/auth/register')) this.router.navigate(['/auth/login'])
+        //   else if (!isAuth && this.currentUrl.includes('/auth/register')) {
+        //     // this.router.navigate(['/auth/register'])
+        //   }
+        //   else {
+        //     user?.roles.find(role => role > 1)
+        //       ? this.router.navigate(['/dashboard']) // /admin
+        //       : this.router.navigate(['/dashboard'])
+        //   }
+        // })
+      })();
 
 
 

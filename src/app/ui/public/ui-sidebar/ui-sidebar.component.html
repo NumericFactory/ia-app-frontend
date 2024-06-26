@@ -14,7 +14,7 @@
         <li class="nav-item">
             <a routerLink="/dashboard" class="nav-link active" routerLinkActive="active">
                 <i style="color: #fff; opacity: 1;" class="bi bi-house"></i>
-                <span>Dashboard</span>
+                <span style="font-size: 1.01rem;">Home</span>
             </a>
         </li>
     </ul>
@@ -29,7 +29,7 @@
         @for(plan of plans$ | async; track plan.id) {
         @if(plan.isVisible && !plan.isPlan) {
         <li class="nav-item">
-            <a [class.locked]="!isUserHasPlan(plan)" (click)="navigateToProgrammePage(plan)" class="nav-link"
+            <a [class.locked]="!isUserHasPlan(plan)" [routerLink]="['/programme', plan.slug]" class="nav-link"
                 routerLinkActive="active" style="position:relative">
                 <i style="opacity: 1;" class="bi bi-mortarboard-fill"></i>
                 <span>{{plan.title}}</span>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StepGateway } from '../../../../core/ports/step.gateway';
 import { AsyncPipe, JsonPipe, LowerCasePipe, TitleCasePipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UiStepCardComponent } from '../../../../ui/public/ui-step-card/ui-step-card.component';
 import { CategoryModel } from '../../../../core/models/category.model';
 import { Observable, combineLatest } from 'rxjs';
@@ -40,11 +40,15 @@ export class DashboardProgrammeViewComponent {
   visibleStepPromptsTotalCount = 0;
 
   constructor(
+    private route: ActivatedRoute,
     private stepService: StepGateway,
     private userService: UserGateway,
     private planService: PlanGateway,
     private bottomSheet: MatBottomSheet
-  ) { }
+  ) {
+    console.log(this.route.snapshot.params)
+
+  }
 
 
   getPlanImage(plan: PlanModel): string {
@@ -57,16 +61,9 @@ export class DashboardProgrammeViewComponent {
     return Boolean(user.plans.find(userPlan => userPlan.id === plan.id));
   }
 
-  choosePlanProgramme(plan: PlanModel): void {
-    this.stepService.getSteps([plan.slug!]).subscribe();
-  }
 
   ngOnInit(): void {
-    // get plans
-    this.planService.getPlans().subscribe();
-    this.planService.plan$.subscribe(plans => {
-      console.log('plans', plans);
-    });
+
 
     // on all user data loader, do what you want
     this.user$.subscribe(user => {
@@ -79,7 +76,7 @@ export class DashboardProgrammeViewComponent {
       }
     });
 
-    this.stepService.getSteps(['basic']).subscribe();
+    this.stepService.getSteps(['propulser-rev']).subscribe();
     this.stepService.fetchCategories().subscribe();
     this.stepService.getPromptsTotalCount().subscribe();
 

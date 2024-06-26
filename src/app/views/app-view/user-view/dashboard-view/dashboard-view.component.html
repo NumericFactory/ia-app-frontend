@@ -1,13 +1,12 @@
 @if(user$ | async; as user) {
 <div class="row mb-3 justify-content-center">
-    <h1 class="fs-3 mb-3 col-12 col-xl-12 col-xxl-10">Dashboard</h1>
+    <h1 class="fs-3 mb-3 col-12 col-xl-12 col-xxl-10">Accueil</h1>
 
-    <div class="col-12 col-xl-12 col-xxl-10">
+    <!-- <div class="col-12 col-xl-12 col-xxl-10">
         <div style="border: 0;
         background: #eff6f8;
         border-radius: 11px;" class="card">
-            <div class="card-body px-3">
-                <!-- <h5>Statistiques</h5> -->
+            <div class="card-body px-3">        
                 <h2 class="fs-5 mb-0">Qu'as-tu accompli ?</h2>
                 <p class="content-subtitle subtitle-bis m-0">Tes statistiques de croissance réalisée</p>
                 <ui-stat-circle [visibleStepPromptsTotalCount]="visibleStepPromptsTotalCount"
@@ -16,22 +15,22 @@
                     [label]="'Total'" />
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 
 <!-- PLANS CARDS -->
 <div class="row mt-4 mb-2 justify-content-center animate__animated animate__fadeIn">
     <div class="col-12 col-xl-12 col-xxl-10">
-        <h2 class="fs-5 mb-2">Accède à ton programme</h2>
+        <h2 style="color: coral" class="fs-5 mb-2">Accède à ton programme</h2>
         <div class="row g-5">
 
             @if(plans$ | async; as plans) {
             @for(plan of plans; track plan.id) {
             <!-- <pre>{{plan | json}}</pre> -->
             @if(plan.isVisible && !plan.isPlan) {
-            <div class="col-12 col-md-6 col-lg-4" (click)="choosePlanProgramme(plan)">
-                <div style="border-radius: 7px; position: relative;"
+            <div class="col-12 col-md-6 col-lg-4">
+                <div [routerLink]="['/programme', plan.slug]" style="border-radius: 7px; position: relative;"
                     class="card plan-card d-flex justify-content-center border-0">
                     <img style="width: 100%; height: 100%; border-radius: 5px;" [src]="getPlanImage(plan)" alt="">
                     <div class="card-body">
@@ -64,7 +63,7 @@
 <div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
     <div class="col-12 col-xl-12 col-xxl-10">
-        <h1 class="fs-4 mb-0">Plan Basic</h1>
+        <h1 style="opacity:.3;color: #19213b" class="fs-4 mb-0">Plan Basic</h1>
         <h2 class="fs-5 mb-0">Stratégies de croissance</h2>
         <h3 class="fs-6 mb-2 subtitle subtitle-bis">Fondamentaux étape-par-étape pour 10X</h3>
         <div class="row g-4">

@@ -22,10 +22,12 @@ ul.programme {
     background: #19213b;
 
     li.nav-item a {
+
+
         background: #19213b;
 
         i {
-            color: #ff7f50;
+            color: #fff;
         }
 
         span {
@@ -43,6 +45,14 @@ ul.programme {
 
             span {
                 color: #ff7f50;
+            }
+        }
+
+        &.active {
+            background-color: #000324 !important;
+
+            span {
+                color: coral;
             }
         }
     }

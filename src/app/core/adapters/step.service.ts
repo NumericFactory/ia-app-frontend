@@ -32,6 +32,7 @@ export class StepService implements StepGateway {
   constructor() { }
 
   public getSteps(plans?: string[]): Observable<StepModel[]> {
+    console.log('getSteps plans', plans);
     let endpoint = `/steps`;
     if (plans) endpoint = `/steps?plans=${plans.join(',')}`;
     return this.http.get<StepModel[]>(`${this.apiUrl}${endpoint}`).pipe(

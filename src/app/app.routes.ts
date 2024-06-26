@@ -20,6 +20,7 @@ import { onboardingPassedGuard } from './shared/guards/onboarding-passed.guard';
 import { PlansListComponent } from './ui/admin/plans/plans-list/plans-list.component';
 import { inject } from '@angular/core';
 import { AuthService } from './core/adapters/auth.service';
+import { DashboardProgrammeViewComponent } from './views/app-view/user-view/dashboard-programme-view/dashboard-programme-view.component';
 
 export const routes: Routes = [
 
@@ -70,8 +71,8 @@ export const routes: Routes = [
         //canActivate: [authGuard, roleGuard, onboardingPassedGuard],
         component: UserViewComponent,
         children: [
-            { path: '', redirectTo: 'home', pathMatch: 'prefix' },
-            { path: 'home', component: DashboardViewComponent },
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'home', component: DashboardProgrammeViewComponent },
             { path: 'step/:id', component: StepViewComponent },
             { path: 'step/:stepid/prompt', component: PromptViewComponent },
             { path: 'category/:categoryid/prompt/:promptid', component: PromptUniqueBycategoryViewComponent }
