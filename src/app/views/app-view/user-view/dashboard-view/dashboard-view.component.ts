@@ -62,11 +62,7 @@ export class DashboardViewComponent {
   }
 
   ngOnInit(): void {
-    // get plans
-    this.planService.getPlans().subscribe();
-    // this.planService.plan$.subscribe(plans => {
-    //   console.log('plans', plans);
-    // });
+
 
     // on all user data loader, do what you want
     this.user$.subscribe(user => {

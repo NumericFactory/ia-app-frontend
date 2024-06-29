@@ -19,7 +19,9 @@ export class PlanService implements PlanGateway {
   getPlans(): Observable<PlanModel[]> {
     const endpoint = '/plans';
     return this.http.get<PlanModel[]>(`${this.apiUrl}${endpoint}`).pipe(
-      tap((apiResponse: any) => this.planSubject.next(apiResponse as PlanModel[]))
+      tap((apiResponse: any) => {
+        this.planSubject.next(apiResponse as PlanModel[])
+      })
     );
   }
 

@@ -5,7 +5,7 @@ import { UserGateway } from '../../../core/ports/user.gateway';
 import { Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
 import { AppStateService } from '../../../shared/services/app-state.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PlanModel } from '../../../core/models/plan.model';
 import { PlanGateway } from '../../../core/ports/plan.gateway';
 
@@ -21,7 +21,9 @@ import { PlanGateway } from '../../../core/ports/plan.gateway';
 })
 export class UiSidebarComponent {
 
-  plans$: Observable<PlanModel[]> = this.planService.plan$;
+  subscription: Subscription = new Subscription();
+
+  plans!: PlanModel[]
   authUser$ = this.authService.user$;
   user$ = this.userService.user$;
   userPromptsHistory: any[] = [];
@@ -31,11 +33,9 @@ export class UiSidebarComponent {
 
   isMenuOpened$ = this.appState.isMenuOpened$;
 
-
   constructor(
     private authService: AuthGateway,
     private userService: UserGateway,
-    private renderer: Renderer2,
     private appState: AppStateService,
     private planService: PlanGateway,
     private router: Router
@@ -52,9 +52,16 @@ export class UiSidebarComponent {
   }
 
   ngOnInit() {
-    //this.userService.fetchUserPrompts().subscribe();
-    //this.userService.fetchUserPromptsHistoryByStep().subscribe();
+    // get plans
+    this.subscription.add(this.planService.plan$.subscribe((plans) => {
+      if (plans.length === 0) {
+        this.subscription.add(this.planService.getPlans().subscribe());
+      }
+      this.plans = plans
+    }
+    ));
 
+    // get user history
     this.user$.subscribe((user) => {
       if (user && user.history) {
         this.userPromptsHistory = user.history.filter((history: any) => history.is_visible == 1);
@@ -64,14 +71,16 @@ export class UiSidebarComponent {
   }
 
   starMouseOver(iconStar: HTMLElement) {
-
     //this.renderer.removeClass(iconStar, 'bi-star');
     //this.renderer.addClass(iconStar, 'bi-star-fill');
   }
   starMouseOut(iconStar: HTMLElement) {
-
     //this.renderer.removeClass(iconStar, 'bi-star-fill');
     //this.renderer.addClass(iconStar, 'bi-star');
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

@@ -1,10 +1,18 @@
+@if(userDataLoaded){
+<p>LODING ....</p>
+}
+
 @if(user$ | async; as user) {
 <div class="row mb-3 justify-content-center">
-    <h1 class="fs-3 mb-3 col-12 col-xl-12 col-xxl-10">Propulser Révolution</h1>
+    <!-- programme title-->
+    @if(plan) {
+    <h1 class="fs-3 mb-3 col-12 col-xl-12 col-xxl-11">{{plan.title}}</h1>
+    }
 
-    <div class="col-12 col-xl-12 col-xxl-10">
+    <!-- data visualisation / user progress -->
+    <div class="col-12 col-xl-12 col-xxl-11">
         <div style="border: 0;
-            background: #eff6f8;
+            background: #d7ebff;
             border-radius: 11px;" class="card">
             <div class="card-body px-3">
                 <!-- <h5>Statistiques</h5> -->
@@ -20,9 +28,10 @@
 </div>
 
 
+
 <div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
     @if(steps$ | async; as steps) {
-    <div class="col-12 col-xl-12 col-xxl-10">
+    <div class="col-12 col-xl-12 col-xxl-11">
         <h2 class="fs-5 mb-0">Stratégies de croissance</h2>
         <h3 class="fs-6 mb-2 subtitle subtitle-bis">Fondamentaux étape-par-étape pour 10X</h3>
         <div class="row g-4">
@@ -43,7 +52,7 @@
 <div class="row section g-3 justify-content-center animate__animated animate__fadeIn">
 
     @if(categories$ | async; as categories) {
-    <div class="col-12 col-xl-12 col-xxl-10">
+    <div class="col-12 col-xl-12 col-xxl-11">
         <h2 class="fs-4 mb-0">Catalyseur de conversion</h2>
         <h3 class="fs-6 mb-4 subtitle subtitle-bis">Action rapide par thématique business</h3>
         <div class="row g-3">

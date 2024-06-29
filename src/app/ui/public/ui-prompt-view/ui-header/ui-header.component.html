@@ -1,18 +1,14 @@
 @if(step) {
 <!-- 1 HEADER-->
 <div class="row mb-3">
-    <div style="transform: translateY(-10px);" class="d-flex align-items-center">
-        <a class="btn btn-link fs-3 btn-back" (click)="goBack()"><i class="bi bi-arrow-left"></i></a>
-        <nav aria-label="breadcrumb ms-3">
-            <ol class="breadcrumb m-0">
-                <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
-                <li class="breadcrumb-item"><a [routerLink]="['/dashboard/step', step.id]">{{step.subtitle}}</a></li>
-                @if(promptsToDisplay[0]; as prompt) {
-                <li class="breadcrumb-item active" aria-current="page">{{prompt.title}}</li>
-                }
-            </ol>
-        </nav>
-    </div>
+
+    @if(urlNavigateToPromptView[0]==='/dashboard/step') {
+    <ui-breadcrumb-dashboard [step]="step"></ui-breadcrumb-dashboard>
+    }
+    @else if(urlNavigateToPromptView[0].includes('/programme')) {
+    <ui-breadcrumb-programme [step]="step"></ui-breadcrumb-programme>
+    }
+
 
     <div class="col-md-12">
         <div style="background: #19213b;

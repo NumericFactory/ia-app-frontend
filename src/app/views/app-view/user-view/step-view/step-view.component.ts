@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { StepGateway } from '../../../../core/ports/step.gateway';
 import { Observable } from 'rxjs';
 import { FormUISchema, StepModel } from '../../../../core/models/step.model';
@@ -14,11 +14,13 @@ import { QuestionControlService } from '../../../../shared/services/question/que
 import { DynamicFormQuestionComponent } from '../../../../shared/services/question/dynamic-form-question/dynamic-form-question.component';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { AlertService } from '../../../../shared/services/alert.service';
+import { UiBreadcrumbDashboard, UiBreadcrumbProgramme } from '../../../../ui/public/ui-breadcrumb/ui-breadcrumb-dashboard.component';
 
 @Component({
   selector: 'app-step-view',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, JsonPipe, ReactiveFormsModule, NgIf],
+  imports: [AsyncPipe, RouterLink, JsonPipe, ReactiveFormsModule, NgIf,
+    UiBreadcrumbDashboard, UiBreadcrumbProgramme],
   templateUrl: './step-view.component.html',
   styleUrl: './step-view.component.scss'
 })
@@ -28,6 +30,10 @@ export class StepViewComponent {
   stepId!: number;
   step$!: Observable<StepModel | null>;
   step: StepModel | null = null;
+
+  programTitle: string = '';
+
+  urlNavigateToPromptView: any = ['/dashboard/step', 0, 'prompt'];
 
   isFormCompleted: boolean = true;
 
@@ -45,6 +51,12 @@ export class StepViewComponent {
     this.step$ = this.stepService.getStepById(this.stepId);
     this.stepService.getStepById(this.stepId).subscribe((step) => {
       this.step = step;
+    });
+    console.log(this.route.snapshot.pathFromRoot)
+    this.route.parent?.params.subscribe((params: Params) => {
+      (params['title'])
+        ? this.urlNavigateToPromptView = [`/programme/${params['title']}/step`, 0, 'prompt']
+        : this.urlNavigateToPromptView = ['/dashboard/step', 0, 'prompt'];
     });
   }
 
@@ -84,7 +96,8 @@ export class StepViewComponent {
     }
     else {
       // navigate to prompt view
-      this.router.navigate(['/dashboard/step', step.id, 'prompt']);
+      this.urlNavigateToPromptView[1] = step.id;
+      this.router.navigate(this.urlNavigateToPromptView);
 
     }
 

@@ -14,7 +14,7 @@
         <li class="nav-item">
             <a routerLink="/dashboard" class="nav-link active" routerLinkActive="active">
                 <i style="color: #fff; opacity: 1;" class="bi bi-house"></i>
-                <span style="font-size: 1.01rem;">Home</span>
+                <span style="font-size: 1.01rem;">Accueil</span>
             </a>
         </li>
     </ul>
@@ -26,7 +26,7 @@
 
     <ul class="nav nav-pills programme flex-column">
 
-        @for(plan of plans$ | async; track plan.id) {
+        @for(plan of plans; track plan.id) {
         @if(plan.isVisible && !plan.isPlan) {
         <li class="nav-item">
             <a [class.locked]="!isUserHasPlan(plan)" [routerLink]="['/programme', plan.slug]" class="nav-link"
@@ -54,7 +54,8 @@
     <div class="mb-auto" style="background-color: transparent; margin-top: 8px;">
         @if(user.history && user.history.length > 0) {
         <h2><span>Historique</span></h2>
-        <p-accordion [activeIndex]="0">
+        <!-- <p-accordion [activeIndex]="0"> -->
+        <p-accordion>
             @for(step of user.history; track step.step_id) {
             <p-accordionTab [header]="step.step_title">
                 <ul class="nav nav-pills flex-column mb-auto" style="padding: 0; list-style: none;">

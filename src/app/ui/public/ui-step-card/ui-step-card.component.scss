@@ -1,14 +1,15 @@
 .card {
-    background: #f4f5f7;
+    background: #1c294e;
     transition-duration: 0.2s;
     height: 100%;
-    border-right: 5px solid #cccfd3;
-    border-bottom: 5px solid #cccfd3;
+    border-right: 5px solid #6381ad;
+    border-bottom: 5px solid #6381ad;
     border-radius: 5px;
+    color: #e7ecf1;
 }
 
 .card:hover {
-    background: #ffffff;
+    background: #19213b;
     transform: scale(1.03);
     cursor: pointer;
 }
@@ -20,6 +21,7 @@
     display: -webkit-box;
     font-size: 15px;
     margin-bottom: 15px;
+    opacity: .7;
 }
 
 .card-body strong {

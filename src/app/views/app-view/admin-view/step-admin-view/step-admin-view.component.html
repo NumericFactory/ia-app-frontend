@@ -43,7 +43,8 @@
                     @else {
                     @for(userVariables of step.variables; track userVariables) {
                     <span (click)="openDialogUpdateUserFormVariables($event, step)"
-                        class="badge badge-sm text-bg-secondary">{{userVariables.key}}</span>
+                        class="badge badge-sm text-bg-secondary"
+                        style="background: #4f647b !important;">{{userVariables.key}}</span>
                     }
                     }
                 </div>
@@ -57,8 +58,9 @@
                     @else {
                     @for(prompt of step.prompts; track prompt) {
                     <div class="row gx-4">
-                        <span (click)="openDialogUpdatePrompt($event, step)" style="text-wrap: balance;"
-                            class="badge fw-400 text-bg-light my-1 col-8">{{prompt.title}}
+                        <span (click)="openDialogUpdatePrompt($event, step)"
+                            style="text-wrap: balance;background:#1c3856 !important;"
+                            class="badge fw-400 text-bg-dark my-1 col-8">{{prompt.title}}
                         </span>
                         @if(prompt.category) {
                         <span (click)="openSelectCategoryDialog($event, prompt)" style="border-radius: 50px;
@@ -85,7 +87,7 @@
                     @if(step.plans.length) {
                     @for(plan of step.plans; track plan) {
                     <span (click)="openDialogSelectPlan($event, step)"
-                        class="badge badge-sm text-bg-primary">{{plan.title}}</span>
+                        class="badge badge-sm text-center text-bg-primary">{{plan.title}}</span>
                     }
                     }
                     @else {

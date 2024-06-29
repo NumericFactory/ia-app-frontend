@@ -3,7 +3,7 @@ import { StepModel } from '../../../core/models/step.model';
 import { RouterLink } from '@angular/router';
 import { MeterGroupModule } from 'primeng/metergroup';
 import { NgFor } from '@angular/common';
-import { UserHistoryItemModel, UserHistoryModel } from '../../../core/models/user.model';
+import { UserHistoryModel } from '../../../core/models/user.model';
 
 @Component({
   selector: 'ui-step-card',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StepGateway } from '../../../../core/ports/step.gateway';
 import { AsyncPipe, JsonPipe, LowerCasePipe, TitleCasePipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 import { UiStepCardComponent } from '../../../../ui/public/ui-step-card/ui-step-card.component';
 import { CategoryModel } from '../../../../core/models/category.model';
 import { Observable, combineLatest } from 'rxjs';
@@ -12,6 +12,7 @@ import { StatCircleComponent } from '../../../../ui/public/ui-stats/ui-stat-circ
 import { UiCategoryCardComponent } from '../../../../ui/public/ui-category-card/ui-category-card.component';
 import { PlanGateway } from '../../../../core/ports/plan.gateway';
 import { PlanModel } from '../../../../core/models/plan.model';
+import { AppStateService } from '../../../../shared/services/app-state.service';
 
 @Component({
   selector: 'app-dashboard-programme-view',
@@ -26,10 +27,17 @@ import { PlanModel } from '../../../../core/models/plan.model';
 })
 export class DashboardProgrammeViewComponent {
 
+  // get plans
   plans$: Observable<PlanModel[]> = this.planService.plan$;
+  // get the current plan
+  plan!: PlanModel;
+  // get steps
   steps$ = this.stepService.steps$;
+  // get categories
   categories$: Observable<CategoryModel[]> = this.stepService.categories$;
+  // get user
   user$ = this.userService.user$;
+  // check if user data is loaded
   userDataLoaded: boolean = false;
 
   // count the total number of prompts in the system
@@ -44,15 +52,58 @@ export class DashboardProgrammeViewComponent {
     private stepService: StepGateway,
     private userService: UserGateway,
     private planService: PlanGateway,
-    private bottomSheet: MatBottomSheet
-  ) {
-    console.log(this.route.snapshot.params)
-
-  }
+    private bottomSheet: MatBottomSheet,
+    private appState: AppStateService
+  ) { }
 
 
-  getPlanImage(plan: PlanModel): string {
-    return plan.imageUrl || 'https://fakeimg.pl/650x300/?text=image&font=lobster';
+  ngOnInit(): void {
+    // load data after at loaded 
+    combineLatest([this.route.parent!.params, this.user$])
+      .subscribe(([params, user]) => {
+        let programmeSlug = params['title'];
+        // on all user data loader, do what you want
+        if (user && params['title']) {
+          this.userDataLoaded = false;
+          // load data after page loaded when user nav to the programme
+          this.stepService.getSteps([programmeSlug]).subscribe();
+          this.stepService.fetchCategories().subscribe();
+          this.stepService.getPromptsTotalCount().subscribe();
+          this.plan = user?.plans.find(plan => plan.slug === programmeSlug);
+          this.appState.setProgrammeInView(this.plan);
+        }
+      });
+
+    // stats on the number of prompts completed and visible
+    combineLatest([this.user$, this.steps$]).subscribe(([user, steps]) => {
+      this.completedStepPromptsTotalCount = 0;
+      this.visibleStepPromptsTotalCount = 0;
+      // 1 count the number of prompts that have been completed 
+      // for each step in the user's history
+      if (user?.history?.length) {
+        user?.history.forEach((story: any) => {
+          if (story.is_visible)
+            this.completedStepPromptsTotalCount += story.prompts.length;
+        });
+      }
+      // 2 count the number of all prompts each visible step
+      steps.forEach((step) => {
+        if (step.isVisible)
+          this.visibleStepPromptsTotalCount += step.prompts.length;
+      });
+    });
+
+  } // end of ngOnInit
+
+
+  openDialogPromptsByCategory(event: Event, category: CategoryModel): void {
+    this.bottomSheet.open(UiCategoryPromptsListComponent, {
+      // disableClose: true,
+      // maxHeight: '85%',
+      closeOnNavigation: true,
+      panelClass: 'bottomsheet-user-var',
+      data: category,
+    });
   }
 
   isUserHasPlan(plan: PlanModel): boolean {
@@ -61,64 +112,12 @@ export class DashboardProgrammeViewComponent {
     return Boolean(user.plans.find(userPlan => userPlan.id === plan.id));
   }
 
-
-  ngOnInit(): void {
-
-
-    // on all user data loader, do what you want
-    this.user$.subscribe(user => {
-      if ((user && !user.settings) || !user?.settings?.length) {
-        if (this.userDataLoaded === false) {
-          this.userDataLoaded = true;
-          // do what you want - user data is loaded
-          console.log('all user data loaded', user);
-        }
-      }
-    });
-
-    this.stepService.getSteps(['propulser-rev']).subscribe();
-    this.stepService.fetchCategories().subscribe();
-    this.stepService.getPromptsTotalCount().subscribe();
-
-    combineLatest([this.user$, this.steps$]).subscribe(([user, steps]) => {
-      this.completedStepPromptsTotalCount = 0;
-      this.visibleStepPromptsTotalCount = 0;
-      // 1 count the number of prompts that have been completed for each step in the user's history
-      if (user?.history?.length) {
-        user?.history.forEach(((story: any) => {
-          if (story.is_visible) {
-            this.completedStepPromptsTotalCount += story.prompts.length;
-          }
-        })) // end of forEach
-      }
-      // 2 count the number of all prompts each visible step
-      steps.forEach((step) => {
-        if (step.isVisible) {
-          // console.log('step', step);  // step object
-          this.visibleStepPromptsTotalCount += step.prompts.length;
-        }
-      });
-      // this.openDialogUserSettings(user!)
-    });
-
+  getPlanImage(plan: PlanModel): string {
+    return plan.imageUrl || 'https://fakeimg.pl/650x300/?text=image&font=lobster';
   }
-
 
   pluralize(count: number, word: string): string {
     return count <= 1 ? word : word + 's';
-  }
-
-  openDialogPromptsByCategory(event: Event, category: CategoryModel): void {
-    this.bottomSheet.open(UiCategoryPromptsListComponent, {
-      //disableClose: true,
-      // width: 'auto',
-      // minWidth: '750px',
-      // maxWidth: '100%',
-      // maxHeight: '85%',
-      closeOnNavigation: true,
-      panelClass: 'bottomsheet-user-var',
-      data: category,
-    });
   }
 
 

@@ -1,17 +1,12 @@
 @if(step$ | async; as step) {
 
 <div class="row mb-3 justify-content-center">
-
-    <div style="transform: translateY(-10px);" class="d-flex align-items-center col-12 col-xl-10">
-        <a class="btn btn-link fs-3 btn-back" routerLink="/dashboard"><i class="bi bi-arrow-left"></i></a>
-        <nav aria-label="breadcrumb ms-3">
-            <ol class="breadcrumb m-0">
-                <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{step.subtitle}}</li>
-            </ol>
-        </nav>
-    </div>
-
+    @if(urlNavigateToPromptView[0]==='/dashboard/step') {
+    <ui-breadcrumb-dashboard [step]="step"></ui-breadcrumb-dashboard>
+    }
+    @else if(urlNavigateToPromptView[0].includes('/programme')) {
+    <ui-breadcrumb-programme [step]="step"></ui-breadcrumb-programme>
+    }
 
 
     <div class="col-12 col-xl-10">
@@ -20,12 +15,12 @@
         border-radius: 9px;" class="card">
             <div class="card-body" style="color: aliceblue">
                 <h2 class="fs-4">{{step.subtitle}}</h2>
-                <p class="fs-6 badge badge-success" style="background: #40619f;">
+                <p class="badge badge-success" style="background: #40619f;font-size: .85rem;">
                     {{step.prompts.length}} prompts
                 </p>
                 @if(step.desc) {
                 <hr style="opacity: .1">
-                <p [innerHTML]="step.desc"></p>
+                <p style="opacity: .8;" [innerHTML]="step.desc"></p>
                 }
             </div>
             <!-- alert si user n'a pas renseigner ses variables -->

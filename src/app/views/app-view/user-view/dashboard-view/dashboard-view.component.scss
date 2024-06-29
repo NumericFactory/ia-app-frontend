@@ -15,8 +15,15 @@
 .plan-card {
     cursor: pointer;
     transition-duration: .2s;
-    background: #19213b;
-    color: antiquewhite;
+    background: #1c3070;
+    color: rgb(231, 229, 227);
+    height: 100%;
+    border-radius: 0 !important;
+
+    img {
+        width: 100%;
+        border-radius: 0;
+    }
 }
 
 .plan-card:hover {
