@@ -89,8 +89,9 @@ export class UserService implements UserGateway {
     const cleanPayload = { ...payloadAIResponse.prompt };
     return this.http.post(`${this.apiUrl}${endpoint}`, cleanPayload).pipe(
       tap((response: any) => {
-
+        console.log('response', response);
         const user = this.userSubject.getValue();
+        console.log('user', user);
         if (user && response.data) {
           if (!user.prompts) {
             user.prompts = [];
@@ -101,7 +102,9 @@ export class UserService implements UserGateway {
             foundPromptInUserData = { ...response.data };
           }
           else {
+            console.log('ancien user p', user.prompts);
             user.prompts = [{ ...response.data }, ...user.prompts];
+            console.log('nouveau user p', user.prompts);
           }
           this.userSubject.next(user);
           // set user.history

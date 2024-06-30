@@ -15,6 +15,7 @@ import { UserModel } from '../../../../core/models/user.model';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { UserVariablesDialog } from '../step-view/step-view.component';
 import { Dialog } from '@angular/cdk/dialog';
+import { AuthService } from '../../../../core/adapters/auth.service';
 
 interface IAResponseModel {
   createdAt: string;
@@ -42,6 +43,7 @@ interface ConversationModel {
 })
 export class PromptViewComponent {
 
+  firstLoad: boolean = true;
   user$ = this.userService.user$;
   user!: UserModel;
   // current stepId and promptId (from url)
@@ -75,61 +77,99 @@ export class PromptViewComponent {
   ngOnInit(): void {
     // get user data from database
     this.user = this.userService.getUserFromSubject() || {} as UserModel;
-    console.log('this.user', this.user);
+    this.stepId = this.route.snapshot.params['stepid'];
+    const stepAndUserPromptsAiResponses$ = combineLatest([
+      this.user$,
+      this.stepService.steps$,
+      this.userService.fetchUserPrompts()
+    ]);
+
+    stepAndUserPromptsAiResponses$.subscribe(([user, steps, promptsAiResponses]) => {
+      if (user && this.firstLoad) {
+        this.user = user;
+        if (steps.length === 0) { this.stepService.getSteps().subscribe(); }
+        if (steps.length > 0) {
+          this.step = steps.find((step: StepModel) => step.id == this.stepId)!
+          this.promptsList = this.step.prompts;
+          // set conversationSate.items with user question and IA response
+          this.conversationSate.items = this.promptsList.map((prompt) => {
+            return {
+              promptId: prompt.id,
+              userQuestion: prompt,
+              iaResponse: {
+                createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
+                text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
+              },
+              checked: false,
+              nextItem: false
+            }
+          });
+          console.log('this.conversationSate.items', this.conversationSate.items);
+          this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+            item.checked = item.iaResponse.text.trim() === '' ? false : true;
+            item.nextItem = false;
+          });
+          this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+            if (item.checked) {
+              this.countPromptsChecked++
+            }
+          });
+          if (!this.conversationHasIAResponse()) {
+            this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
+          }
+          this.setStateOfPrompts();
+        } // end if step
+      } // end if user
+    });
 
     // get step and user prompts data from database
     // and set this.step, this.promptsList, and this.conversationSate.items
 
 
-    this.route.paramMap.subscribe((params: any) => {
-      // get step id from url
-      this.stepId = params.params['stepid'];
-      console.log('this.stepId', this.stepId);
-      // get step and user prompts data from database
-      // and set this.step, this.promptsList, and this.conversationSate.items
-      const stepAndUserPromptsAiResponses$ = combineLatest([
-        this.user$,
-        this.stepService.getStepById(this.stepId),
-        this.userService.fetchUserPrompts()
-      ]);
-      stepAndUserPromptsAiResponses$.subscribe(([user, step, promptsAiResponses]) => {
-        if (user) {
-          this.user = user;
-          if (step) {
-            //console.log('step', step);
-            this.step = step
-            this.promptsList = step.prompts;
-            // set conversationSate.items with user question and IA response
-            this.conversationSate.items = this.promptsList.map((prompt) => {
-              return {
-                promptId: prompt.id,
-                userQuestion: prompt,
-                iaResponse: {
-                  createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
-                  text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
-                },
-                checked: false,
-                nextItem: false
-              }
-            });
-            this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
-              item.checked = item.iaResponse.text.trim() === '' ? false : true;
-              item.nextItem = false;
-            });
-            this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
-              if (item.checked) {
-                this.countPromptsChecked++
-              }
-            });
-            if (!this.conversationHasIAResponse()) {
-              this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
-            }
-            this.setStateOfPrompts();
-          } // end if step
-        } // end if user
-      });
+    // this.route.paramMap.subscribe((params: any) => {
+    //   // get step id from url
+    //   this.stepId = params.params['stepid'];
+    //   console.log('this.stepId', this.stepId);
+    //   // get step and user prompts data from database
+    //   // and set this.step, this.promptsList, and this.conversationSate.items
+    //   stepAndUserPromptsAiResponses$.subscribe(([user, steps, promptsAiResponses]) => {
+    //     if (user) {
+    //       this.user = user;
+    //       if (steps) {
+    //         //console.log('step', step);
+    //         this.step = steps.find((step: StepModel) => step.id === this.stepId)!
+    //         this.promptsList = this.step.prompts;
+    //         // set conversationSate.items with user question and IA response
+    //         this.conversationSate.items = this.promptsList.map((prompt) => {
+    //           return {
+    //             promptId: prompt.id,
+    //             userQuestion: prompt,
+    //             iaResponse: {
+    //               createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
+    //               text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
+    //             },
+    //             checked: false,
+    //             nextItem: false
+    //           }
+    //         });
+    //         this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+    //           item.checked = item.iaResponse.text.trim() === '' ? false : true;
+    //           item.nextItem = false;
+    //         });
+    //         this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+    //           if (item.checked) {
+    //             this.countPromptsChecked++
+    //           }
+    //         });
+    //         if (!this.conversationHasIAResponse()) {
+    //           this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
+    //         }
+    //         this.setStateOfPrompts();
+    //       } // end if step
+    //     } // end if user
+    //   });
 
-    });
+    // });
 
     // get current url fragement for routing
     this.route.fragment.subscribe((fragment: string | null) => {
@@ -143,7 +183,7 @@ export class PromptViewComponent {
    * @param prompt 
    */
   selectPrompt(prompt: PromptModel): void {
-    console.log('selectPrompt', prompt);
+    this.firstLoad = false;
     this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = true;
     this.selectedPrompt = prompt;
     // build secret prompt with user variables
@@ -154,9 +194,12 @@ export class PromptViewComponent {
       {
         next: (response: any) => {
           this.loadingGeneral = false;
+          console.log('response ASK IA', response.data.content[0].text);
           // updtate conversationSate with IA response
-          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.content[0].text;
           this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
+          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.content[0].text;
+          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.checked = true;
+
           // save the IA response in the database
           const payloadAIResponse = {
             ia_response: response.data.content[0].text,
@@ -168,17 +211,37 @@ export class PromptViewComponent {
           this.userService.postUserPromptAIResponse(this.step.id, prompt.id, { prompt: { ...payloadAIResponse } })
             .subscribe(
               (response: any) => {
+                console.log('response INSCRIPT DB IA', response);
+                console.log('payloadAIResponse', payloadAIResponse);
+                //this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.ia_response;
                 this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.createdAt = response.data.created_at;
+                // //this.setStateOfPrompts();
+                // set conversationSate.items with user question and IA response
+
+                // this.conversationSate.items = this.promptsList.map((prompt) => {
+                //   if(prompt.id === response.data.id) {
+                //     return {
+                //       promptId: prompt.id,
+                //       userQuestion: prompt,
+                //       iaResponse: {
+                //         createdAt: response.data.created_at,
+                //         text: response.data.ia_response
+                //       },
+                //       checked: response.data.ia_response == '' ? false : true,
+                //       nextItem: false
+                //     }
+                //   }
+                // });
                 this.setStateOfPrompts();
 
               });
-          this.countPromptsChecked++;
+          //this.countPromptsChecked++;
         },
         // handle error
-        error: (error) => {
-          this.loadingGeneral = false;
-          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
-        }
+        // error: (error) => {
+        //   this.loadingGeneral = false;
+        //   this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
+        // }
       }
     );
   }
@@ -188,25 +251,27 @@ export class PromptViewComponent {
     return Boolean(this.conversationSate.items.find((item) => item.iaResponse.text !== ''));
   }
 
-  isThisPromptHasIAResponse(prompt: PromptModel): boolean {
-    return Boolean(this.conversationSate.items.find((item) => item.promptId === prompt.id && item.iaResponse.text !== ''));
-  }
+  // isThisPromptHasIAResponse(prompt: PromptModel): boolean {
+  //   return Boolean(this.conversationSate.items.find((item) => item.promptId === prompt.id && item.iaResponse.text !== ''));
+  // }
 
   setStateOfPrompts(): void {
     let nextIndexTodiscover = this.conversationSate.items.findIndex((item) => item.iaResponse.text === '');
     if (nextIndexTodiscover === -1) return // all prompts have been discovered
     this.conversationSate.items[nextIndexTodiscover].checked = true;
     this.conversationSate.items.forEach((item, index) => {
-      this.conversationSate.items[index].nextItem = false;
+      //console.log('index', index);
+      //console.log('nextIndexTodiscover', nextIndexTodiscover);
+      //this.conversationSate.items[index].nextItem = false;
       if (index < nextIndexTodiscover) {
         item.checked = true;
 
       }
       if (index >= nextIndexTodiscover) {
         item.checked = false;
+        this.conversationSate.items[nextIndexTodiscover].nextItem = true;
       }
     });
-    this.conversationSate.items[nextIndexTodiscover].nextItem = true;
   }
 
 
@@ -254,7 +319,6 @@ export class PromptViewComponent {
     if (userSettings) {
       userVariablesAndSettings = [...userVariables, ...userSettings]
     }
-    console.log('userVariablesAndSettings', userVariablesAndSettings);
     // replace variables in prompt
     if (newPrompt && userVariablesAndSettings) {
       userVariablesAndSettings.forEach((variable: any) => {
