@@ -17,7 +17,7 @@ export const hasPlanGuard: CanActivateFn = (route, state) => {
   }
   const plan = user?.plans.find((plan: any) => plan.slug === route.paramMap.get('title'));
   if (!plan) {
-    alertService.show(`Vous n'avez pas accès à ce programme`, 'info', 3000, 'center')
+    alertService.show(`🔒 Vous n'avez pas accès à ce programme`, 'info', 3000, 'center')
     hasPlan = false
   }
   else {
