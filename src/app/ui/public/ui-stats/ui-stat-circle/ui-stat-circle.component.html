@@ -8,8 +8,9 @@
                     <p class="card-title">Total</p>
                 </div>
                 <div class="card-body">
-                    <p-knob valueTemplate="{value}/{{max}}" [size]="115" [max]="max" [(ngModel)]="value"
-                        [strokeWidth]="5" [readonly]="true" valueColor="#ff7f50" rangeColor="LightGray" />
+                    <p-knob valueTemplate="{value}/{{visibleStepPromptsTotalCount}}" [size]="115"
+                        [max]="visibleStepPromptsTotalCount" [(ngModel)]="value" [strokeWidth]="5" [readonly]="true"
+                        valueColor="#ff7f50" rangeColor="#b8c4d4" />
                 </div>
             </div>
 
@@ -22,7 +23,7 @@
                 </div>
                 <div class="card-body">
                     <p-knob [size]="65" [(ngModel)]="category.count_done_prompts" [max]="category.count_prompts"
-                        [readonly]="true" valueColor="#39385c" rangeColor="#d3d3d3" />
+                        [readonly]="true" valueColor="#39385c" rangeColor="#b8c4d4" />
                 </div>
             </div>
             }

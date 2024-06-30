@@ -104,7 +104,7 @@ export class PromptViewComponent {
               nextItem: false
             }
           });
-          console.log('this.conversationSate.items', this.conversationSate.items);
+
           this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
             item.checked = item.iaResponse.text.trim() === '' ? false : true;
             item.nextItem = false;
@@ -194,7 +194,6 @@ export class PromptViewComponent {
       {
         next: (response: any) => {
           this.loadingGeneral = false;
-          console.log('response ASK IA', response.data.content[0].text);
           // updtate conversationSate with IA response
           this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
           this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.content[0].text;
@@ -211,37 +210,18 @@ export class PromptViewComponent {
           this.userService.postUserPromptAIResponse(this.step.id, prompt.id, { prompt: { ...payloadAIResponse } })
             .subscribe(
               (response: any) => {
-                console.log('response INSCRIPT DB IA', response);
-                console.log('payloadAIResponse', payloadAIResponse);
                 //this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.text = response.data.ia_response;
                 this.conversationSate.items.find((item) => item.promptId === prompt.id)!.iaResponse.createdAt = response.data.created_at;
-                // //this.setStateOfPrompts();
-                // set conversationSate.items with user question and IA response
-
-                // this.conversationSate.items = this.promptsList.map((prompt) => {
-                //   if(prompt.id === response.data.id) {
-                //     return {
-                //       promptId: prompt.id,
-                //       userQuestion: prompt,
-                //       iaResponse: {
-                //         createdAt: response.data.created_at,
-                //         text: response.data.ia_response
-                //       },
-                //       checked: response.data.ia_response == '' ? false : true,
-                //       nextItem: false
-                //     }
-                //   }
-                // });
                 this.setStateOfPrompts();
 
               });
           //this.countPromptsChecked++;
         },
-        // handle error
-        // error: (error) => {
-        //   this.loadingGeneral = false;
-        //   this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
-        // }
+        //handle error
+        error: (error) => {
+          this.loadingGeneral = false;
+          this.conversationSate.items.find((item) => item.promptId === prompt.id)!.isLoadingResponse = false;
+        }
       }
     );
   }
@@ -260,9 +240,7 @@ export class PromptViewComponent {
     if (nextIndexTodiscover === -1) return // all prompts have been discovered
     this.conversationSate.items[nextIndexTodiscover].checked = true;
     this.conversationSate.items.forEach((item, index) => {
-      //console.log('index', index);
-      //console.log('nextIndexTodiscover', nextIndexTodiscover);
-      //this.conversationSate.items[index].nextItem = false;
+
       if (index < nextIndexTodiscover) {
         item.checked = true;
 

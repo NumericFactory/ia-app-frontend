@@ -19,10 +19,10 @@ export class StatCircleComponent {
 
   @Input() label: string = 'Label';
   @Input() value: number = 50;
-  @Input() max: number = 27;
+  @Input() max: number = 0;
   @Input() min?: number = 0;
   @Input() completedStepPromptsTotalCount: number = 0;
-  @Input() visibleStepPromptsTotalCount: number = 0;
+  @Input() visibleStepPromptsTotalCount!: number;
 
   user$ = this.userService.user$;
   categories$ = this.stepService.categories$;
@@ -34,7 +34,7 @@ export class StatCircleComponent {
 
   ngOnInit(): void {
 
-
+    console.log('StatCircleComponent ngOnInit', this.completedStepPromptsTotalCount);
     combineLatest([this.user$, this.categories$]).subscribe(([user, categories]) => {
       const updatedCategories = categories.map(category => { return { ...category, count_done_prompts: 0 } });
       user?.prompts?.forEach(prompt => {

@@ -78,26 +78,43 @@ export class DashboardProgrammeViewComponent {
 
     // stats on the number of prompts completed and visible
     this.subscription.add(combineLatest([this.user$, this.steps$]).subscribe(([user, steps]) => {
+      this.userDataLoaded = false;
+      let stepPrompts: any = [];
+      //console.log('user', user);
+      console.log('steps', steps);
       this.completedStepPromptsTotalCount = 0;
       this.visibleStepPromptsTotalCount = 0;
       // 1 count the number of prompts that have been completed 
       // for each step in the user's history
-      if (user?.history?.length) {
-        user?.history.forEach((story: any) => {
-          if (story.is_visible)
-            this.completedStepPromptsTotalCount += story.prompts.length;
-        });
-      }
-      // 2 count the number of all prompts each visible step
-      steps.forEach((step) => {
-        if (step.isVisible)
-          this.visibleStepPromptsTotalCount += step.prompts.length;
-      });
-    })
-    );
+      if (steps.length) {
+        // 2 count the number of all prompts in step
+        steps.forEach((step) => {
+          stepPrompts.push(step.prompts);
+        }); // end of steps.forEach
+
+        this.visibleStepPromptsTotalCount = stepPrompts.flat(2).length;
+        console.log('user.prompts', user?.prompts);
+        console.log('step.prompts', stepPrompts.flat(2));
+
+        // 3 count the number of prompts that have been completed
+
+        this.completedStepPromptsTotalCount = this.countMatchingIds(user?.prompts, stepPrompts.flat(2));
+        console.log('completedStepPromptsTotalCount', this.completedStepPromptsTotalCount);
+        this.userDataLoaded = true;
+
+
+
+      } // end of if (steps.length)
+    })); // end of combineLatest
 
   } // end of ngOnInit
 
+  // Fonction pour vérifier et compter les entrées avec le même id
+  countMatchingIds(arrA: any, arrB: any) {
+    const idsB = arrB.map((item: any) => item.id); // Extraire les ids du tableau B
+    const matchingEntries = arrA.filter((item: any) => idsB.includes(item.id)); // Filtrer les entrées de A qui ont le même id dans B
+    return matchingEntries.length; // Retourner le nombre d'entrées correspondantes
+  }
 
   openDialogPromptsByCategory(event: Event, category: CategoryModel): void {
     this.bottomSheet.open(UiCategoryPromptsListComponent, {
