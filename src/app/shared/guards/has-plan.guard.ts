@@ -1,25 +1,29 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { UserGateway } from '../../core/ports/user.gateway';
 import { AlertService } from '../services/alert.service';
 
 
 export const hasPlanGuard: CanActivateFn = (route, state) => {
-  let hasPlan: boolean = false;
+  if (!route.url[0].path.includes('programme')) return true;
+  let hasPlan: boolean = true;
   const alertService = inject(AlertService);
   const userService = inject(UserGateway);
-  userService.user$.subscribe((user: any) => {
-    if (user) {
-      const plan = user?.plans.find((plan: any) => plan.slug === route.paramMap.get('title'));
-      if (!plan) {
-        alertService.show(`Vous n'avez pas accès à ce programme`)
-        hasPlan = false
-      }
-      else {
-        hasPlan = true;
-      }
-    }
-  });
+  const router = inject(Router);
+  const user = userService.getUserFromSubject();
+  if (!user) {
+    router.navigate(['/']);
+    return false;
+  }
+  const plan = user?.plans.find((plan: any) => plan.slug === route.paramMap.get('title'));
+  if (!plan) {
+    alertService.show(`Vous n'avez pas accès à ce programme`, 'info', 3000, 'center')
+    hasPlan = false
+  }
+  else {
+    hasPlan = true;
+  }
+
   return hasPlan;
 
 };

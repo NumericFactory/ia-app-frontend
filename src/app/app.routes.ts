@@ -49,6 +49,26 @@ export const routes: Routes = [
         ]
     },
 
+    // programmes USER Routes
+    {
+        path: 'programme/:title',
+        canActivate: [authGuard, hasPlanGuard],
+        component: UserViewComponent,
+        children: [
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            {
+                path: 'home',
+                loadComponent: () => import('./views/app-view/user-view/dashboard-programme-view/dashboard-programme-view.component')
+                    .then(m => m.DashboardProgrammeViewComponent),
+                pathMatch: 'full'
+            },
+            { path: 'step/:id', component: StepViewComponent },
+            { path: 'step/:stepid/prompt', component: PromptViewComponent },
+            { path: 'category/:categoryid/prompt/:promptid', component: PromptUniqueBycategoryViewComponent }
+        ]
+    },
+
+
     // Dashboard USER Routes
     {
         path: 'dashboard',
@@ -66,19 +86,9 @@ export const routes: Routes = [
             { path: 'category/:categoryid/prompt/:promptid', component: PromptUniqueBycategoryViewComponent }
         ]
     },
-    // programmes USER Routes
-    {
-        path: 'programme/:title',
-        canActivate: [authGuard, hasPlanGuard],
-        component: UserViewComponent,
-        children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: DashboardProgrammeViewComponent },
-            { path: 'step/:id', component: StepViewComponent },
-            { path: 'step/:stepid/prompt', component: PromptViewComponent },
-            { path: 'category/:categoryid/prompt/:promptid', component: PromptUniqueBycategoryViewComponent }
-        ]
-    },
+
+
+
 
     // Dashboard ADMIN Routes
     {
