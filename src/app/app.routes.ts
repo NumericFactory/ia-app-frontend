@@ -21,6 +21,7 @@ import { PlansListComponent } from './ui/admin/plans/plans-list/plans-list.compo
 import { inject } from '@angular/core';
 import { AuthService } from './core/adapters/auth.service';
 import { DashboardProgrammeViewComponent } from './views/app-view/user-view/dashboard-programme-view/dashboard-programme-view.component';
+import { hasPlanGuard } from './shared/guards/has-plan.guard';
 
 export const routes: Routes = [
 
@@ -68,7 +69,7 @@ export const routes: Routes = [
     // programmes USER Routes
     {
         path: 'programme/:title',
-        //canActivate: [authGuard, roleGuard, onboardingPassedGuard],
+        canActivate: [authGuard, hasPlanGuard],
         component: UserViewComponent,
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },

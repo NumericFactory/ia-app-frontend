@@ -1,7 +1,7 @@
 <div [routerLink]="['../step', step.id]" class="card">
     <div style="position:relative;min-height: 231px;" class="card-body">
 
-        <p>{{step.title}}</p>
+        <p style="font-size: .9rem;">{{step.title}}</p>
         <h6>{{step.subtitle}}</h6>
         <div class="step-desc" [innerHTML]="step.desc"></div>
         <!-- <pre>2/{{step.prompts.length}} prompts</pre> -->

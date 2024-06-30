@@ -2,7 +2,6 @@ import { Component, Input, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { StepModel } from '../../../core/models/step.model';
 import { PlanModel } from '../../../core/models/plan.model';
-import { PlanService } from '../../../core/adapters/plan.service';
 import { Observable } from 'rxjs';
 import { AppStateService } from '../../../shared/services/app-state.service';
 import { AsyncPipe } from '@angular/common';
