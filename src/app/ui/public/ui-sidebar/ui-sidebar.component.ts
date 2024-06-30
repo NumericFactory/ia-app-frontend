@@ -5,9 +5,10 @@ import { UserGateway } from '../../../core/ports/user.gateway';
 import { Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
 import { AppStateService } from '../../../shared/services/app-state.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { PlanModel } from '../../../core/models/plan.model';
 import { PlanGateway } from '../../../core/ports/plan.gateway';
+import { StepGateway } from '../../../core/ports/step.gateway';
 
 @Component({
   selector: 'ui-sidebar',
@@ -23,6 +24,8 @@ export class UiSidebarComponent {
 
   subscription: Subscription = new Subscription();
 
+  userHistory: any[] = [];
+
   plans!: PlanModel[]
   authUser$ = this.authService.user$;
   user$ = this.userService.user$;
@@ -37,6 +40,7 @@ export class UiSidebarComponent {
     private authService: AuthGateway,
     private userService: UserGateway,
     private appState: AppStateService,
+    private stepService: StepGateway,
     private planService: PlanGateway,
     private router: Router
   ) { }
@@ -61,13 +65,22 @@ export class UiSidebarComponent {
     }
     ));
 
-    // get user history
-    this.user$.subscribe((user) => {
+    // get user history for this Plan in view by user (and filter visible prompts)
+    this.subscription.add(combineLatest([this.user$, this.stepService.steps$]).subscribe(([user, steps]) => {
       if (user && user.history) {
+        this.userHistory = user.history;
         this.userPromptsHistory = user.history.filter((history: any) => history.is_visible == 1);
         this.userPromptsHistoryInvisible = user.history.filter((history: any) => history.is_visible == 0);
+        // filter by plan in view
+        this.userPromptsHistory = this.userPromptsHistory.filter((history: any) => {
+          const step = steps.find((step: any) => step.id === history.step_id);
+          console.log('step', step);
+          return Boolean(step);
+        });
       }
-    });
+    })
+    );
+
   }
 
   starMouseOver(iconStar: HTMLElement) {

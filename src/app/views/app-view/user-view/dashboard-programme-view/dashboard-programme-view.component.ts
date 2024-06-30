@@ -4,7 +4,7 @@ import { AsyncPipe, JsonPipe, LowerCasePipe, TitleCasePipe } from '@angular/comm
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
 import { UiStepCardComponent } from '../../../../ui/public/ui-step-card/ui-step-card.component';
 import { CategoryModel } from '../../../../core/models/category.model';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { UserGateway } from '../../../../core/ports/user.gateway';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UiCategoryPromptsListComponent } from '../../../../ui/public/ui-category-prompts-list/ui-category-prompts-list.component';
@@ -27,6 +27,7 @@ import { AppStateService } from '../../../../shared/services/app-state.service';
 })
 export class DashboardProgrammeViewComponent {
 
+  subscription: Subscription = new Subscription();
   // get plans
   plans$: Observable<PlanModel[]> = this.planService.plan$;
   // get the current plan
@@ -59,7 +60,7 @@ export class DashboardProgrammeViewComponent {
 
   ngOnInit(): void {
     // load data after at loaded 
-    combineLatest([this.route.parent!.params, this.user$])
+    this.subscription.add(combineLatest([this.route.parent!.params, this.user$])
       .subscribe(([params, user]) => {
         let programmeSlug = params['title'];
         // on all user data loader, do what you want
@@ -72,10 +73,11 @@ export class DashboardProgrammeViewComponent {
           this.plan = user?.plans.find(plan => plan.slug === programmeSlug);
           this.appState.setProgrammeInView(this.plan);
         }
-      });
+      })
+    );
 
     // stats on the number of prompts completed and visible
-    combineLatest([this.user$, this.steps$]).subscribe(([user, steps]) => {
+    this.subscription.add(combineLatest([this.user$, this.steps$]).subscribe(([user, steps]) => {
       this.completedStepPromptsTotalCount = 0;
       this.visibleStepPromptsTotalCount = 0;
       // 1 count the number of prompts that have been completed 
@@ -91,7 +93,8 @@ export class DashboardProgrammeViewComponent {
         if (step.isVisible)
           this.visibleStepPromptsTotalCount += step.prompts.length;
       });
-    });
+    })
+    );
 
   } // end of ngOnInit
 
@@ -118,6 +121,10 @@ export class DashboardProgrammeViewComponent {
 
   pluralize(count: number, word: string): string {
     return count <= 1 ? word : word + 's';
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 

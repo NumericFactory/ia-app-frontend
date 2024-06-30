@@ -44,6 +44,10 @@ export class StepService implements StepGateway {
   public getStepById(id: number): Observable<StepModel | null> {
     id = Number(id);
     return this.steps$.pipe(
+      tap((steps: StepModel[]) => {
+        // attention : les steps ici appartiennent à un plan
+        // sile user n'est pas dans la plan en cours de consultation, il ne doit pas voir les steps dans l'historique
+      }),
       map((steps: StepModel[]) => steps.find((step: StepModel) => step.id === id) || null)
     );
   }

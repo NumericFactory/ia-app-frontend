@@ -42,6 +42,7 @@ interface ConversationModel {
 })
 export class PromptViewComponent {
 
+  user$ = this.userService.user$;
   user!: UserModel;
   // current stepId and promptId (from url)
   stepId!: number;
@@ -74,6 +75,7 @@ export class PromptViewComponent {
   ngOnInit(): void {
     // get user data from database
     this.user = this.userService.getUserFromSubject() || {} as UserModel;
+    console.log('this.user', this.user);
 
     // get step and user prompts data from database
     // and set this.step, this.promptsList, and this.conversationSate.items
@@ -82,43 +84,49 @@ export class PromptViewComponent {
     this.route.paramMap.subscribe((params: any) => {
       // get step id from url
       this.stepId = params.params['stepid'];
+      console.log('this.stepId', this.stepId);
       // get step and user prompts data from database
       // and set this.step, this.promptsList, and this.conversationSate.items
       const stepAndUserPromptsAiResponses$ = combineLatest([
+        this.user$,
         this.stepService.getStepById(this.stepId),
         this.userService.fetchUserPrompts()
       ]);
-      stepAndUserPromptsAiResponses$.subscribe(([step, promptsAiResponses]) => {
-        if (step) {
-          this.step = step
-          this.promptsList = step.prompts;
-          // set conversationSate.items with user question and IA response
-          this.conversationSate.items = this.promptsList.map((prompt) => {
-            return {
-              promptId: prompt.id,
-              userQuestion: prompt,
-              iaResponse: {
-                createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
-                text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
-              },
-              checked: false,
-              nextItem: false
+      stepAndUserPromptsAiResponses$.subscribe(([user, step, promptsAiResponses]) => {
+        if (user) {
+          this.user = user;
+          if (step) {
+            //console.log('step', step);
+            this.step = step
+            this.promptsList = step.prompts;
+            // set conversationSate.items with user question and IA response
+            this.conversationSate.items = this.promptsList.map((prompt) => {
+              return {
+                promptId: prompt.id,
+                userQuestion: prompt,
+                iaResponse: {
+                  createdAt: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.created_at || '',
+                  text: promptsAiResponses.find((AiResponse: any) => AiResponse.id === prompt.id)?.ia_response || ''
+                },
+                checked: false,
+                nextItem: false
+              }
+            });
+            this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+              item.checked = item.iaResponse.text.trim() === '' ? false : true;
+              item.nextItem = false;
+            });
+            this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
+              if (item.checked) {
+                this.countPromptsChecked++
+              }
+            });
+            if (!this.conversationHasIAResponse()) {
+              this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
             }
-          });
-          this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
-            item.checked = item.iaResponse.text.trim() === '' ? false : true;
-            item.nextItem = false;
-          });
-          this.conversationSate.items.forEach((item: ConversationModel, index: number) => {
-            if (item.checked) {
-              this.countPromptsChecked++
-            }
-          });
-          if (!this.conversationHasIAResponse()) {
-            this.selectPrompt(this.promptsList[0]); // select prompt to display the first time, and when the user click on a prompt
-          }
-          this.setStateOfPrompts();
-        }
+            this.setStateOfPrompts();
+          } // end if step
+        } // end if user
       });
 
     });
