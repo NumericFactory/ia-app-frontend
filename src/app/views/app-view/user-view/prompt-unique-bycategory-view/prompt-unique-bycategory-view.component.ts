@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PromptModel } from '../../../../core/models/step.model';
 import { StepGateway } from '../../../../core/ports/step.gateway';
@@ -8,6 +8,8 @@ import { UniquePromptUserVariablesForm } from '../../../../ui/public/ui-prompt-u
 import { UiConversationUserComponent } from '../../../../ui/public/ui-prompt-view/ui-conversation-user/ui-conversation-user.component';
 import { UiConversationIaComponent } from '../../../../ui/public/ui-prompt-view/ui-conversation-ia/ui-conversation-ia.component';
 import { IAGateway } from '../../../../core/ports/ia.gateway';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-prompt-unique-bycategory-view',
@@ -39,7 +41,8 @@ export class PromptUniqueBycategoryViewComponent {
     private stepService: StepGateway,
     private userService: UserGateway,
     private iaService: IAGateway,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -84,7 +87,7 @@ export class PromptUniqueBycategoryViewComponent {
   }
 
   goBack() {
-    this.router.navigate(['/dashboard']);
+    this.location.back();
   }
 
   selectPrompt(prompt: PromptModel) {
