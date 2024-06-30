@@ -64,6 +64,17 @@ body {
     color: #000324;
 }
 
+.btn-primary {
+    background-color: #0c135d;
+    border-color: #000324;
+
+    &:hover {
+        background-color: #1a1e4e;
+        border-color: #000324;
+
+    }
+}
+
 ui-sidebar {
     position: sticky;
     top: 0;

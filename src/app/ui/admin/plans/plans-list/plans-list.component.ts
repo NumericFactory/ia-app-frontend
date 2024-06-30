@@ -51,9 +51,8 @@ export class PlansListComponent {
     // open dialog
     this.dialog.open(UpdatePlanFormComponent, {
       disableClose: true,
-      width: 'auto',
-      minWidth: '900px',
-      maxWidth: '100%',
+      width: '100%',
+      maxWidth: '850px',
       maxHeight: '85%',
       panelClass: 'dialog-user-var',
       data: plan
