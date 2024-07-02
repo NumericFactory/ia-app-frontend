@@ -6,6 +6,15 @@
     <span class="search d-flex align-items-center justify-content-end col-7">
         <input #searchText (keyup)="searchUser(searchText.value)" class="form-control w-50" placeholder="Rechercher"
             type="text">
+
+        <button (click)="openDialogVideos()" class="btn btn-sm btn-secondary ms-2 btn-icon">
+            <i style="font-size: 1.2rem;
+            margin-right: 5px;
+            padding: 3px;
+            opacity: .7;" class="bi bi-camera-reels"></i>
+            Onboarding videos
+        </button>
+
         <button class="btn btn-sm btn-primary ms-2 btn-icon" (click)="openDialogManageUserSettings()">
             <i style="font-size: 1.2rem;
             margin-right: 5px;

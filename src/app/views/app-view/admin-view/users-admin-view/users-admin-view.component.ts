@@ -15,6 +15,7 @@ import { ListboxChangeEvent } from 'primeng/listbox';
 import { of } from 'rxjs';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { VideoListComponent } from '../../../../ui/admin/videos/videos-list/videos-list.component';
 
 @Component({
   selector: 'app-users-admin-view',
@@ -49,6 +50,17 @@ export class UsersAdminViewComponent {
     private bottomSheet: MatBottomSheet,
     private loaderService: LoaderService
   ) { }
+
+  openDialogVideos() {
+    const dialogRef = this.dialog.open(VideoListComponent, {
+      disableClose: true,
+      width: 'auto',
+      minWidth: '900px',
+      maxWidth: '100%',
+      maxHeight: '85%',
+      panelClass: 'dialog-user-var'
+    });
+  }
 
   openDialogSelectPlan(event: Event, user: UserModel): void {
     event.stopPropagation();

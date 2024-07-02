@@ -1,0 +1,58 @@
+<p class="text-secondary info-text">
+    <i class="bi bi-info-circle-fill text-primary"></i>Mettre à jour cette catégorie
+</p>
+<i (click)="close()" class="bi bi-x-lg close-dialog-btn"></i>
+<hr>
+
+<form (ngSubmit)="updateVideo()" [formGroup]="updateVideoForm">
+    <div class="row">
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="videoid">Video ID*</label>
+                <input type="text" class="form-control" id="videoid" formControlName="videoid">
+                @if(updateVideoForm.get('videoid')?.invalid && isSubmitted) {
+                <p class="error">video id requis</p>
+                }
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="videotype">Type</label>
+                <select class="form-control" id="videotype" formControlName="videotype">
+                    <option value="vimeo">Vimeo</option>
+                    <option value="youtube">Youtube</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="parent">Titre</label>
+                <input formControlName="title" class="col form-control" placeholder="" type="text">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="desc">Description</label>
+                <!-- <textarea class="form-control" id="desc" formControlName="desc"></textarea> -->
+                <p-editor formControlName="desc" [style]="{ height: '220px' }">
+                    <ng-template pTemplate="header">
+                        <span class="ql-formats">
+                            <button type="button" class="ql-bold" aria-label="Bold"></button>
+                            <button type="button" class="ql-italic" aria-label="Italic"></button>
+                            <button type="button" class="ql-underline" aria-label="Underline"></button>
+                        </span>
+                    </ng-template></p-editor>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary">Ajouter</button>
+            </div>
+        </div>
+    </div>
+
+
+</form>

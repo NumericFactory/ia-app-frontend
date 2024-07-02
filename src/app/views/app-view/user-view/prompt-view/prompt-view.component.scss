@@ -16,8 +16,8 @@
 
 .relaunch-conversation-new-variables {
     font-size: 15px;
-    background: #0e0e0e05;
-    border-color: rgba(0, 0, 0, .2);
+    background: rgb(14 14 14 / 5%);
+    border-color: rgba(0, 0, 0, 0.2);
     padding: 21px 13px;
     font-weight: 600;
     display: flex;
@@ -27,7 +27,7 @@
     border: 0;
     position: fixed;
     bottom: 30px;
-    color: #3a434d45;
+    color: rgb(58 67 77 / 38%);
 
     &:hover {
         background: #f6f6f6;

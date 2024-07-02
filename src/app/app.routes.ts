@@ -18,16 +18,15 @@ import { PromptUniqueBycategoryViewComponent } from './views/app-view/user-view/
 import { OnboardingViewComponent } from './views/app-view/onboarding-view/onboarding-view.component';
 import { onboardingPassedGuard } from './shared/guards/onboarding-passed.guard';
 import { PlansListComponent } from './ui/admin/plans/plans-list/plans-list.component';
-import { inject } from '@angular/core';
-import { AuthService } from './core/adapters/auth.service';
-import { DashboardProgrammeViewComponent } from './views/app-view/user-view/dashboard-programme-view/dashboard-programme-view.component';
 import { hasPlanGuard } from './shared/guards/has-plan.guard';
+import { OnboardingVideosViewComponent } from './views/app-view/user-view/onboarding-videos-view/onboarding-videos-view.component';
 
 export const routes: Routes = [
 
 
     // Auth Routes
     { path: 'onboarding', component: OnboardingViewComponent },
+    { path: 'onboarding-videos', canActivate: [authGuard], component: OnboardingVideosViewComponent },
     {
         path: 'auth',
         component: AuthViewComponent,

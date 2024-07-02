@@ -19,6 +19,8 @@ import { IaService } from './core/adapters/ia.service';
 import { provideMarkdown } from 'ngx-markdown';
 import { PlanService } from './core/adapters/plan.service';
 import { PlanGateway } from './core/ports/plan.gateway';
+import { VideoGateway } from './core/ports/video.gateway';
+import { VideoService } from './core/adapters/video.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,6 +41,8 @@ export const appConfig: ApplicationConfig = {
     { provide: StepGateway, useClass: StepService },
     // ia 
     { provide: IAGateway, useClass: IaService },
+    // video
+    { provide: VideoGateway, useClass: VideoService },
     provideAnimationsAsync()
   ]
 };
