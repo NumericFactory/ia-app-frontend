@@ -3,7 +3,7 @@ import { AuthGateway, loginUserPayload, registerUserPayload, ResponseMessage } f
 import { Observable, BehaviorSubject, tap, lastValueFrom, map, merge, mergeMap } from 'rxjs';
 import { UserModel } from '../models/user.model';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertService } from '../../shared/services/alert.service';
 import { UserGateway } from '../ports/user.gateway';
@@ -73,6 +73,23 @@ export class AuthService implements AuthGateway {
   public resetPassword(password: string): Observable<ResponseMessage> {
     const endpoint = '/auth/reset-password';
     return this.http.post<ResponseMessage>(`${this.apiUrl}${endpoint}`, { password });
+  }
+
+  // set password
+  public setPassword(password: any, email: string, token: string, tokenId: string): void {
+    console.log(token)
+    const endpoint = '/auth/set-password';
+    const params = new HttpParams()
+      .set('email', email)
+      .set('token', token)
+      .set('tokenId', tokenId)
+    this.http.post<ResponseMessage>(`${this.apiUrl}${endpoint}`, password, { params })
+      .subscribe({
+        next: (res) => {
+          this.alert.show('Connectez-vous', 'success');
+          this.router.navigate(['auth'])
+        }
+      })
   }
 
   // logout user

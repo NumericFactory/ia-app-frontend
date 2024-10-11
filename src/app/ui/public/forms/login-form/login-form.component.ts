@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AlertService } from '../../../../shared/services/alert.service';
@@ -15,6 +15,7 @@ export class LoginFormComponent {
 
   loginForm!: FormGroup;
   isFormSubmitted = false;
+  @Input() email: null | string = null;
   @Output() loginFormSubmittedEvent = new EventEmitter();
 
   constructor(private alertService: AlertService) {
@@ -22,6 +23,13 @@ export class LoginFormComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
+  }
+
+  ngOnInit() {
+    if (this.email) {
+      console.log(this.email)
+      this.loginForm.setControl('email', this.email)
+    }
   }
 
   onSubmitLoginForm() {

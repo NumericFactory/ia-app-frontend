@@ -20,6 +20,12 @@ import { AuthGateway } from '../../core/ports/auth.gateway';
     flex-direction: row;
     align-items: center;
   }
+  @media (max-width : 960px) {
+    main {
+      align-items: flex-start;
+      padding-top: 20px;
+    }
+  }
   aside { display: none; height: 100vh; width:0;}
   @media (min-width: 576px) {
     aside {display: block;width:20%}
@@ -46,7 +52,7 @@ import { AuthGateway } from '../../core/ports/auth.gateway';
   // @media (min-width: 992px) {
   //   .form {width: 50%;}
   // }
-  ui-login-form, ui-register-form {
+  ui-login-form, ui-register-form, ui-setpassword-form {
     width: 100%;
   }
   `

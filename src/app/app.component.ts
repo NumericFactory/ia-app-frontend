@@ -36,6 +36,7 @@ export class AppComponent {
   currentUrl = '';
 
   ngOnInit() {
+
     /**
      * LoadUser and redirect user based on their role
      * If user is not authenticated, redirect to login page

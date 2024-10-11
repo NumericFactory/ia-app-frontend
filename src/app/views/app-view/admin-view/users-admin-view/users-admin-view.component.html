@@ -4,22 +4,29 @@
         <h2>Utilisateurs</h2>
     </span>
     <span class="search d-flex align-items-center justify-content-end col-7">
-        <input #searchText (keyup)="searchUser(searchText.value)" class="form-control w-50" placeholder="Rechercher"
-            type="text">
+        <input #searchText
+               (keyup)="searchUser(searchText.value)"
+               class="form-control w-50"
+               placeholder="Rechercher"
+               type="text">
 
-        <button (click)="openDialogVideos()" class="btn btn-sm btn-secondary ms-2 btn-icon">
+        <button (click)="openDialogVideos()"
+                class="btn btn-sm btn-secondary ms-2 btn-icon">
             <i style="font-size: 1.2rem;
             margin-right: 5px;
             padding: 3px;
-            opacity: .7;" class="bi bi-camera-reels"></i>
+            opacity: .7;"
+               class="bi bi-camera-reels"></i>
             Onboarding videos
         </button>
 
-        <button class="btn btn-sm btn-primary ms-2 btn-icon" (click)="openDialogManageUserSettings()">
+        <button class="btn btn-sm btn-primary ms-2 btn-icon"
+                (click)="openDialogManageUserSettings()">
             <i style="font-size: 1.2rem;
             margin-right: 5px;
             padding: 3px;
-            opacity: .7;" class="bi bi-gear"></i>
+            opacity: .7;"
+               class="bi bi-gear"></i>
             Gérer les settings user
         </button>
     </span>
@@ -50,19 +57,22 @@
             <td>
                 <div class="d-inline-flex">
                     @if(!user.roles.length) {
-                    <span (click)="openRoleDialog($event,user)" class="badge badge-sm text-bg-secondary">guest</span>
+                    <span (click)="openRoleDialog($event,user)"
+                          class="badge badge-sm text-bg-secondary">guest</span>
                     }
                     @else {
                     @for(role of user.roles; track role) {
                     @if(role===Role.user) {
-                    <span (click)="openRoleDialog($event,user)" class="badge badge-sm text-bg-secondary">user</span>
+                    <span (click)="openRoleDialog($event,user)"
+                          class="badge badge-sm text-bg-secondary">user</span>
                     }
                     @if(role===Role.admin) {
-                    <span (click)="openRoleDialog($event,user)" class="badge badge-sm text-bg-secondary">admin</span>
+                    <span (click)="openRoleDialog($event,user)"
+                          class="badge badge-sm text-bg-secondary">admin</span>
                     }
                     @if(role===Role.powerAdmin) {
                     <span (click)="openRoleDialog($event,user)"
-                        class="badge badge-sm text-bg-secondary">powerAdmin</span>
+                          class="badge badge-sm text-bg-secondary">powerAdmin</span>
                     }
                     }
                     }
@@ -75,11 +85,12 @@
                     @if(user.plans.length) {
                     @for(plan of user.plans; track plan) {
                     <span (click)="openDialogSelectPlan($event, user)"
-                        class="badge badge-sm text-bg-primary">{{plan.title}}</span>
+                          class="badge badge-sm text-bg-primary">{{plan.title}}</span>
                     }
                     }
                     @else {
-                    <button (click)="openDialogSelectPlan($event, user)" class="btn btn-sm btn-light py-0">
+                    <button (click)="openDialogSelectPlan($event, user)"
+                            class="btn btn-sm btn-light py-0">
                         <i class="bi bi-plus"></i> Plan
                     </button>
                     }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { tap } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AlertService } from '../services/alert.service';
 import { LoaderService } from '../services/loader.service';
@@ -16,6 +16,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const alert = inject(AlertService);
   const loader = inject(LoaderService);
   const _route = inject(Router);
+  const _activatedRoute = inject(ActivatedRoute);
 
   return next(req).pipe(
     tap({
@@ -29,8 +30,14 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
               alert.show(error.message, 'error');
               break;
             case 401:
-              alert.show('Connectez-vous pour continuer', 'info');
-              _route.navigate(['/auth']);
+              // alert.show('Connectez-vous pour continuer', 'info');
+              console.log('oki?', _route.routerState.snapshot.url.includes('/auth/login'))
+              if (_route.routerState.snapshot.url.includes('/auth/set-password') === false &&
+                _route.routerState.snapshot.url.includes('/auth/register') === false &&
+                (_route.routerState.snapshot.url.includes('/auth/login') === false)
+              ) {
+                _route.navigate(['/auth'])
+              }
               break;
             case 403:
               alert.show('Accès non permis', 'error')

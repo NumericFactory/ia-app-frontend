@@ -20,6 +20,7 @@ import { onboardingPassedGuard } from './shared/guards/onboarding-passed.guard';
 import { PlansListComponent } from './ui/admin/plans/plans-list/plans-list.component';
 import { hasPlanGuard } from './shared/guards/has-plan.guard';
 import { OnboardingVideosViewComponent } from './views/app-view/user-view/onboarding-videos-view/onboarding-videos-view.component';
+import { SetpasswordViewComponent } from './views/auth-view/setpassword-view/setpassword-view.component';
 
 export const routes: Routes = [
 
@@ -34,7 +35,8 @@ export const routes: Routes = [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'login', component: LoginViewComponent },
             { path: 'register', component: RegisterViewComponent },
-            { path: 'remember-password', component: RememberpasswordViewComponent }
+            { path: 'remember-password', component: RememberpasswordViewComponent },
+            { path: 'set-password', component: SetpasswordViewComponent },
         ]
     },
     // user Routes

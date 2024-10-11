@@ -6,4 +6,5 @@
     </p>
 </div>
 
-<ui-login-form (loginFormSubmittedEvent)="loginAction($event)"></ui-login-form>
+<ui-login-form [email]="email"
+               (loginFormSubmittedEvent)="loginAction($event)"></ui-login-form>

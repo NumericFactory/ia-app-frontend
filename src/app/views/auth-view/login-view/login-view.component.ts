@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthGateway, loginUserPayload } from '../../../core/ports/auth.gateway';
 import { LoginFormComponent } from '../../../ui/public/forms/login-form/login-form.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-view',
@@ -11,10 +12,15 @@ import { LoginFormComponent } from '../../../ui/public/forms/login-form/login-fo
 })
 export class LoginViewComponent {
 
-  constructor(private authService: AuthGateway) { }
+  email: null | string = null;
+  constructor(private authService: AuthGateway, private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(val => this.email = val['email']);
+  }
+
 
   loginAction(credentials: loginUserPayload) {
-
     this.authService.login(credentials).subscribe();
   }
 
